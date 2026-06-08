@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cleanroom Mastery - Guia Interactiva</title>
+  <title>Cleanroom Mastery | Academia Operativa para Facility Services</title>
   <style>
     :root {
       --ink: #1f2a37;
@@ -384,6 +384,63 @@
       font-size: 14px;
     }
 
+    .mastery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mastery-card,
+    .qa-card,
+    .glossary-item {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .mastery-card strong,
+    .qa-card strong,
+    .glossary-item strong {
+      display: block;
+      color: var(--blue-dark);
+      margin-bottom: 6px;
+    }
+
+    .mastery-card p,
+    .qa-card p,
+    .glossary-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .qa-card {
+      display: grid;
+      gap: 10px;
+      background: #fbfdff;
+    }
+
+    .qa-card .answer {
+      border-left: 3px solid var(--green);
+      background: var(--green-soft);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+    }
+
+    .qa-card .why {
+      border-left: 3px solid var(--blue);
+      background: var(--blue-soft);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
     .card-top {
       display: flex;
       justify-content: space-between;
@@ -727,12 +784,14 @@
       .hero, .grid.two, .grid.three { grid-template-columns: 1fr; }
       .grid.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .flashcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .mastery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .glossary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 640px) {
       .main { padding: 14px; }
       .hero { padding: 20px; }
-      .hero-metrics, .grid.cards, .flashcards { grid-template-columns: 1fr; }
+      .hero-metrics, .grid.cards, .flashcards, .mastery-grid, .glossary-grid { grid-template-columns: 1fr; }
       .module-body, .module-header { padding: 16px; }
       .sort-row { grid-template-columns: 48px 1fr; }
       .sort-row .pill { grid-column: 1 / -1; width: fit-content; }
@@ -762,7 +821,7 @@
         <div class="brand-mark">CM</div>
         <div>
           <h1>Cleanroom Mastery</h1>
-          <small>Guia interactiva PM / Facility Services</small>
+          <small>Guía interactiva PM / Facility Services</small>
         </div>
       </div>
 
@@ -772,7 +831,7 @@
           <strong id="progressText">0%</strong>
         </div>
         <div class="bar"><span id="progressBar"></span></div>
-        <small id="progressDetail">0 de 10 modulos completados</small>
+        <small id="progressDetail">0 de 10 módulos completados</small>
       </div>
 
       <div class="nav-section">Aprendizaje</div>
@@ -792,15 +851,15 @@
           <div class="hero">
             <div>
               <span class="pill green">Academia corporativa</span>
-              <h2>Cleanroom Mastery - Guia Interactiva para Dominar Cuartos Limpios</h2>
-              <p>Bienvenida. Esta plataforma resume fundamentos, buenas practicas y escenarios operativos para una Project Manager que lidera limpieza, soporte y facility services en ambientes controlados.</p>
+              <h2>Cleanroom Mastery | Academia Operativa para Facility Services</h2>
+              <p>Bienvenida. Esta plataforma resume fundamentos, buenas prácticas y escenarios operativos para una Project Manager que lidera limpieza, soporte y facility services en ambientes controlados.</p>
               <div class="notice success">
-                Guia general: cada empresa debe seguir sus SOP oficiales, requisitos regulatorios, validaciones, hojas de seguridad y entrenamientos aprobados.
+                Guía general: cada empresa debe seguir sus SOP oficiales, requisitos regulatorios, validaciones, hojas de seguridad y entrenamientos aprobados.
               </div>
               <div class="hero-metrics">
-                <div class="metric"><strong>10</strong><span>modulos interactivos</span></div>
+                <div class="metric"><strong>10</strong><span>módulos interactivos</span></div>
                 <div class="metric"><strong>50+</strong><span>preguntas y actividades</span></div>
-                <div class="metric"><strong>1</strong><span>evaluacion final</span></div>
+                <div class="metric"><strong>1</strong><span>evaluación final</span></div>
               </div>
             </div>
             <div class="cleanroom-visual" aria-hidden="true"><div class="person"></div></div>
@@ -809,20 +868,27 @@
           <div class="grid two">
             <div class="card">
               <h3>Ruta recomendada</h3>
-              <p>Avanza por los modulos en orden. Cada modulo combina concepto, aplicacion operacional y practica. Marca como completado cuando puedas explicar el tema a un tecnico o supervisor.</p>
+              <p>Avanza por los módulos en orden. Cada módulo combina concepto, aplicación operacional y práctica. Marca como completado cuando puedas explicar el tema a un técnico o supervisor.</p>
               <div class="btn-row">
-                <button class="btn" onclick="showSection('module-1')">Comenzar modulo 1</button>
-                <button class="btn secondary" onclick="showSection('final')">Ir a evaluacion final</button>
+                <button class="btn" onclick="showSection('module-1')">Comenzar módulo 1</button>
+                <button class="btn secondary" onclick="showSection('module-9')">Simulador de auditoría</button>
+                <button class="btn secondary" onclick="showSection('final')">Ir a evaluación final</button>
               </div>
             </div>
             <div class="card">
               <h3>Notas personales</h3>
               <p>Escribe aprendizajes, dudas para tu QA/EHS o puntos para reforzar con el equipo.</p>
-              <textarea id="globalNotes" class="notes" placeholder="Ejemplo: confirmar SOP vigente de desinfeccion, frecuencia de cambio de mopas, flujo de ingreso de materiales..."></textarea>
+              <textarea id="globalNotes" class="notes" placeholder="Ejemplo: confirmar SOP vigente de desinfección, frecuencia de cambio de mopas, flujo de ingreso de materiales..."></textarea>
             </div>
           </div>
 
-          <h3 style="margin-top:22px;">Modulos</h3>
+          <div class="card" style="margin-top:22px;">
+            <h3>Lo que debo dominar para hablar con QA, EHS y cliente</h3>
+            <p>Temas clave para conversar con seguridad, traducir requisitos técnicos a rutinas de piso y defender la operación con evidencia.</p>
+            <div class="mastery-grid" id="masteryTopics"></div>
+          </div>
+
+          <h3 style="margin-top:22px;">Módulos</h3>
           <div class="grid cards" id="moduleCards"></div>
         </section>
 
@@ -837,77 +903,77 @@
       {
         id: 1,
         icon: "□",
-        title: "Que es un cuarto limpio",
-        subtitle: "Conceptos base, proposito e industrias.",
+        title: "¿Qué es un cuarto limpio?",
+        subtitle: "Conceptos base, propósito e industrias.",
         sections: [
-          ["Definicion sencilla", "Un cuarto limpio es un ambiente controlado donde se limita la cantidad de particulas suspendidas en el aire y se controlan variables como flujo de personal, materiales, limpieza, presion, temperatura, humedad y practicas de trabajo. No significa que el area este visualmente bonita: significa que opera bajo controles definidos y medibles."],
-          ["Proposito", "Su objetivo es proteger el producto, proceso, paciente, muestra, dispositivo o investigacion frente a contaminacion que pueda afectar calidad, seguridad, rendimiento o cumplimiento regulatorio."],
-          ["Industrias donde se usa", "Farmaceutica, biotecnologia, dispositivos medicos, microelectronica, aeroespacial, hospitales, laboratorios, alimentos especializados, optica, cosmeticos regulados y manufactura avanzada."],
-          ["Limpieza normal vs cleanroom", "En limpieza normal se busca apariencia, orden e higiene general. En cleanroom se busca control de contaminacion: se usan tecnicas especificas, materiales aprobados, movimientos disciplinados, rutas definidas, registros y verificacion."],
+          ["Definición sencilla", "Un cuarto limpio es un ambiente controlado donde se limita la cantidad de partículas suspendidas en el aire y se controlan variables como flujo de personal, materiales, limpieza, presión, temperatura, humedad y prácticas de trabajo. No significa que el área esté visualmente bonita: significa que opera bajo controles definidos y medibles."],
+          ["Propósito", "Su objetivo es proteger el producto, proceso, paciente, muestra, dispositivo o investigación frente a contaminación que pueda afectar calidad, seguridad, rendimiento o cumplimiento regulatorio."],
+          ["Industrias donde se usa", "Farmacéutica, biotecnología, dispositivos médicos, microelectrónica, aeroespacial, hospitales, laboratorios, alimentos especializados, óptica, cosméticos regulados y manufactura avanzada."],
+          ["Limpieza normal vs. cleanroom", "En limpieza normal se busca apariencia, orden e higiene general. En cleanroom se busca control de contaminación: se usan técnicas específicas, materiales aprobados, movimientos disciplinados, rutas definidas, registros y verificación."],
         ],
         table: [
           ["Aspecto", "Limpieza normal", "Limpieza en cleanroom"],
-          ["Meta", "Area visible limpia", "Contaminacion bajo control"],
-          ["Materiales", "Productos comerciales comunes", "Quimicos, paños y mopas aprobados"],
+          ["Meta", "Área visible limpia", "Contaminación bajo control"],
+          ["Materiales", "Productos comerciales comunes", "Químicos, paños y mopas aprobados"],
           ["Movimiento", "Flexible", "Controlado y lento"],
-          ["Evidencia", "Inspeccion visual", "Registros, monitoreo, auditoria"]
+          ["Evidencia", "Inspección visual", "Registros, monitoreo, auditoría"]
         ],
         quiz: [
-          q("Cual frase describe mejor un cleanroom?", ["Un area donde no existe ningun microbio", "Un ambiente controlado para limitar particulas y contaminacion", "Un cuarto que se limpia una vez por semana"], 1, "Correcto: cleanroom significa control, no ausencia absoluta de todo contaminante."),
-          q("Que diferencia clave existe frente a limpieza normal?", ["La limpieza normal siempre usa mejores quimicos", "En cleanroom importan controles, tecnica y documentacion", "No se necesita capacitacion"], 1, "Exacto: el metodo y la evidencia son parte del control.")
+          q("¿Cuál frase describe mejor un cleanroom?", ["Un área donde no existe ningún microbio", "Un ambiente controlado para limitar partículas y contaminación", "Un cuarto que se limpia una vez por semana"], 1, "Correcto: cleanroom significa control, no ausencia absoluta de todo contaminante."),
+          q("¿Qué diferencia clave existe frente a limpieza normal?", ["La limpieza normal siempre usa mejores químicos", "En cleanroom importan controles, técnica y documentación", "No se necesita capacitación"], 1, "Exacto: el método y la evidencia son parte del control.")
         ]
       },
       {
         id: 2,
         icon: "ISO",
-        title: "Clasificacion de cleanrooms",
-        subtitle: "ISO 14644, particulas y clases ISO 5-8.",
+        title: "Clasificación de cleanrooms",
+        subtitle: "ISO 14644, partículas y clases ISO 5-8.",
         sections: [
-          ["ISO 14644 en general", "ISO 14644 es una familia de normas usadas para clasificar y monitorear cuartos limpios y ambientes controlados, principalmente por concentracion de particulas en el aire. La clasificacion no reemplaza los SOP de la empresa ni los requisitos regulatorios aplicables."],
-          ["Concepto de particulas", "Las particulas son pequenas unidades solidas o liquidas suspendidas en el aire o depositadas en superficies. Pueden venir de piel, ropa, carton, polvo, corrosion, procesos, equipos o materiales."],
-          ["ISO 5, ISO 6, ISO 7, ISO 8", "Mientras menor es el numero ISO, mas estricto es el limite de particulas. ISO 5 es mas controlado que ISO 8. La operacion diaria debe mantener comportamientos, vestimenta, presiones y limpieza compatibles con la clasificacion definida."],
+          ["ISO 14644 en general", "ISO 14644 es una familia de normas usadas para clasificar y monitorear cuartos limpios y ambientes controlados, principalmente por concentración de partículas en el aire. La clasificación no reemplaza los SOP de la empresa ni los requisitos regulatorios aplicables."],
+          ["Concepto de partículas", "Las partículas son pequeñas unidades sólidas o líquidas suspendidas en el aire o depositadas en superficies. Pueden venir de piel, ropa, cartón, polvo, corrosión, procesos, equipos o materiales."],
+          ["ISO 5, ISO 6, ISO 7, ISO 8", "Mientras menor es el número ISO, más estricto es el límite de partículas. ISO 5 es más controlado que ISO 8. La operación diaria debe mantener comportamientos, vestimenta, presiones y limpieza compatibles con la clasificación definida."],
         ],
         table: [
-          ["Clase", "Nivel general", "Ejemplo operativo", "Implicacion para facility services"],
-          ["ISO 5", "Muy estricto", "Zonas criticas, cabinas, procesos sensibles", "Movimientos minimos, gowning estricto, materiales muy controlados"],
-          ["ISO 6", "Alto control", "Soporte directo a procesos criticos", "Limpieza frecuente, flujo de materiales definido"],
-          ["ISO 7", "Control intermedio", "Salas de preparacion o manufactura controlada", "Disciplina de ingreso, registros y desinfeccion robusta"],
-          ["ISO 8", "Control basico relativo", "Antesalas, soporte, empaque controlado", "Control de polvo, carton, rutas y conducta"]
+          ["Clase", "Nivel general", "Ejemplo operativo", "Implicación para facility services"],
+          ["ISO 5", "Muy estricto", "Zonas críticas, cabinas, procesos sensibles", "Movimientos mínimos, gowning estricto, materiales muy controlados"],
+          ["ISO 6", "Alto control", "Soporte directo a procesos críticos", "Limpieza frecuente, flujo de materiales definido"],
+          ["ISO 7", "Control intermedio", "Salas de preparación o manufactura controlada", "Disciplina de ingreso, registros y desinfección robusta"],
+          ["ISO 8", "Control básico relativo", "Antesalas, soporte, empaque controlado", "Control de polvo, cartón, rutas y conducta"]
         ],
         quiz: [
-          q("Si una sala pasa de ISO 8 a ISO 7, que ocurre con la exigencia?", ["Disminuye", "Aumenta", "No cambia"], 1, "Correcto: ISO 7 es mas estricto que ISO 8."),
-          q("Que mide principalmente la clasificacion ISO de cleanroom?", ["Ruido", "Particulas en aire", "Color del piso"], 1, "Correcto: la base es la concentracion de particulas por tamanos definidos.")
+          q("Si una sala pasa de ISO 8 a ISO 7, ¿qué ocurre con la exigencia?", ["Disminuye", "Aumenta", "No cambia"], 1, "Correcto: ISO 7 es más estricto que ISO 8."),
+          q("¿Qué mide principalmente la clasificación ISO de cleanroom?", ["Ruido", "Partículas en aire", "Color del piso"], 1, "Correcto: la base es la concentración de partículas por tamaños definidos.")
         ]
       },
       {
         id: 3,
         icon: "!",
-        title: "Contaminacion",
+        title: "Contaminación",
         subtitle: "Tipos, fuentes y actividad de riesgo.",
         sections: [
-          ["Tipos principales", "Particulas: polvo, fibras, piel, residuos. Biologica: bacterias, hongos, esporas. Quimica: vapores, residuos de detergente, lubricantes. Cruzada: transferencia no deseada entre productos, areas, herramientas o personas."],
-          ["Fuentes frecuentes", "Personas, aire, materiales, equipos, herramientas, empaque, agua, quimicos, procedimientos incorrectos, rutas mal definidas, mantenimiento y habitos informales."],
-          ["Enfoque de liderazgo", "Una PM debe observar patrones: donde se acumulan desviaciones, que turnos tienen mas fallas, que materiales generan polvo y que procedimientos no son claros para el personal."],
+          ["Tipos principales", "Partículas: polvo, fibras, piel, residuos. Biológica: bacterias, hongos, esporas. Química: vapores, residuos de detergente, lubricantes. Cruzada: transferencia no deseada entre productos, áreas, herramientas o personas."],
+          ["Fuentes frecuentes", "Personas, aire, materiales, equipos, herramientas, empaque, agua, químicos, procedimientos incorrectos, rutas mal definidas, mantenimiento y hábitos informales."],
+          ["Enfoque de liderazgo", "Una PM debe observar patrones: dónde se acumulan desviaciones, qué turnos tienen más fallas, qué materiales generan polvo y qué procedimientos no son claros para el personal."],
         ],
         activity: "risk",
         quiz: [
-          q("Cual suele ser una fuente critica de contaminacion?", ["Personas", "Calendario", "Color de paredes"], 0, "Correcto: las personas generan particulas y pueden transferir contaminantes."),
-          q("Que es contaminacion cruzada?", ["Transferencia no deseada entre areas, productos o herramientas", "Una pared manchada", "Usar zapatos comodos"], 0, "Exacto: el riesgo esta en transferir algo de un contexto a otro.")
+          q("¿Cuál suele ser una fuente crítica de contaminación?", ["Personas", "Calendario", "Color de paredes"], 0, "Correcto: las personas generan partículas y pueden transferir contaminantes."),
+          q("¿Qué es contaminación cruzada?", ["Transferencia no deseada entre áreas, productos o herramientas", "Una pared manchada", "Usar zapatos cómodos"], 0, "Exacto: el riesgo está en transferir algo de un contexto a otro.")
         ]
       },
       {
         id: 4,
         icon: "OK",
         title: "Comportamiento dentro del cleanroom",
-        subtitle: "Disciplina operacional y buenas practicas.",
+        subtitle: "Disciplina operacional y buenas prácticas.",
         sections: [
           ["Movimientos correctos", "Moverse despacio, evitar movimientos bruscos, mantener manos lejos de cara y cabello, no tocar superficies innecesarias, seguir rutas definidas y mantener postura consciente."],
-          ["Que evitar", "Correr, sentarse en pisos o equipos, recargarse en paredes, hablar sobre producto abierto, abrir puertas innecesariamente, usar maquillaje no permitido, ingresar objetos personales o manipular celular si no esta autorizado."],
-          ["Disciplina operacional", "La conducta repetible reduce variabilidad. Un equipo disciplinado no improvisa cuando hay presion: consulta SOP, escala dudas y registra lo requerido."],
-          ["Importancia del personal", "El personal es una barrera de control y tambien una fuente de riesgo. La capacitacion, observacion en piso y retroalimentacion inmediata son responsabilidades clave de supervision."]
+          ["Qué evitar", "Correr, sentarse en pisos o equipos, recargarse en paredes, hablar sobre producto abierto, abrir puertas innecesariamente, usar maquillaje no permitido, ingresar objetos personales o manipular celular si no está autorizado."],
+          ["Disciplina operacional", "La conducta repetible reduce variabilidad. Un equipo disciplinado no improvisa cuando hay presión: consulta SOP, escala dudas y registra lo requerido."],
+          ["Importancia del personal", "El personal es una barrera de control y también una fuente de riesgo. La capacitación, observación en piso y retroalimentación inmediata son responsabilidades clave de supervisión."]
         ],
         checklist: [
-          "Ingreso solo con entrenamiento vigente y autorizacion.",
+          "Ingreso solo con entrenamiento vigente y autorización.",
           "Camino por rutas definidas y evito movimientos bruscos.",
           "Mantengo manos enguantadas lejos de cara, lentes, mascarilla y cabello.",
           "No apoyo materiales en pisos ni superficies no aprobadas.",
@@ -915,53 +981,53 @@
           "Cumplo el SOP incluso si la tarea parece rutinaria."
         ],
         quiz: [
-          q("Por que se recomienda moverse lentamente?", ["Para reducir generacion y dispersion de particulas", "Para ahorrar energia", "Porque el piso siempre es resbaloso"], 0, "Correcto: movimientos bruscos alteran aire y liberan particulas."),
-          q("Que debe hacer un lider si observa una practica incorrecta?", ["Ignorar si no hubo problema", "Corregir, documentar si aplica y reforzar entrenamiento", "Esperar la auditoria"], 1, "Correcto: la intervencion temprana previene desviaciones mayores.")
+          q("¿Por qué se recomienda moverse lentamente?", ["Para reducir generación y dispersión de partículas", "Para ahorrar energía", "Porque el piso siempre es resbaloso"], 0, "Correcto: movimientos bruscos alteran aire y liberan partículas."),
+          q("¿Qué debe hacer un líder si observa una práctica incorrecta?", ["Ignorar si no hubo problema", "Corregir, documentar si aplica y reforzar entrenamiento", "Esperar la auditoría"], 1, "Correcto: la intervención temprana previene desviaciones mayores.")
         ]
       },
       {
         id: 5,
         icon: "G",
         title: "Gowning / Vestimenta",
-        subtitle: "Orden tipico, errores y practica.",
+        subtitle: "Orden típico, errores y práctica.",
         sections: [
-          ["Proceso general", "Gowning es la colocacion controlada de prendas que actuan como barrera entre la persona y el ambiente. El orden exacto depende del SOP, la clasificacion del area y los requisitos de producto."],
-          ["Orden tipico", "Retirar objetos no permitidos, higiene de manos, cubrir cabello/barba, colocar cubrezapatos, bata u overol, mascarilla si aplica, gafas si aplica, guantes y sanitizacion final de guantes."],
+          ["Proceso general", "Gowning es la colocación controlada de prendas que actúan como barrera entre la persona y el ambiente. El orden exacto depende del SOP, la clasificación del área y los requisitos de producto."],
+          ["Orden típico", "Retirar objetos no permitidos, higiene de manos, cubrir cabello/barba, colocar cubrezapatos, bata u overol, mascarilla si aplica, gafas si aplica, guantes y sanitizacion final de guantes."],
           ["Errores comunes", "Tocar la parte externa de la prenda con manos no sanitizadas, dejar cabello expuesto, arrastrar mangas, pisar zonas limpias con calzado no controlado, usar talla incorrecta o saltarse inspeccion visual."]
         ],
         order: [
           "Retirar objetos personales no permitidos",
           "Realizar higiene de manos",
           "Colocar cubrecabello y cubrebarba si aplica",
-          "Colocar cubrezapatos o botas segun SOP",
+          "Colocar cubrezapatos o botas según SOP",
           "Colocar bata u overol sin tocar el piso",
           "Colocar mascarilla/gafas si aplica",
           "Colocar guantes y sanitizarlos"
         ],
         quiz: [
-          q("Que se debe seguir siempre para gowning?", ["El orden que resulte mas rapido", "El SOP oficial del sitio", "La preferencia del supervisor"], 1, "Correcto: el SOP define el metodo aprobado."),
-          q("Cual es un error comun?", ["Inspeccionar la prenda", "Evitar que toque el piso", "Dejar cabello expuesto"], 2, "Correcto: cabello expuesto aumenta riesgo de particulas y biocarga.")
+          q("¿Qué se debe seguir siempre para gowning?", ["El orden que resulte más rápido", "El SOP oficial del sitio", "La preferencia del supervisor"], 1, "Correcto: el SOP define el método aprobado."),
+          q("¿Cuál es un error común?", ["Inspeccionar la prenda", "Evitar que toque el piso", "Dejar cabello expuesto"], 2, "Correcto: cabello expuesto aumenta riesgo de partículas y biocarga.")
         ]
       },
       {
         id: 6,
         icon: "L",
         title: "Limpieza en cleanroom",
-        subtitle: "Tecnicas, quimicos y procedimiento.",
+        subtitle: "Técnicas, químicos y procedimiento.",
         sections: [
-          ["Limpiar, sanitizar y desinfectar", "Limpiar remueve suciedad o residuos visibles/no visibles. Sanitizar reduce microorganismos a niveles definidos. Desinfectar destruye o inactiva microorganismos segun el agente, concentracion y tiempo de contacto aprobados."],
-          ["Tecnicas generales", "Usar paños doblados por caras, trazos unidireccionales o superpuestos, cambiar paños segun SOP, no recontaminar superficies, respetar tiempo de contacto y registrar lote/concentracion si aplica."],
-          ["Arriba hacia abajo", "Se limpia primero lo alto para evitar que particulas caigan sobre areas ya tratadas. Techos, rejillas, paredes, equipos y pisos pueden tener frecuencias distintas."],
-          ["Limpio a menos limpio", "El flujo reduce transferencia de contaminacion. Se inicia en zonas mas criticas o limpias y se avanza hacia zonas de menor control, segun SOP."],
-          ["Materiales aprobados", "Paños de baja liberacion de particulas, mopas compatibles, quimicos validados o aprobados, botellas etiquetadas, diluciones controladas y equipos limpios o dedicados."]
+          ["Limpiar, sanitizar y desinfectar", "Limpiar remueve suciedad o residuos visibles/no visibles. Sanitizar reduce microorganismos a niveles definidos. Desinfectar destruye o inactiva microorganismos según el agente, concentración y tiempo de contacto aprobados."],
+          ["Técnicas generales", "Usar paños doblados por caras, trazos unidireccionales o superpuestos, cambiar paños según SOP, no recontaminar superficies, respetar tiempo de contacto y registrar lote/concentración si aplica."],
+          ["Arriba hacia abajo", "Se limpia primero lo alto para evitar que partículas caigan sobre áreas ya tratadas. Techos, rejillas, paredes, equipos y pisos pueden tener frecuencias distintas."],
+          ["Limpio a menos limpio", "El flujo reduce transferencia de contaminación. Se inicia en zonas más críticas o limpias y se avanza hacia zonas de menor control, según SOP."],
+          ["Materiales aprobados", "Paños de baja liberación de partículas, mopas compatibles, químicos validados o aprobados, botellas etiquetadas, diluciones controladas y equipos limpios o dedicados."]
         ],
         procedure: [
           {
-            text: "Para limpiar una mesa critica, el operador usa un pano aprobado, aplica desinfectante, respeta el tiempo de contacto y limpia con trazos superpuestos de atras hacia adelante.",
+            text: "Para limpiar una mesa critica, el operador usa un paño aprobado, aplica desinfectante, respeta el tiempo de contacto y limpia con trazos superpuestos de atras hacia adelante.",
             correct: true
           },
           {
-            text: "Para terminar mas rapido, se usa una mopa comun del pasillo externo dentro del cleanroom y se registra al final del turno.",
+            text: "Para terminar más rápido, se usa una mopa común del pasillo externo dentro del cleanroom y se registra al final del turno.",
             correct: false
           },
           {
@@ -970,71 +1036,71 @@
           }
         ],
         quiz: [
-          q("Que significa tiempo de contacto?", ["Tiempo que el quimico debe permanecer humedo sobre la superficie", "Tiempo para preparar el carro", "Tiempo de descanso del operador"], 0, "Correcto: sin tiempo de contacto, la desinfeccion puede ser inefectiva."),
-          q("Por que se limpia de arriba hacia abajo?", ["Para que lo que caiga no contamine areas ya limpiadas", "Porque es mas comodo", "Para gastar menos pano"], 0, "Exacto: controla la direccion del riesgo.")
+          q("¿Qué significa tiempo de contacto?", ["Tiempo que el químico debe permanecer húmedo sobre la superficie", "Tiempo para preparar el carro", "Tiempo de descanso del operador"], 0, "Correcto: sin tiempo de contacto, la desinfección puede ser inefectiva."),
+          q("¿Por qué se limpia de arriba hacia abajo?", ["Para que lo que caiga no contamine áreas ya limpiadas", "Porque es más cómodo", "Para gastar menos paño"], 0, "Exacto: controla la dirección del riesgo.")
         ]
       },
       {
         id: 7,
         icon: "SOP",
         title: "SOP y procedimientos",
-        subtitle: "Como leer, ejecutar y analizar SOP.",
+        subtitle: "Cómo leer, ejecutar y analizar SOP.",
         sections: [
-          ["Que es un SOP", "Un Standard Operating Procedure es un documento aprobado que describe como ejecutar una actividad de forma consistente, segura y conforme a requisitos internos o regulatorios."],
-          ["Para que sirve", "Reduce variabilidad, define responsabilidades, estandariza entrenamiento, protege al producto/persona/proceso y crea una base para auditorias e investigaciones."],
-          ["Como se lee", "Confirmar titulo, codigo, version vigente, alcance, definiciones, responsabilidades, materiales, pasos, criterios de aceptacion, registros, seguridad y anexos. Si algo no es claro, se escala antes de improvisar."],
+          ["Qué es un SOP", "Un Standard Operating Procedure es un documento aprobado que describe cómo ejecutar una actividad de forma consistente, segura y conforme a requisitos internos o regulatorios."],
+          ["Para qué sirve", "Reduce variabilidad, define responsabilidades, estandariza entrenamiento, protege al producto/persona/proceso y crea una base para auditorías e investigaciones."],
+          ["Cómo se lee", "Confirmar título, código, versión vigente, alcance, definiciones, responsabilidades, materiales, pasos, criterios de aceptación, registros, seguridad y anexos. Si algo no es claro, se escala antes de improvisar."],
           ["Partes de un SOP", "Objetivo, alcance, responsabilidades, materiales/equipos, procedimiento, registros, seguridad, referencias, anexos, historial de cambios y aprobaciones."]
         ],
         sop: true,
         quiz: [
-          q("Que se debe confirmar antes de usar un SOP impreso?", ["Que sea la version vigente", "Que tenga muchas paginas", "Que tenga logo bonito"], 0, "Correcto: usar versiones obsoletas crea desviaciones."),
-          q("Que hacer si un paso del SOP no es claro?", ["Interpretarlo libremente", "Escalar la duda y detener si el riesgo lo requiere", "Omitirlo"], 1, "Correcto: no se improvisa en procesos controlados.")
+          q("¿Qué se debe confirmar antes de usar un SOP impreso?", ["Que sea la versión vigente", "Que tenga muchas páginas", "Que tenga logo bonito"], 0, "Correcto: usar versiones obsoletas crea desviaciones."),
+          q("¿Qué hacer si un paso del SOP no es claro?", ["Interpretarlo libremente", "Escalar la duda y detener si el riesgo lo requiere", "Omitirlo"], 1, "Correcto: no se improvisa en procesos controlados.")
         ]
       },
       {
         id: 8,
         icon: "R",
-        title: "Documentacion y registros",
-        subtitle: "Buenas practicas y revision de registro.",
+        title: "Documentación y registros",
+        subtitle: "Buenas prácticas y revisión de registro.",
         sections: [
-          ["Importancia", "La documentacion demuestra que una actividad fue realizada, por quien, cuando, con que materiales y bajo que condiciones. Tambien permite investigar tendencias y desviaciones."],
-          ["Buenas practicas", "Registrar en tiempo real, escribir legible, usar formato aprobado, no dejar espacios en blanco, corregir segun SOP, firmar/fechar, registrar lotes o concentraciones cuando aplique."],
-          ["Si no esta documentado, no se hizo", "En entornos regulados, una actividad sin registro puede considerarse no ejecutada porque no existe evidencia verificable."],
+          ["Importancia", "La documentación demuestra que una actividad fue realizada, por quién, cuándo, con qué materiales y bajo qué condiciones. También permite investigar tendencias y desviaciones."],
+          ["Buenas prácticas", "Registrar en tiempo real, escribir legible, usar formato aprobado, no dejar espacios en blanco, corregir según SOP, firmar/fechar, registrar lotes o concentraciones cuando aplique."],
+          ["Si no está documentado, no se hizo", "En entornos regulados, una actividad sin registro puede considerarse no ejecutada porque no existe evidencia verificable."],
           ["Errores comunes", "Tachones no controlados, espacios en blanco, datos incompletos, firmas faltantes, horas inconsistentes, uso de lapiz, correcciones sin iniciales o fechas, registros antes de ejecutar."]
         ],
         recordReview: true,
         quiz: [
-          q("Cual es una buena practica documental?", ["Registrar al final de la semana", "Registrar en tiempo real", "Dejar espacios en blanco"], 1, "Correcto: documentar en tiempo real reduce errores y dudas."),
-          q("Que problema tiene una firma faltante?", ["No permite verificar responsabilidad", "Mejora la limpieza", "No importa si la tarea se hizo"], 0, "Correcto: sin firma falta trazabilidad.")
+          q("¿Cuál es una buena práctica documental?", ["Registrar al final de la semana", "Registrar en tiempo real", "Dejar espacios en blanco"], 1, "Correcto: documentar en tiempo real reduce errores y dudas."),
+          q("¿Qué problema tiene una firma faltante?", ["No permite verificar responsabilidad", "Mejora la limpieza", "No importa si la tarea se hizo"], 0, "Correcto: sin firma falta trazabilidad.")
         ]
       },
       {
         id: 9,
         icon: "A",
-        title: "Auditorias en cleanroom",
-        subtitle: "Preparacion, preguntas y simulador.",
+        title: "Auditorías en cleanroom",
+        subtitle: "Preparación, preguntas y simulador.",
         sections: [
-          ["Que revisan", "Entrenamiento, cumplimiento de SOP, registros, limpieza, control de materiales, gowning, desviaciones, mantenimiento, monitoreo ambiental, etiquetas, vigencia de documentos y conocimiento del personal."],
-          ["Como prepararse", "Revisar SOP vigentes, entrenar respuestas simples, verificar registros completos, caminar el area con ojos de auditor, corregir hallazgos, conocer escalamiento y tener evidencias disponibles."],
-          ["Como responder", "Responder solo lo que se sabe, usar evidencia, no inventar, pedir aclaracion si la pregunta no se entiende, demostrar conocimiento del SOP y escalar cuando corresponde."]
+          ["Qué revisan", "Entrenamiento, cumplimiento de SOP, registros, limpieza, control de materiales, gowning, desviaciones, mantenimiento, monitoreo ambiental, etiquetas, vigencia de documentos y conocimiento del personal."],
+          ["Cómo prepararse", "Revisar SOP vigentes, entrenar respuestas simples, verificar registros completos, caminar el área con ojos de auditor, corregir hallazgos, conocer escalamiento y tener evidencias disponibles."],
+          ["Cómo responder", "Responder solo lo que se sabe, usar evidencia, no inventar, pedir aclaración si la pregunta no se entiende, demostrar conocimiento del SOP y escalar cuando corresponde."]
         ],
         audit: true,
         quiz: [
-          q("Que es mejor ante una pregunta que no sabes responder?", ["Inventar algo convincente", "Decir que verificaras el SOP o consultaras al SME", "Culpar a otro turno"], 1, "Correcto: honestidad y trazabilidad generan confianza."),
-          q("Que evidencia suele pedir auditoria?", ["Registros completos y SOP vigente", "Opiniones personales", "Mensajes informales"], 0, "Exacto: evidencia controlada.")
+          q("¿Qué es mejor ante una pregunta que no sabes responder?", ["Inventar algo convincente", "Decir que verificarás el SOP o consultarás al SME", "Culpar a otro turno"], 1, "Correcto: honestidad y trazabilidad generan confianza."),
+          q("¿Qué evidencia suele pedir auditoría?", ["Registros completos y SOP vigente", "Opiniones personales", "Mensajes informales"], 0, "Exacto: evidencia controlada.")
         ]
       },
       {
         id: 10,
         icon: "PM",
-        title: "Rol del liderazgo y supervision",
-        subtitle: "Cumplimiento, capacitacion y acciones correctivas.",
+        title: "Rol del liderazgo y supervisión",
+        subtitle: "Cumplimiento, capacitación y acciones correctivas.",
         sections: [
-          ["Que debe saber una Project Manager", "Debe entender riesgos de contaminacion, requisitos basicos de SOP, entrenamiento, turnos, rutas, materiales aprobados, documentacion, escalamiento, auditorias y comunicacion con QA/EHS/Facilities/Produccion."],
-          ["Asegurar cumplimiento", "Traducir SOP a rutinas de piso, observar conducta, revisar registros, confirmar materiales, dar seguimiento a desviaciones, medir tendencias y mantener comunicacion clara con stakeholders."],
+          ["Qué debe saber una Project Manager", "Debe entender riesgos de contaminación, requisitos básicos de SOP, entrenamiento, turnos, rutas, materiales aprobados, documentación, escalamiento, auditorías y comunicación con QA/EHS/Facilities/Producción."],
+          ["Asegurar cumplimiento", "Traducir SOP a rutinas de piso, observar conducta, revisar registros, confirmar materiales, dar seguimiento a desviaciones, medir tendencias y mantener comunicación clara con stakeholders."],
           ["Capacitar al personal", "Usar demostraciones, coaching en piso, evaluaciones cortas, retraining por error recurrente, observaciones documentadas y lenguaje sencillo conectado al impacto en producto y cumplimiento."],
           ["Detectar desviaciones", "Buscar patrones: firmas faltantes, materiales no aprobados, tiempos incompletos, puertas abiertas, gowning incorrecto, limpieza fuera de secuencia, carros mal segregados o procedimientos que no reflejan la realidad."],
-          ["Acciones correctivas", "Contener el riesgo, investigar causa raiz, definir acciones, asignar responsables, fechas, evidencia de cierre y verificacion de efectividad."]
+          ["Acciones correctivas", "Contener el riesgo, investigar causa raíz, definir acciones, asignar responsables, fechas, evidencia de cierre y verificación de efectividad."]
         ],
         checklist: [
           "Reviso que el personal tenga entrenamiento vigente.",
@@ -1045,46 +1111,87 @@
           "Doy retroalimentacion especifica y respetuosa."
         ],
         quiz: [
-          q("Cual es una responsabilidad clave de liderazgo?", ["Hacer que el equipo improvise menos y siga procesos", "Solo aprobar vacaciones", "Evitar auditorias"], 0, "Correcto: liderazgo convierte requisitos en habitos operativos."),
-          q("Que debe incluir una accion correctiva?", ["Responsable, fecha, evidencia y verificacion", "Solo una promesa verbal", "Un correo sin seguimiento"], 0, "Exacto: sin seguimiento no hay cierre real.")
+          q("¿Cuál es una responsabilidad clave de liderazgo?", ["Hacer que el equipo improvise menos y siga procesos", "Solo aprobar vacaciones", "Evitar auditorías"], 0, "Correcto: liderazgo convierte requisitos en hábitos operativos."),
+          q("¿Qué debe incluir una acción correctiva?", ["Responsable, fecha, evidencia y verificación", "Solo una promesa verbal", "Un correo sin seguimiento"], 0, "Exacto: sin seguimiento no hay cierre real.")
         ]
       }
     ];
 
-    const flashcards = [
-      ["Cleanroom", "Ambiente controlado para limitar particulas y contaminacion."],
-      ["ISO 14644", "Norma de referencia para clasificacion y monitoreo de cuartos limpios."],
-      ["Particula", "Unidad pequena solida o liquida que puede estar suspendida o depositada."],
-      ["Biocarga", "Presencia o cantidad de microorganismos en una superficie, material o ambiente."],
-      ["Gowning", "Proceso controlado de colocacion de vestimenta de barrera."],
-      ["Tiempo de contacto", "Tiempo que un sanitizante o desinfectante debe permanecer humedo para ser efectivo."],
-      ["SOP", "Procedimiento aprobado que define como ejecutar una actividad."],
-      ["Trazabilidad", "Capacidad de reconstruir quien hizo que, cuando, como y con que materiales."]
+    const masteryTopics = [
+      ["Control de contaminación", "Entender fuentes, rutas de transferencia y barreras permite priorizar acciones en piso y explicar riesgos al cliente."],
+      ["SOP y procedimientos", "Saber leer, ejecutar y verificar SOP ayuda a convertir requisitos escritos en rutinas repetibles para el equipo."],
+      ["Buenas Prácticas de Manufactura / GMP", "Conocer GMP permite alinear limpieza, conducta y registros con expectativas de calidad y cumplimiento."],
+      ["ISO 14644", "Dominar la lógica de clasificación ayuda a conversar sobre partículas, monitoreo y nivel de control requerido."],
+      ["Documentación y registros", "Los registros demuestran que el trabajo se realizó correctamente, a tiempo y por personal autorizado."],
+      ["Desviaciones y no conformidades", "Identificar, contener y escalar eventos evita que un problema operativo se convierta en un riesgo mayor."],
+      ["CAPA: acciones correctivas y preventivas", "Una líder debe dar seguimiento a causa raíz, responsables, fechas, evidencia y efectividad."],
+      ["Auditorías internas y externas", "Prepararse con evidencia y respuestas claras transmite control, trazabilidad y madurez operativa."],
+      ["Monitoreo ambiental", "Comprender qué se mide y por qué ayuda a interpretar alertas, tendencias y riesgos para la operación."],
+      ["Entrenamiento del personal", "El cumplimiento depende de personas capacitadas, observadas y reforzadas en las prácticas críticas."],
+      ["Gestión de cambios", "Cualquier cambio en químico, frecuencia, material, ruta o método debe evaluarse antes de implementarse."],
+      ["Trazabilidad", "Permite reconstruir quién hizo qué, cuándo, con qué material y bajo qué procedimiento."],
+      ["Seguridad y EHS", "La operación debe proteger producto, proceso y personas mediante uso correcto de químicos, EPP y controles."],
+      ["Métricas operativas", "Indicadores de registros, desviaciones, retraining y cumplimiento ayudan a dirigir la supervisión."],
+      ["Preparación para visitas del cliente", "Implica tener áreas, registros, personal y narrativa operativa listos para responder con evidencia."]
     ];
+
+    const glossaryTerms = [
+      ["Cleanroom", "Ambiente controlado donde se limita la concentración de partículas y se aplican controles de limpieza, personal, materiales y flujo."],
+      ["SOP", "Procedimiento operativo estándar aprobado que define cómo ejecutar una actividad de forma consistente y documentada."],
+      ["GMP", "Buenas Prácticas de Manufactura; principios de calidad orientados a proteger producto, proceso, paciente o usuario final."],
+      ["ISO 14644", "Familia de normas usada como referencia para clasificar y monitorear cuartos limpios por concentración de partículas."],
+      ["Contaminación", "Presencia no deseada de partículas, microorganismos, químicos o materiales que pueden afectar calidad o seguridad."],
+      ["Partícula", "Unidad sólida o líquida pequeña que puede estar suspendida en el aire o depositada sobre una superficie."],
+      ["Biocarga", "Cantidad o presencia de microorganismos en una superficie, material, equipo o ambiente."],
+      ["Desviación", "Evento o condición que se aparta de un procedimiento, especificación, parámetro o práctica aprobada."],
+      ["No conformidad", "Incumplimiento confirmado de un requisito definido, ya sea interno, regulatorio, contractual o del cliente."],
+      ["CAPA", "Sistema de acciones correctivas y preventivas para corregir causas raíz y evitar recurrencia."],
+      ["Monitoreo ambiental", "Evaluación planificada de partículas, microorganismos u otros parámetros para verificar el estado del ambiente."],
+      ["Trazabilidad", "Capacidad de reconstruir actividades, materiales, responsables, fechas, lotes y evidencia asociada."],
+      ["Data Integrity", "Principio que exige datos completos, consistentes, exactos, legibles, disponibles y confiables durante su ciclo de vida."],
+      ["ALCOA+", "Criterios de integridad de datos: atribuible, legible, contemporáneo, original, exacto, completo, consistente, duradero y disponible."],
+      ["Gowning", "Proceso controlado de colocación de vestimenta de barrera para ingresar o trabajar en áreas controladas."],
+      ["Sanitización", "Reducción de microorganismos a un nivel definido o aceptable según el procedimiento aplicable."],
+      ["Desinfección", "Uso de un agente aprobado para destruir o inactivar microorganismos en superficies, respetando concentración y tiempo de contacto."],
+      ["Validación", "Evidencia documentada de que un proceso, método o sistema cumple consistentemente su propósito previsto."],
+      ["Auditoría", "Revisión estructurada para verificar cumplimiento contra SOP, estándares, regulaciones o requisitos del cliente."],
+      ["Change Control", "Proceso formal para evaluar, aprobar, implementar y documentar cambios antes de afectar una operación controlada."]
+    ];
+
+    const flashcards = glossaryTerms.slice(0, 8);
 
     const finalQuestions = [
-      q("Una PM observa que el equipo usa paños no aprobados porque 'son iguales'. Que debe hacer?", ["Permitirlo si limpian bien", "Detener/contener, verificar SOP, escalar y corregir", "Comprar mas sin avisar"], 1, "Correcto: materiales no aprobados pueden afectar control y cumplimiento."),
-      q("Cual es la razon principal para documentar limpieza?", ["Tener evidencia verificable de ejecucion", "Llenar archivos", "Evitar conversar con auditoria"], 0, "Correcto."),
-      q("Una sala ISO 5 es comparada con ISO 8. Cual es mas estricta?", ["ISO 5", "ISO 8", "Son iguales"], 0, "Correcto."),
-      q("Que accion reduce dispersion de particulas por personal?", ["Movimientos lentos y controlados", "Caminar rapido", "Abrir puertas para ventilar"], 0, "Correcto."),
-      q("Que representa contaminacion cruzada?", ["Transferencia no deseada entre areas/productos/herramientas", "Limpieza con dos personas", "Cambio de uniforme"], 0, "Correcto."),
-      q("Que debe hacer alguien si no entiende un paso del SOP?", ["Escalar la duda antes de improvisar", "Omitirlo", "Usar memoria"], 0, "Correcto."),
-      q("Que error documental es critico?", ["Firma faltante", "Letra clara", "Fecha completa"], 0, "Correcto."),
-      q("Que revisan comunmente los auditores?", ["SOP, registros, entrenamiento y practicas reales", "Solo decoracion", "Solo velocidad del equipo"], 0, "Correcto."),
-      q("Que significa limpiar de arriba hacia abajo?", ["Controlar que particulas caigan antes de limpiar zonas bajas", "Ahorrar escalera", "No limpiar pisos"], 0, "Correcto."),
-      q("Que hace efectiva una accion correctiva?", ["Causa raiz, responsable, fecha, evidencia y verificacion", "Solo pedir mas cuidado", "Cambiar el nombre del formato"], 0, "Correcto.")
+      q("Una PM observa que el equipo usa paños no aprobados porque 'son iguales'. ¿Qué debe hacer?", ["Permitirlo si limpian bien", "Detener/contener, verificar SOP, escalar y corregir", "Comprar más sin avisar"], 1, "Correcto: materiales no aprobados pueden afectar control y cumplimiento."),
+      q("¿Cuál es la razón principal para documentar limpieza?", ["Tener evidencia verificable de ejecución", "Llenar archivos", "Evitar conversar con auditoría"], 0, "Correcto."),
+      q("Una sala ISO 5 es comparada con ISO 8. ¿Cuál es más estricta?", ["ISO 5", "ISO 8", "Son iguales"], 0, "Correcto."),
+      q("¿Qué acción reduce dispersión de partículas por personal?", ["Movimientos lentos y controlados", "Caminar rápido", "Abrir puertas para ventilar"], 0, "Correcto."),
+      q("¿Qué representa contaminación cruzada?", ["Transferencia no deseada entre áreas/productos/herramientas", "Limpieza con dos personas", "Cambio de uniforme"], 0, "Correcto."),
+      q("¿Qué debe hacer alguien si no entiende un paso del SOP?", ["Escalar la duda antes de improvisar", "Omitirlo", "Usar memoria"], 0, "Correcto."),
+      q("¿Qué error documental es crítico?", ["Firma faltante", "Letra clara", "Fecha completa"], 0, "Correcto."),
+      q("¿¿Qué revisan comúnmente los auditores?", ["SOP, registros, entrenamiento y prácticas reales", "Solo decoración", "Solo velocidad del equipo"], 0, "Correcto."),
+      q("¿Qué significa limpiar de arriba hacia abajo?", ["Controlar que partículas caigan antes de limpiar zonas bajas", "Ahorrar escalera", "No limpiar pisos"], 0, "Correcto."),
+      q("¿Qué hace efectiva una acción correctiva?", ["Causa raíz, responsable, fecha, evidencia y verificación", "Solo pedir más cuidado", "Cambiar el nombre del formato"], 0, "Correcto.")
     ];
 
-    const extraAuditQuestions = [
-      "Expliqueme como sabe que esta usando el SOP vigente.",
-      "Que haria si encuentra una mopa no aprobada dentro del cleanroom?",
-      "Como verifica que el personal entiende el gowning correcto?",
-      "Donde se documenta la limpieza y quien revisa el registro?",
-      "Que significa tiempo de contacto para este desinfectante?",
-      "Como responde si hay una puerta abierta mas tiempo del permitido?",
-      "Como asegura que no haya contaminacion cruzada entre areas?",
-      "Que desviaciones ha detectado y que acciones tomo?"
+    const auditFaqs = [
+      ["¿Qué haces si observas una desviación durante la limpieza?", "Detengo o contengo la actividad si hay riesgo, notifico al supervisor/QA según el flujo definido, documento el evento y espero la evaluación antes de continuar si aplica.", "La respuesta muestra control inmediato del riesgo, escalamiento y trazabilidad. Nota: siempre responde y actúa según el SOP oficial de la empresa."],
+      ["¿Cómo confirmas que el personal está capacitado?", "Verifico la matriz o registro de entrenamiento vigente, la autorización de ingreso y, cuando aplique, observaciones prácticas documentadas.", "Usa evidencia objetiva, no memoria ni confianza informal. Nota: siempre responde según el sistema oficial de entrenamiento de la empresa."],
+      ["¿Qué documento respalda que la limpieza se realizó?", "El registro aprobado de limpieza, completado en tiempo real con fecha, hora, área, responsable, firma y datos de materiales si aplica.", "Conecta la actividad con evidencia verificable. Nota: cada empresa define sus formatos oficiales."],
+      ["¿Qué haces si un colaborador no sigue el procedimiento?", "Intervengo de inmediato, corrijo la práctica, evalúo si hay impacto, documento o escalo si aplica y refuerzo entrenamiento.", "Combina corrección en piso con evaluación de impacto y prevención de recurrencia. Nota: sigue el procedimiento disciplinario y de calidad vigente."],
+      ["¿Cómo sabes qué químico usar?", "Consulto el SOP vigente, la lista de químicos aprobados, etiqueta, concentración, fecha de preparación/vencimiento y hoja de seguridad cuando aplique.", "Evita decisiones por costumbre y demuestra control de materiales. Nota: usa únicamente químicos aprobados por la empresa."],
+      ["¿Qué significa 'si no está documentado, no se hizo'?", "Significa que, en un ambiente regulado o controlado, una actividad sin evidencia completa no puede verificarse de forma confiable.", "Refuerza la importancia de registros completos y contemporáneos. Nota: explica el concepto según las políticas documentales internas."],
+      ["¿Cómo se evita la contaminación cruzada?", "Controlando rutas, segregación de materiales, equipos dedicados o limpios, gowning, flujo de personal y limpieza según SOP.", "La respuesta cubre fuentes y mecanismos de transferencia. Nota: usa los controles específicos definidos por la empresa."],
+      ["¿Qué revisas antes de ingresar a un cleanroom?", "Autorización, entrenamiento vigente, requisitos de gowning, objetos prohibidos, condición personal, materiales permitidos y estado del área de ingreso.", "Demuestra disciplina antes de cruzar la barrera de control. Nota: cada área puede tener requisitos distintos."],
+      ["¿Cómo se controla el ingreso de materiales?", "Mediante materiales aprobados, limpieza/desinfección previa si aplica, rutas definidas, etiquetas, registros y segregación.", "El control de materiales reduce partículas, biocarga y contaminación cruzada. Nota: sigue el flujo logístico aprobado."],
+      ["¿Qué harías si encuentras un registro incompleto?", "No lo completo por otra persona; notifico al responsable o supervisor, sigo el proceso de corrección documental y evalúo impacto si aplica.", "Protege integridad de datos y responsabilidad individual. Nota: aplica el SOP de documentación de la empresa."],
+      ["¿Cómo sabes que estás usando el SOP vigente?", "Lo consulto en el sistema o punto de uso autorizado, verificando código, título, versión, fecha efectiva y estado aprobado.", "Evita uso de copias obsoletas. Nota: cada empresa define dónde está la fuente oficial."],
+      ["¿Qué haces si encuentras una mopa no aprobada dentro del cleanroom?", "La retiro o segrego según procedimiento, notifico, evalúo posible impacto y verifico si hubo uso antes de liberar el área.", "Ataca contención, investigación y prevención. Nota: actúa según el SOP de materiales no conformes o desviaciones."],
+      ["¿Cómo explicas el tiempo de contacto de un desinfectante?", "Es el tiempo que el producto debe permanecer húmedo sobre la superficie para lograr la eficacia esperada.", "Demuestra comprensión técnica del uso correcto del químico. Nota: confirma tiempos en el SOP, etiqueta o validación aprobada."],
+      ["¿Qué haces si una puerta queda abierta más tiempo del permitido?", "Cierro o aseguro la condición, notifico, reviso impacto en presión/flujo si aplica y documento el evento según procedimiento.", "Muestra respuesta ante posible pérdida de control ambiental. Nota: sigue el escalamiento definido por Facilities/QA."],
+      ["¿Cómo preparas al equipo para una visita de cliente?", "Reviso entrenamiento, registros, orden del área, materiales aprobados, puntos críticos del SOP y practico respuestas basadas en evidencia.", "Integra preparación documental, visual y conductual. Nota: ninguna respuesta debe sustituir los SOP oficiales."]
     ];
+
+    const extraAuditQuestions = auditFaqs.map(item => item[0]);
 
     let state = JSON.parse(localStorage.getItem("cleanroomMasteryState") || "{}");
     state.completed = state.completed || [];
@@ -1105,6 +1212,7 @@
     function buildApp() {
       buildNav();
       buildModules();
+      buildMasteryTopics();
       buildDashboardCards();
       buildExtras();
       buildFinal();
@@ -1122,9 +1230,9 @@
       const mobile = document.getElementById("mobileNav");
       nav.innerHTML = navButton("dashboard", "Inicio", "⌂");
       modules.forEach(m => nav.innerHTML += navButton(`module-${m.id}`, `M${m.id}. ${m.title}`, m.icon));
-      extraNav.innerHTML = navButton("extras", "Glosario y recursos", "?") + navButton("final", "Evaluacion final", "★");
+      extraNav.innerHTML = navButton("extras", "Glosario y recursos", "?") + navButton("final", "Evaluación final", "★");
 
-      [["dashboard", "Inicio"], ...modules.map(m => [`module-${m.id}`, `Modulo ${m.id}: ${m.title}`]), ["extras", "Glosario y recursos"], ["final", "Evaluacion final"]].forEach(([id, label]) => {
+      [["dashboard", "Inicio"], ...modules.map(m => [`module-${m.id}`, `Módulo ${m.id}: ${m.title}`]), ["extras", "Glosario y recursos"], ["final", "Evaluación final"]].forEach(([id, label]) => {
         const opt = document.createElement("option");
         opt.value = id;
         opt.textContent = label;
@@ -1137,16 +1245,26 @@
       return `<button data-target="${id}" onclick="showSection('${id}')"><span class="nav-title"><span>${icon}</span><span>${label}</span></span><span class="status-dot" data-dot="${id}">-</span></button>`;
     }
 
+    function buildMasteryTopics() {
+      const wrap = document.getElementById("masteryTopics");
+      if (!wrap) return;
+      wrap.innerHTML = masteryTopics.map(([title, text]) => `
+        <article class="mastery-card">
+          <strong>${title}</strong>
+          <p>${text}</p>
+        </article>`).join("");
+    }
+
     function buildDashboardCards() {
       const wrap = document.getElementById("moduleCards");
       wrap.innerHTML = modules.map(m => `
         <article class="card module-card">
           <div>
-            <div class="card-top"><span class="pill">Modulo ${m.id}</span><span class="status-dot ${state.completed.includes(m.id) ? "done" : ""}">${state.completed.includes(m.id) ? "✓" : m.icon}</span></div>
+            <div class="card-top"><span class="pill">Módulo ${m.id}</span><span class="status-dot ${state.completed.includes(m.id) ? "done" : ""}">${state.completed.includes(m.id) ? "✓" : m.icon}</span></div>
             <h3>${m.title}</h3>
             <p>${m.subtitle}</p>
           </div>
-          <button class="btn secondary" onclick="showSection('module-${m.id}')">Abrir modulo</button>
+          <button class="btn secondary" onclick="showSection('module-${m.id}')">Abrir módulo</button>
         </article>`).join("");
     }
 
@@ -1164,12 +1282,12 @@
       return `
         <article class="module">
           <header class="module-header">
-            <span class="pill">Modulo ${m.id}</span>
+            <span class="pill">Módulo ${m.id}</span>
             <h2>${m.title}</h2>
             <p>${m.subtitle}</p>
           </header>
           <div class="module-body">
-            <div class="notice">Recuerda: esta guia es general. En una operacion real, el SOP oficial, la version vigente y el entrenamiento aprobado tienen prioridad.</div>
+            <div class="notice">Recuerda: esta guía es general. En una operación real, el SOP oficial, la versión vigente y el entrenamiento aprobado tienen prioridad.</div>
             <div class="grid two">
               ${m.sections.map(([h, body]) => `<div class="card"><h3>${h}</h3><p>${body}</p></div>`).join("")}
             </div>
@@ -1183,12 +1301,12 @@
             ${m.audit ? renderAuditSimulator() : ""}
             ${renderQuiz(m)}
             <div class="card">
-              <h3>Notas del modulo</h3>
-              <textarea class="notes" data-module-note="${m.id}" placeholder="Anota dudas, ejemplos de tu operacion o acciones para tu equipo...">${state[`note${m.id}`] || ""}</textarea>
+              <h3>Notas del módulo</h3>
+              <textarea class="notes" data-module-note="${m.id}" placeholder="Anota dudas, ejemplos de tu operación o acciones para tu equipo...">${state[`note${m.id}`] || ""}</textarea>
             </div>
             <div class="btn-row">
-              <button class="btn green" onclick="completeModule(${m.id})">Marcar modulo como completado</button>
-              <button class="btn secondary" onclick="showSection('${m.id < 10 ? `module-${m.id + 1}` : "final"}')">${m.id < 10 ? "Siguiente modulo" : "Ir a evaluacion final"}</button>
+              <button class="btn green" onclick="completeModule(${m.id})">Marcar módulo como completado</button>
+              <button class="btn secondary" onclick="showSection('${m.id < 10 ? `module-${m.id + 1}` : "final"}')">${m.id < 10 ? "Siguiente módulo" : "Ir a evaluación final"}</button>
             </div>
           </div>
         </article>
@@ -1202,7 +1320,7 @@
     function renderQuiz(m) {
       return `
         <div class="quiz" id="quiz-${m.id}">
-          <h3>Mini quiz del modulo</h3>
+          <h3>Mini quiz del módulo</h3>
           ${m.quiz.map((question, i) => `
             <div class="quiz-question" data-quiz="${m.id}" data-question="${i}">
               <strong>${i + 1}. ${question.text}</strong>
@@ -1217,12 +1335,12 @@
 
     function renderRiskActivity() {
       const risks = [
-        ["Un operador entra con carton corrugado no aprobado.", true, "Carton puede liberar fibras y particulas."],
-        ["Se usa una herramienta dedicada y limpia segun SOP.", false, "Es una practica de control, no un riesgo si esta aprobada."],
+        ["Un operador entra con cartón corrugado no aprobado.", true, "Cartón puede liberar fibras y partículas."],
+        ["Se usa una herramienta dedicada y limpia según SOP.", false, "Es una práctica de control, no un riesgo si está aprobada."],
         ["Una puerta queda abierta durante traslado de materiales.", true, "Puede alterar presion, flujo de aire y control ambiental."],
         ["El equipo registra hora, lote y firma al terminar cada tarea.", false, "Esto mejora trazabilidad."]
       ];
-      return `<div class="activity"><h3>Actividad: Identifica el riesgo</h3><p>Selecciona si cada situacion representa riesgo de contaminacion.</p>${risks.map((r, i) => `
+      return `<div class="activity"><h3>Actividad: Identifica el riesgo</h3><p>Selecciona si cada situación representa riesgo de contaminación.</p>${risks.map((r, i) => `
         <div class="quiz-question">
           <strong>${r[0]}</strong>
           <div class="btn-row">
@@ -1235,12 +1353,12 @@
 
     function renderChecklist(m) {
       const saved = state.checklists[m.id] || [];
-      return `<div class="activity"><h3>Checklist interactivo</h3><p>Marca las practicas que puedes verificar o implementar con tu equipo.</p>${m.checklist.map((item, i) => `
+      return `<div class="activity"><h3>Checklist interactivo</h3><p>Marca las prácticas que puedes verificar o implementar con tu equipo.</p>${m.checklist.map((item, i) => `
         <label class="check-item"><input type="checkbox" ${saved.includes(i) ? "checked" : ""} onchange="toggleChecklist(${m.id}, ${i}, this.checked)"><span>${item}</span></label>`).join("")}</div>`;
     }
 
     function renderOrderActivity(m) {
-      return `<div class="activity"><h3>Actividad: Ordena los pasos de gowning</h3><p>Asigna el numero correcto a cada paso. Usa el orden general de esta guia; valida siempre el SOP real.</p><div class="sort-list" id="order-${m.id}">
+      return `<div class="activity"><h3>Actividad: Ordena los pasos de gowning</h3><p>Asigna el número correcto a cada paso. Usa el orden general de esta guía; valida siempre el SOP real.</p><div class="sort-list" id="order-${m.id}">
         ${shuffle(m.order.map((step, i) => ({ step, correct: i + 1 }))).map(item => `
           <div class="sort-row" data-correct="${item.correct}">
             <select>${m.order.map((_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("")}</select>
@@ -1255,8 +1373,8 @@
         <div class="quiz-question">
           <strong>${p.text}</strong>
           <div class="btn-row">
-            <button class="option" onclick="activityFeedback(this, ${p.correct}, '${p.correct ? "Correcto: el procedimiento protege el control de contaminacion." : "Atencion: usar materiales no aprobados rompe el control y puede generar desviacion."}')">Correcto</button>
-            <button class="option" onclick="activityFeedback(this, ${!p.correct}, '${p.correct ? "Atencion: este escenario si sigue buenas practicas generales." : "Correcto: ese procedimiento no debe aceptarse."}')">Incorrecto</button>
+            <button class="option" onclick="activityFeedback(this, ${p.correct}, '${p.correct ? "Correcto: el procedimiento protege el control de contaminación." : "Atención: usar materiales no aprobados rompe el control y puede generar desviación."}')">Correcto</button>
+            <button class="option" onclick="activityFeedback(this, ${!p.correct}, '${p.correct ? "Atención: este escenario si sigue buenas prácticas generales." : "Correcto: ese procedimiento no debe aceptarse."}')">Incorrecto</button>
           </div>
           <div class="feedback"></div>
         </div>`).join("")}</div>`;
@@ -1264,16 +1382,16 @@
 
     function renderSopActivity() {
       return `<div class="activity"><h3>Actividad: Analiza un SOP ficticio</h3>
-        <div class="notice warning"><strong>SOP CLN-007 Limpieza de mesa de preparacion</strong><br>Version: 03. Objetivo: remover residuos y reducir biocarga. Alcance: mesas de preparacion ISO 7. Materiales: pano aprobado CR-12, desinfectante aprobado, guantes. Procedimiento: verificar despeje del area, sanitizar guantes, aplicar desinfectante, limpiar con trazos superpuestos, respetar 5 minutos de contacto, registrar fecha/hora/firma/lote.</div>
-        <div class="quiz-question"><strong>Que dato confirma trazabilidad del quimico?</strong><div class="options">
+        <div class="notice warning"><strong>SOP CLN-007 Limpieza de mesa de preparación</strong><br>Versión: 03. Objetivo: remover residuos y reducir biocarga. Alcance: mesas de preparacion ISO 7. Materiales: paño aprobado CR-12, desinfectante aprobado, guantes. Procedimiento: verificar despeje del área, sanitizar guantes, aplicar desinfectante, limpiar con trazos superpuestos, respetar 5 minutos de contacto, registrar fecha/hora/firma/lote.</div>
+        <div class="quiz-question"><strong>¿Qué dato confirma trazabilidad del químico?</strong><div class="options">
           <button class="option" onclick="activityFeedback(this, true, 'Correcto: el lote permite trazabilidad del material usado.')">Lote del desinfectante</button>
           <button class="option" onclick="activityFeedback(this, false, 'No: el color no confirma trazabilidad.')">Color de la botella</button>
           <button class="option" onclick="activityFeedback(this, false, 'No: la rapidez no documenta el material.')">Tiempo total del turno</button>
         </div><div class="feedback"></div></div>
-        <div class="quiz-question"><strong>Que paso protege la efectividad del desinfectante?</strong><div class="options">
-          <button class="option" onclick="activityFeedback(this, true, 'Correcto: el tiempo de contacto es critico.')">Respetar 5 minutos de contacto</button>
+        <div class="quiz-question"><strong>¿Qué paso protege la efectividad del desinfectante?</strong><div class="options">
+          <button class="option" onclick="activityFeedback(this, true, 'Correcto: el tiempo de contacto es crítico.')">Respetar 5 minutos de contacto</button>
           <button class="option" onclick="activityFeedback(this, false, 'No: saltar pasos aumenta riesgo.')">Secar inmediatamente</button>
-          <button class="option" onclick="activityFeedback(this, false, 'No: registrar antes de ejecutar es mala practica.')">Firmar antes de limpiar</button>
+          <button class="option" onclick="activityFeedback(this, false, 'No: registrar antes de ejecutar es mala práctica.')">Firmar antes de limpiar</button>
         </div><div class="feedback"></div></div>
       </div>`;
     }
@@ -1282,11 +1400,11 @@
       const items = [
         ["Fecha completa: 08/06/2026", false, "Dato completo."],
         ["Hora de inicio en blanco", true, "Espacio en blanco: falta evidencia."],
-        ["Firma del tecnico faltante", true, "Sin firma no hay responsable verificable."],
+        ["Firma del técnico faltante", true, "Sin firma no hay responsable verificable."],
         ["Lote de desinfectante registrado", false, "Buena trazabilidad."],
-        ["Correccion con tachon fuerte e ilegible", true, "Correcciones deben hacerse segun SOP, manteniendo legibilidad."]
+        ["Corrección con tachón fuerte e ilegible", true, "Correcciones deben hacerse según SOP, manteniendo legibilidad."]
       ];
-      return `<div class="activity"><h3>Ejercicio: Revision de registro</h3><p>Marca cuales elementos son errores que deberias corregir o escalar.</p>${items.map(item => `
+      return `<div class="activity"><h3>Ejercicio: Revisión de registro</h3><p>Marca cuáles elementos son errores que deberías corregir o escalar.</p>${items.map(item => `
         <div class="quiz-question"><strong>${item[0]}</strong><div class="btn-row">
           <button class="option" onclick="activityFeedback(this, ${item[1]}, '${item[2]}')">Es error</button>
           <button class="option" onclick="activityFeedback(this, ${!item[1]}, '${item[2]}')">No es error</button>
@@ -1295,33 +1413,47 @@
 
     function renderAuditSimulator() {
       const scenarios = [
-        q("Auditor: Como sabe que este personal esta autorizado para entrar?", ["Mostraria matriz/registro de entrenamiento vigente", "Diria que todos tienen experiencia", "No responderia"], 0, "Correcto: usa evidencia controlada."),
-        q("Auditor: Que hace si encuentra una desviacion de limpieza?", ["Contener, notificar, documentar e investigar segun SOP", "Borrarla del registro", "Esperar al siguiente mes"], 0, "Correcto: contencion y escalamiento."),
-        q("Auditor: Por que no usa carton en el area?", ["Puede liberar particulas/fibras y no estar aprobado", "Porque se ve feo", "Porque pesa mucho"], 0, "Correcto: enfoca la respuesta en contaminacion y SOP.")
+        q("Auditor: ¿Cómo sabe que este personal está autorizado para entrar?", ["Mostraría matriz/registro de entrenamiento vigente", "Diría que todos tienen experiencia", "No respondería"], 0, "Correcto: usa evidencia controlada."),
+        q("Auditor: ¿Qué hace si encuentra una desviación de limpieza?", ["Contener, notificar, documentar e investigar según SOP", "Borrarla del registro", "Esperar al siguiente mes"], 0, "Correcto: contención y escalamiento."),
+        q("Auditor: ¿Por qué no usa cartón en el área?", ["Puede liberar partículas/fibras y no estar aprobado", "Porque se ve feo", "Porque pesa mucho"], 0, "Correcto: enfoca la respuesta en contaminación y SOP.")
       ];
-      return `<div class="activity"><h3>Simulador de auditoria</h3><p>Practica respuestas seguras, breves y basadas en evidencia.</p>${scenarios.map((s, i) => `
+      return `<div class="activity"><h3>Simulador de auditoría</h3><p>Practica respuestas seguras, breves y basadas en evidencia.</p>${scenarios.map((s, i) => `
         <div class="quiz-question">
           <strong>${s.text}</strong>
           <div class="options">${s.options.map((opt, oi) => `<button class="option" onclick="activityFeedback(this, ${oi === s.answer}, '${s.feedback}')">${opt}</button>`).join("")}</div>
           <div class="feedback"></div>
-        </div>`).join("")}</div>`;
+        </div>`).join("")}
+        <h3 style="margin-top:18px;">Preguntas frecuentes de QA, EHS o cliente</h3>
+        <p>Usa estas respuestas como práctica de lenguaje operativo. En una auditoría real, siempre responde con evidencia y según el SOP oficial de tu empresa.</p>
+        <div class="grid two">
+          ${auditFaqs.map(([question, answer, why]) => `
+            <article class="qa-card">
+              <div><strong>Pregunta</strong><p>${question}</p></div>
+              <div class="answer"><strong>Respuesta sugerida</strong><p>${answer}</p></div>
+              <div class="why"><strong>Por qué es adecuada</strong><p>${why}</p></div>
+              <span class="pill amber">Responder según SOP oficial</span>
+            </article>`).join("")}
+        </div>
+      </div>`;
     }
 
     function buildExtras() {
       document.getElementById("extras").innerHTML = `
         <article class="module">
-          <header class="module-header"><span class="pill">Recursos</span><h2>Glosario, errores y checklists</h2><p>Material de repaso para prepararte antes de caminar un area, liderar personal o recibir auditoria.</p></header>
+          <header class="module-header"><span class="pill">Recursos</span><h2>Glosario, errores y checklists</h2><p>Material de repaso para prepararte antes de caminar un área, liderar personal o recibir auditoría.</p></header>
           <div class="module-body">
-            <div class="card"><h3>Tarjetas de memoria</h3><p>Haz clic en cada tarjeta para ver la definicion.</p><div class="flashcards">${flashcards.map(([term, def]) => `
-              <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><span class="pill">Termino</span><strong>${term}</strong></div><div class="flash-face back"><span class="pill green">Definicion</span><p>${def}</p></div></div></div>`).join("")}</div></div>
+            <div class="card"><h3>Tarjetas de memoria</h3><p>Haz clic en cada tarjeta para ver la definición.</p><div class="flashcards">${flashcards.map(([term, def]) => `
+              <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><span class="pill">Término</span><strong>${term}</strong></div><div class="flash-face back"><span class="pill green">Definición</span><p>${def}</p></div></div></div>`).join("")}</div></div>
+            <div class="card"><h3>Glosario técnico</h3><p>Definiciones breves para hablar con QA, EHS, Facilities y clientes con más precisión.</p><div class="glossary-grid">${glossaryTerms.map(([term, def]) => `
+              <article class="glossary-item"><strong>${term}</strong><p>${def}</p></article>`).join("")}</div></div>
             <div class="grid two">
               <div class="card"><h3>Errores que debo evitar</h3><div class="callout-list">
-                ${["Usar materiales no aprobados por parecer equivalentes.","Firmar registros antes de ejecutar la tarea.","Permitir ingreso por experiencia sin entrenamiento vigente.","Ignorar pequenos hallazgos repetitivos.","Mover carros entre areas sin limpieza o segregacion definida.","Responder auditorias con suposiciones en vez de evidencia.","Cambiar la secuencia de limpieza por conveniencia.","Dejar espacios en blanco en registros."].map(x => `<div>${x}</div>`).join("")}
+                ${["Usar materiales no aprobados por parecer equivalentes.","Firmar registros antes de ejecutar la tarea.","Permitir ingreso por experiencia sin entrenamiento vigente.","Ignorar pequeños hallazgos repetitivos.","Mover carros entre áreas sin limpieza o segregación definida.","Responder auditorías con suposiciones en vez de evidencia.","Cambiar la secuencia de limpieza por conveniencia.","Dejar espacios en blanco en registros."].map(x => `<div>${x}</div>`).join("")}
               </div></div>
-              <div class="card"><h3>Preguntas que me pueden hacer en auditoria</h3><div class="callout-list">${extraAuditQuestions.map(x => `<div>${x}</div>`).join("")}</div></div>
+              <div class="card"><h3>Preguntas que me pueden hacer en auditoría</h3><div class="callout-list">${extraAuditQuestions.map(x => `<div>${x}</div>`).join("")}</div></div>
             </div>
             <div class="card"><h3>Checklist para visitar un cleanroom</h3>
-              ${["Confirmar autorizacion y entrenamiento vigente.","Revisar requisitos de gowning antes de entrar.","No ingresar celular, papel, carton u objetos no aprobados.","Observar presiones, puertas, flujo de materiales y limpieza visual.","Verificar que registros esten completos, legibles y en tiempo real.","Preguntar al personal como sabe que el SOP es vigente.","Confirmar que quimicos y paños tengan identificacion/lote si aplica.","Registrar hallazgos, responsables y fechas de seguimiento."].map((x, i) => `<label class="check-item"><input type="checkbox"><span>${x}</span></label>`).join("")}
+              ${["Confirmar autorización y entrenamiento vigente.","Revisar requisitos de gowning antes de entrar.","No ingresar celular, papel, cartón u objetos no aprobados.","Observar presiones, puertas, flujo de materiales y limpieza visual.","Verificar que registros estén completos, legibles y en tiempo real.","Preguntar al personal cómo sabe que el SOP es vigente.","Confirmar que químicos y paños tengan identificación/lote si aplica.","Registrar hallazgos, responsables y fechas de seguimiento."].map((x, i) => `<label class="check-item"><input type="checkbox"><span>${x}</span></label>`).join("")}
             </div>
           </div>
         </article>`;
@@ -1330,9 +1462,9 @@
     function buildFinal() {
       document.getElementById("final").innerHTML = `
         <article class="module">
-          <header class="module-header"><span class="pill green">Evaluacion</span><h2>Banco de preguntas final</h2><p>Evalua fundamentos generales de cleanroom, liderazgo operativo, documentacion y auditoria.</p></header>
+          <header class="module-header"><span class="pill green">Evaluación</span><h2>Banco de preguntas final</h2><p>Evalúa fundamentos generales de cleanroom, liderazgo operativo, documentación y auditoría.</p></header>
           <div class="module-body">
-            <div class="notice">Esta evaluacion es de aprendizaje interno. No sustituye entrenamiento oficial ni calificacion de la empresa.</div>
+            <div class="notice">Esta evaluación es de aprendizaje interno. No sustituye entrenamiento oficial ni calificación de la empresa.</div>
             <div class="quiz" id="finalQuiz">${finalQuestions.map((question, i) => `
               <div class="quiz-question" data-final="${i}">
                 <strong>${i + 1}. ${question.text}</strong>
@@ -1342,8 +1474,8 @@
             <div class="card">
               <h3>Resultado</h3>
               <div class="final-score" id="finalScore">${state.finalScore === null ? "--" : state.finalScore + "%"}</div>
-              <p id="finalMessage">Completa todas las preguntas para calcular tu puntuacion.</p>
-              <div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuacion</button><button class="btn secondary" onclick="resetFinal()">Reintentar evaluacion</button></div>
+              <p id="finalMessage">Completa todas las preguntas para calcular tu puntuación.</p>
+              <div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuación</button><button class="btn secondary" onclick="resetFinal()">Reintentar evaluación</button></div>
             </div>
           </div>
         </article>`;
@@ -1396,7 +1528,7 @@
       state.finalScore = score;
       save();
       document.getElementById("finalScore").textContent = score + "%";
-      document.getElementById("finalMessage").textContent = score >= 85 ? "Excelente dominio general. Buen nivel para conversar con QA, Facilities y operaciones." : score >= 70 ? "Buen avance. Refuerza los modulos donde dudaste y repite escenarios de auditoria." : "Conviene repasar los fundamentos y practicar con tu SOP real antes de una auditoria.";
+      document.getElementById("finalMessage").textContent = score >= 85 ? "Excelente dominio general. Buen nivel para conversar con QA, Facilities y operaciones." : score >= 70 ? "Buen avance. Refuerza los módulos donde dudaste y repite escenarios de auditoría." : "Conviene repasar los fundamentos y practicar con tu SOP real antes de una auditoría.";
     }
 
     function resetFinal() {
@@ -1442,14 +1574,14 @@
       save();
       buildDashboardCards();
       updateProgress();
-      alert(`Modulo ${id} marcado como completado.`);
+      alert(`Módulo ${id} marcado como completado.`);
     }
 
     function updateProgress() {
       const percent = Math.round((state.completed.length / modules.length) * 100);
       document.getElementById("progressText").textContent = percent + "%";
       document.getElementById("progressBar").style.width = percent + "%";
-      document.getElementById("progressDetail").textContent = `${state.completed.length} de ${modules.length} modulos completados`;
+      document.getElementById("progressDetail").textContent = `${state.completed.length} de ${modules.length} módulos completados`;
       document.querySelectorAll("[data-dot]").forEach(dot => {
         const id = dot.dataset.dot;
         const match = id.match(/module-(\d+)/);
@@ -1481,18 +1613,18 @@
       save();
       const lines = [
         "Cleanroom Mastery - Progreso y notas",
-        `Fecha de exportacion: ${new Date().toLocaleString()}`,
-        `Progreso: ${state.completed.length}/${modules.length} modulos`,
-        `Evaluacion final: ${state.finalScore === null ? "sin completar" : state.finalScore + "%"}`,
+        `Fecha de exportación: ${new Date().toLocaleString()}`,
+        `Progreso: ${state.completed.length}/${modules.length} módulos`,
+        `Evaluación final: ${state.finalScore === null ? "sin completar" : state.finalScore + "%"}`,
         "",
-        "Modulos completados:",
-        ...modules.map(m => `${state.completed.includes(m.id) ? "[x]" : "[ ]"} Modulo ${m.id}: ${m.title}`),
+        "Módulos completados:",
+        ...modules.map(m => `${state.completed.includes(m.id) ? "[x]" : "[ ]"} Módulo ${m.id}: ${m.title}`),
         "",
         "Notas generales:",
         state.notes || "(sin notas)",
         "",
-        "Notas por modulo:",
-        ...modules.map(m => `Modulo ${m.id}: ${state[`note${m.id}`] || "(sin notas)"}`)
+        "Notas por módulo:",
+        ...modules.map(m => `Módulo ${m.id}: ${state[`note${m.id}`] || "(sin notas)"}`)
       ];
       const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
