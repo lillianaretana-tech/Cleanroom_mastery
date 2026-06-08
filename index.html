@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cleanroom Mastery - Guia Interactiva</title>
+  <style>
+    :root {
+      --ink: #1f2a37;
+      --muted: #667085;
+      --line: #d9e2ec;
+      --soft: #f5f8fb;
+      --panel: #ffffff;
+      --blue: #1769aa;
+      --blue-dark: #0f4f83;
+      --blue-soft: #e8f2fb;
+      --green: #2f9e73;
+      --green-soft: #e9f7f0;
+      --amber: #b7791f;
+      --amber-soft: #fff6df;
+      --red: #c2413c;
+      --red-soft: #fff0ef;
+      --shadow: 0 16px 40px rgba(31, 42, 55, .10);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #eef4f9;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: #ffffff;
+      border-right: 1px solid var(--line);
+      padding: 22px 18px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--blue);
+      border-radius: 8px;
+      font-size: 24px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .progress-box {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .bar {
+      height: 11px;
+      background: #dfe9f2;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width .3s ease;
+    }
+
+    .nav-section {
+      margin: 16px 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav button {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      border: 1px solid transparent;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: var(--blue-soft);
+      border-color: #c5def2;
+      color: var(--blue-dark);
+    }
+
+    .nav .nav-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+      font-size: 14px;
+    }
+
+    .status-dot {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #edf2f7;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-dot.done {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .side-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 28px;
+    }
+
+    .topbar {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, .96);
+      border-bottom: 1px solid var(--line);
+      padding: 10px 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .content {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 260px;
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 24px;
+      align-items: stretch;
+      background: linear-gradient(135deg, #0f4f83, #167c94 55%, #2f9e73);
+      color: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+
+    .hero h2 {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: rgba(255, 255, 255, .9);
+      font-size: 16px;
+      margin: 0 0 18px;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, .14);
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .82);
+    }
+
+    .cleanroom-visual {
+      min-height: 230px;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px);
+      background-size: 34px 34px;
+    }
+
+    .cleanroom-visual:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 24% 28%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+        radial-gradient(circle at 64% 34%, rgba(255,255,255,.75) 0 1px, transparent 2px),
+        radial-gradient(circle at 78% 70%, rgba(255,255,255,.65) 0 2px, transparent 3px),
+        linear-gradient(180deg, transparent 0 62%, rgba(255,255,255,.18) 62% 100%);
+    }
+
+    .person {
+      position: absolute;
+      left: 50%;
+      bottom: 34px;
+      transform: translateX(-50%);
+      width: 94px;
+      height: 132px;
+      border-radius: 48px 48px 18px 18px;
+      background: rgba(255,255,255,.78);
+      box-shadow: inset 0 0 0 2px rgba(15,79,131,.22);
+    }
+
+    .person:before {
+      content: "";
+      position: absolute;
+      left: 24px;
+      top: -34px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.88);
+      box-shadow: inset 0 -10px 0 rgba(23,105,170,.18);
+    }
+
+    .person:after {
+      content: "";
+      position: absolute;
+      left: 22px;
+      top: 24px;
+      width: 50px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(23,105,170,.38);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(31,42,55,.06);
+    }
+
+    .module-card {
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .module-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .module-card h3 {
+      margin: 8px 0;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .module-card p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 26px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill.green { background: var(--green-soft); color: #1f7a59; }
+    .pill.amber { background: var(--amber-soft); color: var(--amber); }
+    .pill.red { background: var(--red-soft); color: var(--red); }
+
+    .module {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .module-header {
+      padding: 24px;
+      background: #f9fbfd;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .module-header h2 {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 3vw, 36px);
+      letter-spacing: 0;
+    }
+
+    .module-header p {
+      color: var(--muted);
+      margin: 0;
+      max-width: 900px;
+    }
+
+    .module-body {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+
+    h4 {
+      margin: 0 0 8px;
+      letter-spacing: 0;
+    }
+
+    p { margin-top: 0; }
+
+    ul, ol {
+      margin-top: 0;
+      padding-left: 22px;
+    }
+
+    li + li { margin-top: 6px; }
+
+    .notice {
+      border-left: 4px solid var(--blue);
+      background: var(--blue-soft);
+      color: var(--ink);
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .warning {
+      border-left-color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .success {
+      border-left-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef5fb;
+      color: var(--blue-dark);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: var(--blue);
+      color: white;
+      font-weight: 700;
+      border: 1px solid var(--blue);
+    }
+
+    .btn:hover { background: var(--blue-dark); }
+
+    .btn.secondary {
+      background: white;
+      color: var(--blue-dark);
+      border-color: #b7d2e9;
+    }
+
+    .btn.secondary:hover { background: var(--blue-soft); }
+
+    .btn.green {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .btn.danger {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .quiz, .activity {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fbfdff;
+    }
+
+    .quiz-question {
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .quiz-question:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .options {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .option:hover { border-color: #9bc6e6; background: #f6fbff; }
+    .option.correct { border-color: var(--green); background: var(--green-soft); }
+    .option.incorrect { border-color: var(--red); background: var(--red-soft); }
+
+    .feedback {
+      margin-top: 10px;
+      min-height: 24px;
+      font-weight: 700;
+    }
+
+    .feedback.good { color: #1f7a59; }
+    .feedback.bad { color: var(--red); }
+
+    .check-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .check-item input {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: var(--green);
+    }
+
+    .sort-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .sort-row {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px;
+    }
+
+    .sort-row select {
+      width: 52px;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 5px;
+      background: white;
+    }
+
+    .flashcards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .flashcard {
+      min-height: 154px;
+      perspective: 1000px;
+    }
+
+    .flash-inner {
+      width: 100%;
+      height: 100%;
+      min-height: 154px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .35s ease;
+    }
+
+    .flashcard.flipped .flash-inner { transform: rotateY(180deg); }
+
+    .flash-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: white;
+      backface-visibility: hidden;
+      box-shadow: 0 8px 18px rgba(31,42,55,.06);
+    }
+
+    .flash-face.back {
+      background: var(--blue-soft);
+      transform: rotateY(180deg);
+    }
+
+    .flash-face strong {
+      color: var(--blue-dark);
+      font-size: 18px;
+    }
+
+    .notes {
+      width: 100%;
+      min-height: 110px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      resize: vertical;
+      background: white;
+    }
+
+    .callout-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .callout-list div {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .final-score {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin: 8px 0;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 1080px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .topbar { display: flex; }
+      .main { padding: 18px; }
+      .hero, .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .grid.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flashcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .main { padding: 14px; }
+      .hero { padding: 20px; }
+      .hero-metrics, .grid.cards, .flashcards { grid-template-columns: 1fr; }
+      .module-body, .module-header { padding: 16px; }
+      .sort-row { grid-template-columns: 48px 1fr; }
+      .sort-row .pill { grid-column: 1 / -1; width: fit-content; }
+    }
+
+    @media print {
+      .sidebar, .topbar, .btn-row, .quiz, .activity, .notes, .no-print { display: none !important; }
+      body { background: white; }
+      .app { display: block; }
+      .main { padding: 0; }
+      .section { display: block !important; page-break-after: always; }
+      .hero, .module, .card { box-shadow: none; }
+      .hero { color: var(--ink); background: white; border: 1px solid var(--line); }
+      .cleanroom-visual { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <strong>Cleanroom Mastery</strong>
+    <select id="mobileNav" aria-label="Navegacion"></select>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">CM</div>
+        <div>
+          <h1>Cleanroom Mastery</h1>
+          <small>Guia interactiva PM / Facility Services</small>
+        </div>
+      </div>
+
+      <div class="progress-box">
+        <div class="progress-row">
+          <span>Progreso general</span>
+          <strong id="progressText">0%</strong>
+        </div>
+        <div class="bar"><span id="progressBar"></span></div>
+        <small id="progressDetail">0 de 10 modulos completados</small>
+      </div>
+
+      <div class="nav-section">Aprendizaje</div>
+      <nav class="nav" id="nav"></nav>
+      <div class="nav-section">Refuerzo</div>
+      <nav class="nav" id="extraNav"></nav>
+      <div class="side-actions">
+        <button class="btn secondary" onclick="printSummary()">Imprimir resumen</button>
+        <button class="btn secondary" onclick="exportProgress()">Exportar notas/progreso</button>
+        <button class="btn danger" onclick="resetProgress()">Reiniciar progreso</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="content">
+        <section id="dashboard" class="section active">
+          <div class="hero">
+            <div>
+              <span class="pill green">Academia corporativa</span>
+              <h2>Cleanroom Mastery - Guia Interactiva para Dominar Cuartos Limpios</h2>
+              <p>Bienvenida. Esta plataforma resume fundamentos, buenas practicas y escenarios operativos para una Project Manager que lidera limpieza, soporte y facility services en ambientes controlados.</p>
+              <div class="notice success">
+                Guia general: cada empresa debe seguir sus SOP oficiales, requisitos regulatorios, validaciones, hojas de seguridad y entrenamientos aprobados.
+              </div>
+              <div class="hero-metrics">
+                <div class="metric"><strong>10</strong><span>modulos interactivos</span></div>
+                <div class="metric"><strong>50+</strong><span>preguntas y actividades</span></div>
+                <div class="metric"><strong>1</strong><span>evaluacion final</span></div>
+              </div>
+            </div>
+            <div class="cleanroom-visual" aria-hidden="true"><div class="person"></div></div>
+          </div>
+
+          <div class="grid two">
+            <div class="card">
+              <h3>Ruta recomendada</h3>
+              <p>Avanza por los modulos en orden. Cada modulo combina concepto, aplicacion operacional y practica. Marca como completado cuando puedas explicar el tema a un tecnico o supervisor.</p>
+              <div class="btn-row">
+                <button class="btn" onclick="showSection('module-1')">Comenzar modulo 1</button>
+                <button class="btn secondary" onclick="showSection('final')">Ir a evaluacion final</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Notas personales</h3>
+              <p>Escribe aprendizajes, dudas para tu QA/EHS o puntos para reforzar con el equipo.</p>
+              <textarea id="globalNotes" class="notes" placeholder="Ejemplo: confirmar SOP vigente de desinfeccion, frecuencia de cambio de mopas, flujo de ingreso de materiales..."></textarea>
+            </div>
+          </div>
+
+          <h3 style="margin-top:22px;">Modulos</h3>
+          <div class="grid cards" id="moduleCards"></div>
+        </section>
+
+        <section id="extras" class="section"></section>
+        <section id="final" class="section"></section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const modules = [
+      {
+        id: 1,
+        icon: "□",
+        title: "Que es un cuarto limpio",
+        subtitle: "Conceptos base, proposito e industrias.",
+        sections: [
+          ["Definicion sencilla", "Un cuarto limpio es un ambiente controlado donde se limita la cantidad de particulas suspendidas en el aire y se controlan variables como flujo de personal, materiales, limpieza, presion, temperatura, humedad y practicas de trabajo. No significa que el area este visualmente bonita: significa que opera bajo controles definidos y medibles."],
+          ["Proposito", "Su objetivo es proteger el producto, proceso, paciente, muestra, dispositivo o investigacion frente a contaminacion que pueda afectar calidad, seguridad, rendimiento o cumplimiento regulatorio."],
+          ["Industrias donde se usa", "Farmaceutica, biotecnologia, dispositivos medicos, microelectronica, aeroespacial, hospitales, laboratorios, alimentos especializados, optica, cosmeticos regulados y manufactura avanzada."],
+          ["Limpieza normal vs cleanroom", "En limpieza normal se busca apariencia, orden e higiene general. En cleanroom se busca control de contaminacion: se usan tecnicas especificas, materiales aprobados, movimientos disciplinados, rutas definidas, registros y verificacion."],
+        ],
+        table: [
+          ["Aspecto", "Limpieza normal", "Limpieza en cleanroom"],
+          ["Meta", "Area visible limpia", "Contaminacion bajo control"],
+          ["Materiales", "Productos comerciales comunes", "Quimicos, paños y mopas aprobados"],
+          ["Movimiento", "Flexible", "Controlado y lento"],
+          ["Evidencia", "Inspeccion visual", "Registros, monitoreo, auditoria"]
+        ],
+        quiz: [
+          q("Cual frase describe mejor un cleanroom?", ["Un area donde no existe ningun microbio", "Un ambiente controlado para limitar particulas y contaminacion", "Un cuarto que se limpia una vez por semana"], 1, "Correcto: cleanroom significa control, no ausencia absoluta de todo contaminante."),
+          q("Que diferencia clave existe frente a limpieza normal?", ["La limpieza normal siempre usa mejores quimicos", "En cleanroom importan controles, tecnica y documentacion", "No se necesita capacitacion"], 1, "Exacto: el metodo y la evidencia son parte del control.")
+        ]
+      },
+      {
+        id: 2,
+        icon: "ISO",
+        title: "Clasificacion de cleanrooms",
+        subtitle: "ISO 14644, particulas y clases ISO 5-8.",
+        sections: [
+          ["ISO 14644 en general", "ISO 14644 es una familia de normas usadas para clasificar y monitorear cuartos limpios y ambientes controlados, principalmente por concentracion de particulas en el aire. La clasificacion no reemplaza los SOP de la empresa ni los requisitos regulatorios aplicables."],
+          ["Concepto de particulas", "Las particulas son pequenas unidades solidas o liquidas suspendidas en el aire o depositadas en superficies. Pueden venir de piel, ropa, carton, polvo, corrosion, procesos, equipos o materiales."],
+          ["ISO 5, ISO 6, ISO 7, ISO 8", "Mientras menor es el numero ISO, mas estricto es el limite de particulas. ISO 5 es mas controlado que ISO 8. La operacion diaria debe mantener comportamientos, vestimenta, presiones y limpieza compatibles con la clasificacion definida."],
+        ],
+        table: [
+          ["Clase", "Nivel general", "Ejemplo operativo", "Implicacion para facility services"],
+          ["ISO 5", "Muy estricto", "Zonas criticas, cabinas, procesos sensibles", "Movimientos minimos, gowning estricto, materiales muy controlados"],
+          ["ISO 6", "Alto control", "Soporte directo a procesos criticos", "Limpieza frecuente, flujo de materiales definido"],
+          ["ISO 7", "Control intermedio", "Salas de preparacion o manufactura controlada", "Disciplina de ingreso, registros y desinfeccion robusta"],
+          ["ISO 8", "Control basico relativo", "Antesalas, soporte, empaque controlado", "Control de polvo, carton, rutas y conducta"]
+        ],
+        quiz: [
+          q("Si una sala pasa de ISO 8 a ISO 7, que ocurre con la exigencia?", ["Disminuye", "Aumenta", "No cambia"], 1, "Correcto: ISO 7 es mas estricto que ISO 8."),
+          q("Que mide principalmente la clasificacion ISO de cleanroom?", ["Ruido", "Particulas en aire", "Color del piso"], 1, "Correcto: la base es la concentracion de particulas por tamanos definidos.")
+        ]
+      },
+      {
+        id: 3,
+        icon: "!",
+        title: "Contaminacion",
+        subtitle: "Tipos, fuentes y actividad de riesgo.",
+        sections: [
+          ["Tipos principales", "Particulas: polvo, fibras, piel, residuos. Biologica: bacterias, hongos, esporas. Quimica: vapores, residuos de detergente, lubricantes. Cruzada: transferencia no deseada entre productos, areas, herramientas o personas."],
+          ["Fuentes frecuentes", "Personas, aire, materiales, equipos, herramientas, empaque, agua, quimicos, procedimientos incorrectos, rutas mal definidas, mantenimiento y habitos informales."],
+          ["Enfoque de liderazgo", "Una PM debe observar patrones: donde se acumulan desviaciones, que turnos tienen mas fallas, que materiales generan polvo y que procedimientos no son claros para el personal."],
+        ],
+        activity: "risk",
+        quiz: [
+          q("Cual suele ser una fuente critica de contaminacion?", ["Personas", "Calendario", "Color de paredes"], 0, "Correcto: las personas generan particulas y pueden transferir contaminantes."),
+          q("Que es contaminacion cruzada?", ["Transferencia no deseada entre areas, productos o herramientas", "Una pared manchada", "Usar zapatos comodos"], 0, "Exacto: el riesgo esta en transferir algo de un contexto a otro.")
+        ]
+      },
+      {
+        id: 4,
+        icon: "OK",
+        title: "Comportamiento dentro del cleanroom",
+        subtitle: "Disciplina operacional y buenas practicas.",
+        sections: [
+          ["Movimientos correctos", "Moverse despacio, evitar movimientos bruscos, mantener manos lejos de cara y cabello, no tocar superficies innecesarias, seguir rutas definidas y mantener postura consciente."],
+          ["Que evitar", "Correr, sentarse en pisos o equipos, recargarse en paredes, hablar sobre producto abierto, abrir puertas innecesariamente, usar maquillaje no permitido, ingresar objetos personales o manipular celular si no esta autorizado."],
+          ["Disciplina operacional", "La conducta repetible reduce variabilidad. Un equipo disciplinado no improvisa cuando hay presion: consulta SOP, escala dudas y registra lo requerido."],
+          ["Importancia del personal", "El personal es una barrera de control y tambien una fuente de riesgo. La capacitacion, observacion en piso y retroalimentacion inmediata son responsabilidades clave de supervision."]
+        ],
+        checklist: [
+          "Ingreso solo con entrenamiento vigente y autorizacion.",
+          "Camino por rutas definidas y evito movimientos bruscos.",
+          "Mantengo manos enguantadas lejos de cara, lentes, mascarilla y cabello.",
+          "No apoyo materiales en pisos ni superficies no aprobadas.",
+          "Reporto derrames, danos, presiones anormales o puertas abiertas.",
+          "Cumplo el SOP incluso si la tarea parece rutinaria."
+        ],
+        quiz: [
+          q("Por que se recomienda moverse lentamente?", ["Para reducir generacion y dispersion de particulas", "Para ahorrar energia", "Porque el piso siempre es resbaloso"], 0, "Correcto: movimientos bruscos alteran aire y liberan particulas."),
+          q("Que debe hacer un lider si observa una practica incorrecta?", ["Ignorar si no hubo problema", "Corregir, documentar si aplica y reforzar entrenamiento", "Esperar la auditoria"], 1, "Correcto: la intervencion temprana previene desviaciones mayores.")
+        ]
+      },
+      {
+        id: 5,
+        icon: "G",
+        title: "Gowning / Vestimenta",
+        subtitle: "Orden tipico, errores y practica.",
+        sections: [
+          ["Proceso general", "Gowning es la colocacion controlada de prendas que actuan como barrera entre la persona y el ambiente. El orden exacto depende del SOP, la clasificacion del area y los requisitos de producto."],
+          ["Orden tipico", "Retirar objetos no permitidos, higiene de manos, cubrir cabello/barba, colocar cubrezapatos, bata u overol, mascarilla si aplica, gafas si aplica, guantes y sanitizacion final de guantes."],
+          ["Errores comunes", "Tocar la parte externa de la prenda con manos no sanitizadas, dejar cabello expuesto, arrastrar mangas, pisar zonas limpias con calzado no controlado, usar talla incorrecta o saltarse inspeccion visual."]
+        ],
+        order: [
+          "Retirar objetos personales no permitidos",
+          "Realizar higiene de manos",
+          "Colocar cubrecabello y cubrebarba si aplica",
+          "Colocar cubrezapatos o botas segun SOP",
+          "Colocar bata u overol sin tocar el piso",
+          "Colocar mascarilla/gafas si aplica",
+          "Colocar guantes y sanitizarlos"
+        ],
+        quiz: [
+          q("Que se debe seguir siempre para gowning?", ["El orden que resulte mas rapido", "El SOP oficial del sitio", "La preferencia del supervisor"], 1, "Correcto: el SOP define el metodo aprobado."),
+          q("Cual es un error comun?", ["Inspeccionar la prenda", "Evitar que toque el piso", "Dejar cabello expuesto"], 2, "Correcto: cabello expuesto aumenta riesgo de particulas y biocarga.")
+        ]
+      },
+      {
+        id: 6,
+        icon: "L",
+        title: "Limpieza en cleanroom",
+        subtitle: "Tecnicas, quimicos y procedimiento.",
+        sections: [
+          ["Limpiar, sanitizar y desinfectar", "Limpiar remueve suciedad o residuos visibles/no visibles. Sanitizar reduce microorganismos a niveles definidos. Desinfectar destruye o inactiva microorganismos segun el agente, concentracion y tiempo de contacto aprobados."],
+          ["Tecnicas generales", "Usar paños doblados por caras, trazos unidireccionales o superpuestos, cambiar paños segun SOP, no recontaminar superficies, respetar tiempo de contacto y registrar lote/concentracion si aplica."],
+          ["Arriba hacia abajo", "Se limpia primero lo alto para evitar que particulas caigan sobre areas ya tratadas. Techos, rejillas, paredes, equipos y pisos pueden tener frecuencias distintas."],
+          ["Limpio a menos limpio", "El flujo reduce transferencia de contaminacion. Se inicia en zonas mas criticas o limpias y se avanza hacia zonas de menor control, segun SOP."],
+          ["Materiales aprobados", "Paños de baja liberacion de particulas, mopas compatibles, quimicos validados o aprobados, botellas etiquetadas, diluciones controladas y equipos limpios o dedicados."]
+        ],
+        procedure: [
+          {
+            text: "Para limpiar una mesa critica, el operador usa un pano aprobado, aplica desinfectante, respeta el tiempo de contacto y limpia con trazos superpuestos de atras hacia adelante.",
+            correct: true
+          },
+          {
+            text: "Para terminar mas rapido, se usa una mopa comun del pasillo externo dentro del cleanroom y se registra al final del turno.",
+            correct: false
+          },
+          {
+            text: "Al limpiar paredes, se inicia arriba y se avanza hacia abajo usando material aprobado y tecnica definida.",
+            correct: true
+          }
+        ],
+        quiz: [
+          q("Que significa tiempo de contacto?", ["Tiempo que el quimico debe permanecer humedo sobre la superficie", "Tiempo para preparar el carro", "Tiempo de descanso del operador"], 0, "Correcto: sin tiempo de contacto, la desinfeccion puede ser inefectiva."),
+          q("Por que se limpia de arriba hacia abajo?", ["Para que lo que caiga no contamine areas ya limpiadas", "Porque es mas comodo", "Para gastar menos pano"], 0, "Exacto: controla la direccion del riesgo.")
+        ]
+      },
+      {
+        id: 7,
+        icon: "SOP",
+        title: "SOP y procedimientos",
+        subtitle: "Como leer, ejecutar y analizar SOP.",
+        sections: [
+          ["Que es un SOP", "Un Standard Operating Procedure es un documento aprobado que describe como ejecutar una actividad de forma consistente, segura y conforme a requisitos internos o regulatorios."],
+          ["Para que sirve", "Reduce variabilidad, define responsabilidades, estandariza entrenamiento, protege al producto/persona/proceso y crea una base para auditorias e investigaciones."],
+          ["Como se lee", "Confirmar titulo, codigo, version vigente, alcance, definiciones, responsabilidades, materiales, pasos, criterios de aceptacion, registros, seguridad y anexos. Si algo no es claro, se escala antes de improvisar."],
+          ["Partes de un SOP", "Objetivo, alcance, responsabilidades, materiales/equipos, procedimiento, registros, seguridad, referencias, anexos, historial de cambios y aprobaciones."]
+        ],
+        sop: true,
+        quiz: [
+          q("Que se debe confirmar antes de usar un SOP impreso?", ["Que sea la version vigente", "Que tenga muchas paginas", "Que tenga logo bonito"], 0, "Correcto: usar versiones obsoletas crea desviaciones."),
+          q("Que hacer si un paso del SOP no es claro?", ["Interpretarlo libremente", "Escalar la duda y detener si el riesgo lo requiere", "Omitirlo"], 1, "Correcto: no se improvisa en procesos controlados.")
+        ]
+      },
+      {
+        id: 8,
+        icon: "R",
+        title: "Documentacion y registros",
+        subtitle: "Buenas practicas y revision de registro.",
+        sections: [
+          ["Importancia", "La documentacion demuestra que una actividad fue realizada, por quien, cuando, con que materiales y bajo que condiciones. Tambien permite investigar tendencias y desviaciones."],
+          ["Buenas practicas", "Registrar en tiempo real, escribir legible, usar formato aprobado, no dejar espacios en blanco, corregir segun SOP, firmar/fechar, registrar lotes o concentraciones cuando aplique."],
+          ["Si no esta documentado, no se hizo", "En entornos regulados, una actividad sin registro puede considerarse no ejecutada porque no existe evidencia verificable."],
+          ["Errores comunes", "Tachones no controlados, espacios en blanco, datos incompletos, firmas faltantes, horas inconsistentes, uso de lapiz, correcciones sin iniciales o fechas, registros antes de ejecutar."]
+        ],
+        recordReview: true,
+        quiz: [
+          q("Cual es una buena practica documental?", ["Registrar al final de la semana", "Registrar en tiempo real", "Dejar espacios en blanco"], 1, "Correcto: documentar en tiempo real reduce errores y dudas."),
+          q("Que problema tiene una firma faltante?", ["No permite verificar responsabilidad", "Mejora la limpieza", "No importa si la tarea se hizo"], 0, "Correcto: sin firma falta trazabilidad.")
+        ]
+      },
+      {
+        id: 9,
+        icon: "A",
+        title: "Auditorias en cleanroom",
+        subtitle: "Preparacion, preguntas y simulador.",
+        sections: [
+          ["Que revisan", "Entrenamiento, cumplimiento de SOP, registros, limpieza, control de materiales, gowning, desviaciones, mantenimiento, monitoreo ambiental, etiquetas, vigencia de documentos y conocimiento del personal."],
+          ["Como prepararse", "Revisar SOP vigentes, entrenar respuestas simples, verificar registros completos, caminar el area con ojos de auditor, corregir hallazgos, conocer escalamiento y tener evidencias disponibles."],
+          ["Como responder", "Responder solo lo que se sabe, usar evidencia, no inventar, pedir aclaracion si la pregunta no se entiende, demostrar conocimiento del SOP y escalar cuando corresponde."]
+        ],
+        audit: true,
+        quiz: [
+          q("Que es mejor ante una pregunta que no sabes responder?", ["Inventar algo convincente", "Decir que verificaras el SOP o consultaras al SME", "Culpar a otro turno"], 1, "Correcto: honestidad y trazabilidad generan confianza."),
+          q("Que evidencia suele pedir auditoria?", ["Registros completos y SOP vigente", "Opiniones personales", "Mensajes informales"], 0, "Exacto: evidencia controlada.")
+        ]
+      },
+      {
+        id: 10,
+        icon: "PM",
+        title: "Rol del liderazgo y supervision",
+        subtitle: "Cumplimiento, capacitacion y acciones correctivas.",
+        sections: [
+          ["Que debe saber una Project Manager", "Debe entender riesgos de contaminacion, requisitos basicos de SOP, entrenamiento, turnos, rutas, materiales aprobados, documentacion, escalamiento, auditorias y comunicacion con QA/EHS/Facilities/Produccion."],
+          ["Asegurar cumplimiento", "Traducir SOP a rutinas de piso, observar conducta, revisar registros, confirmar materiales, dar seguimiento a desviaciones, medir tendencias y mantener comunicacion clara con stakeholders."],
+          ["Capacitar al personal", "Usar demostraciones, coaching en piso, evaluaciones cortas, retraining por error recurrente, observaciones documentadas y lenguaje sencillo conectado al impacto en producto y cumplimiento."],
+          ["Detectar desviaciones", "Buscar patrones: firmas faltantes, materiales no aprobados, tiempos incompletos, puertas abiertas, gowning incorrecto, limpieza fuera de secuencia, carros mal segregados o procedimientos que no reflejan la realidad."],
+          ["Acciones correctivas", "Contener el riesgo, investigar causa raiz, definir acciones, asignar responsables, fechas, evidencia de cierre y verificacion de efectividad."]
+        ],
+        checklist: [
+          "Reviso que el personal tenga entrenamiento vigente.",
+          "Confirmo que los materiales usados coincidan con el SOP.",
+          "Observo al menos una tarea critica en piso por semana.",
+          "Reviso registros antes de cierre de turno o lote.",
+          "Escalo desviaciones con datos, no con suposiciones.",
+          "Doy retroalimentacion especifica y respetuosa."
+        ],
+        quiz: [
+          q("Cual es una responsabilidad clave de liderazgo?", ["Hacer que el equipo improvise menos y siga procesos", "Solo aprobar vacaciones", "Evitar auditorias"], 0, "Correcto: liderazgo convierte requisitos en habitos operativos."),
+          q("Que debe incluir una accion correctiva?", ["Responsable, fecha, evidencia y verificacion", "Solo una promesa verbal", "Un correo sin seguimiento"], 0, "Exacto: sin seguimiento no hay cierre real.")
+        ]
+      }
+    ];
+
+    const flashcards = [
+      ["Cleanroom", "Ambiente controlado para limitar particulas y contaminacion."],
+      ["ISO 14644", "Norma de referencia para clasificacion y monitoreo de cuartos limpios."],
+      ["Particula", "Unidad pequena solida o liquida que puede estar suspendida o depositada."],
+      ["Biocarga", "Presencia o cantidad de microorganismos en una superficie, material o ambiente."],
+      ["Gowning", "Proceso controlado de colocacion de vestimenta de barrera."],
+      ["Tiempo de contacto", "Tiempo que un sanitizante o desinfectante debe permanecer humedo para ser efectivo."],
+      ["SOP", "Procedimiento aprobado que define como ejecutar una actividad."],
+      ["Trazabilidad", "Capacidad de reconstruir quien hizo que, cuando, como y con que materiales."]
+    ];
+
+    const finalQuestions = [
+      q("Una PM observa que el equipo usa paños no aprobados porque 'son iguales'. Que debe hacer?", ["Permitirlo si limpian bien", "Detener/contener, verificar SOP, escalar y corregir", "Comprar mas sin avisar"], 1, "Correcto: materiales no aprobados pueden afectar control y cumplimiento."),
+      q("Cual es la razon principal para documentar limpieza?", ["Tener evidencia verificable de ejecucion", "Llenar archivos", "Evitar conversar con auditoria"], 0, "Correcto."),
+      q("Una sala ISO 5 es comparada con ISO 8. Cual es mas estricta?", ["ISO 5", "ISO 8", "Son iguales"], 0, "Correcto."),
+      q("Que accion reduce dispersion de particulas por personal?", ["Movimientos lentos y controlados", "Caminar rapido", "Abrir puertas para ventilar"], 0, "Correcto."),
+      q("Que representa contaminacion cruzada?", ["Transferencia no deseada entre areas/productos/herramientas", "Limpieza con dos personas", "Cambio de uniforme"], 0, "Correcto."),
+      q("Que debe hacer alguien si no entiende un paso del SOP?", ["Escalar la duda antes de improvisar", "Omitirlo", "Usar memoria"], 0, "Correcto."),
+      q("Que error documental es critico?", ["Firma faltante", "Letra clara", "Fecha completa"], 0, "Correcto."),
+      q("Que revisan comunmente los auditores?", ["SOP, registros, entrenamiento y practicas reales", "Solo decoracion", "Solo velocidad del equipo"], 0, "Correcto."),
+      q("Que significa limpiar de arriba hacia abajo?", ["Controlar que particulas caigan antes de limpiar zonas bajas", "Ahorrar escalera", "No limpiar pisos"], 0, "Correcto."),
+      q("Que hace efectiva una accion correctiva?", ["Causa raiz, responsable, fecha, evidencia y verificacion", "Solo pedir mas cuidado", "Cambiar el nombre del formato"], 0, "Correcto.")
+    ];
+
+    const extraAuditQuestions = [
+      "Expliqueme como sabe que esta usando el SOP vigente.",
+      "Que haria si encuentra una mopa no aprobada dentro del cleanroom?",
+      "Como verifica que el personal entiende el gowning correcto?",
+      "Donde se documenta la limpieza y quien revisa el registro?",
+      "Que significa tiempo de contacto para este desinfectante?",
+      "Como responde si hay una puerta abierta mas tiempo del permitido?",
+      "Como asegura que no haya contaminacion cruzada entre areas?",
+      "Que desviaciones ha detectado y que acciones tomo?"
+    ];
+
+    let state = JSON.parse(localStorage.getItem("cleanroomMasteryState") || "{}");
+    state.completed = state.completed || [];
+    state.quizScores = state.quizScores || {};
+    state.checklists = state.checklists || {};
+    state.notes = state.notes || "";
+    state.finalScore = state.finalScore || null;
+
+    function q(text, options, answer, feedback) {
+      return { text, options, answer, feedback };
+    }
+
+    function save() {
+      localStorage.setItem("cleanroomMasteryState", JSON.stringify(state));
+      updateProgress();
+    }
+
+    function buildApp() {
+      buildNav();
+      buildModules();
+      buildDashboardCards();
+      buildExtras();
+      buildFinal();
+      document.getElementById("globalNotes").value = state.notes || "";
+      document.getElementById("globalNotes").addEventListener("input", e => {
+        state.notes = e.target.value;
+        save();
+      });
+      updateProgress();
+    }
+
+    function buildNav() {
+      const nav = document.getElementById("nav");
+      const extraNav = document.getElementById("extraNav");
+      const mobile = document.getElementById("mobileNav");
+      nav.innerHTML = navButton("dashboard", "Inicio", "⌂");
+      modules.forEach(m => nav.innerHTML += navButton(`module-${m.id}`, `M${m.id}. ${m.title}`, m.icon));
+      extraNav.innerHTML = navButton("extras", "Glosario y recursos", "?") + navButton("final", "Evaluacion final", "★");
+
+      [["dashboard", "Inicio"], ...modules.map(m => [`module-${m.id}`, `Modulo ${m.id}: ${m.title}`]), ["extras", "Glosario y recursos"], ["final", "Evaluacion final"]].forEach(([id, label]) => {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = label;
+        mobile.appendChild(opt);
+      });
+      mobile.addEventListener("change", e => showSection(e.target.value));
+    }
+
+    function navButton(id, label, icon) {
+      return `<button data-target="${id}" onclick="showSection('${id}')"><span class="nav-title"><span>${icon}</span><span>${label}</span></span><span class="status-dot" data-dot="${id}">-</span></button>`;
+    }
+
+    function buildDashboardCards() {
+      const wrap = document.getElementById("moduleCards");
+      wrap.innerHTML = modules.map(m => `
+        <article class="card module-card">
+          <div>
+            <div class="card-top"><span class="pill">Modulo ${m.id}</span><span class="status-dot ${state.completed.includes(m.id) ? "done" : ""}">${state.completed.includes(m.id) ? "✓" : m.icon}</span></div>
+            <h3>${m.title}</h3>
+            <p>${m.subtitle}</p>
+          </div>
+          <button class="btn secondary" onclick="showSection('module-${m.id}')">Abrir modulo</button>
+        </article>`).join("");
+    }
+
+    function buildModules() {
+      modules.forEach(m => {
+        const section = document.createElement("section");
+        section.id = `module-${m.id}`;
+        section.className = "section";
+        section.innerHTML = renderModule(m);
+        document.querySelector(".content").appendChild(section);
+      });
+    }
+
+    function renderModule(m) {
+      return `
+        <article class="module">
+          <header class="module-header">
+            <span class="pill">Modulo ${m.id}</span>
+            <h2>${m.title}</h2>
+            <p>${m.subtitle}</p>
+          </header>
+          <div class="module-body">
+            <div class="notice">Recuerda: esta guia es general. En una operacion real, el SOP oficial, la version vigente y el entrenamiento aprobado tienen prioridad.</div>
+            <div class="grid two">
+              ${m.sections.map(([h, body]) => `<div class="card"><h3>${h}</h3><p>${body}</p></div>`).join("")}
+            </div>
+            ${m.table ? renderTable(m.table) : ""}
+            ${m.activity === "risk" ? renderRiskActivity() : ""}
+            ${m.checklist ? renderChecklist(m) : ""}
+            ${m.order ? renderOrderActivity(m) : ""}
+            ${m.procedure ? renderProcedureActivity(m) : ""}
+            ${m.sop ? renderSopActivity() : ""}
+            ${m.recordReview ? renderRecordReview() : ""}
+            ${m.audit ? renderAuditSimulator() : ""}
+            ${renderQuiz(m)}
+            <div class="card">
+              <h3>Notas del modulo</h3>
+              <textarea class="notes" data-module-note="${m.id}" placeholder="Anota dudas, ejemplos de tu operacion o acciones para tu equipo...">${state[`note${m.id}`] || ""}</textarea>
+            </div>
+            <div class="btn-row">
+              <button class="btn green" onclick="completeModule(${m.id})">Marcar modulo como completado</button>
+              <button class="btn secondary" onclick="showSection('${m.id < 10 ? `module-${m.id + 1}` : "final"}')">${m.id < 10 ? "Siguiente modulo" : "Ir a evaluacion final"}</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderTable(rows) {
+      return `<div class="card table-wrap"><table>${rows.map((r, i) => `<tr>${r.map(c => i === 0 ? `<th>${c}</th>` : `<td>${c}</td>`).join("")}</tr>`).join("")}</table></div>`;
+    }
+
+    function renderQuiz(m) {
+      return `
+        <div class="quiz" id="quiz-${m.id}">
+          <h3>Mini quiz del modulo</h3>
+          ${m.quiz.map((question, i) => `
+            <div class="quiz-question" data-quiz="${m.id}" data-question="${i}">
+              <strong>${i + 1}. ${question.text}</strong>
+              <div class="options">
+                ${question.options.map((opt, oi) => `<button class="option" onclick="answerQuestion(${m.id}, ${i}, ${oi}, this)">${opt}</button>`).join("")}
+              </div>
+              <div class="feedback"></div>
+            </div>`).join("")}
+        </div>
+      `;
+    }
+
+    function renderRiskActivity() {
+      const risks = [
+        ["Un operador entra con carton corrugado no aprobado.", true, "Carton puede liberar fibras y particulas."],
+        ["Se usa una herramienta dedicada y limpia segun SOP.", false, "Es una practica de control, no un riesgo si esta aprobada."],
+        ["Una puerta queda abierta durante traslado de materiales.", true, "Puede alterar presion, flujo de aire y control ambiental."],
+        ["El equipo registra hora, lote y firma al terminar cada tarea.", false, "Esto mejora trazabilidad."]
+      ];
+      return `<div class="activity"><h3>Actividad: Identifica el riesgo</h3><p>Selecciona si cada situacion representa riesgo de contaminacion.</p>${risks.map((r, i) => `
+        <div class="quiz-question">
+          <strong>${r[0]}</strong>
+          <div class="btn-row">
+            <button class="option" onclick="activityFeedback(this, ${r[1] === true}, '${r[2]}')">Es riesgo</button>
+            <button class="option" onclick="activityFeedback(this, ${r[1] === false}, '${r[2]}')">No es riesgo</button>
+          </div>
+          <div class="feedback"></div>
+        </div>`).join("")}</div>`;
+    }
+
+    function renderChecklist(m) {
+      const saved = state.checklists[m.id] || [];
+      return `<div class="activity"><h3>Checklist interactivo</h3><p>Marca las practicas que puedes verificar o implementar con tu equipo.</p>${m.checklist.map((item, i) => `
+        <label class="check-item"><input type="checkbox" ${saved.includes(i) ? "checked" : ""} onchange="toggleChecklist(${m.id}, ${i}, this.checked)"><span>${item}</span></label>`).join("")}</div>`;
+    }
+
+    function renderOrderActivity(m) {
+      return `<div class="activity"><h3>Actividad: Ordena los pasos de gowning</h3><p>Asigna el numero correcto a cada paso. Usa el orden general de esta guia; valida siempre el SOP real.</p><div class="sort-list" id="order-${m.id}">
+        ${shuffle(m.order.map((step, i) => ({ step, correct: i + 1 }))).map(item => `
+          <div class="sort-row" data-correct="${item.correct}">
+            <select>${m.order.map((_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("")}</select>
+            <span>${item.step}</span>
+            <span class="pill">Paso</span>
+          </div>`).join("")}
+        </div><div class="btn-row" style="margin-top:12px;"><button class="btn" onclick="checkOrder(${m.id})">Revisar orden</button></div><div class="feedback" id="order-feedback-${m.id}"></div></div>`;
+    }
+
+    function renderProcedureActivity(m) {
+      return `<div class="activity"><h3>Actividad: Selecciona el procedimiento correcto</h3>${m.procedure.map((p, i) => `
+        <div class="quiz-question">
+          <strong>${p.text}</strong>
+          <div class="btn-row">
+            <button class="option" onclick="activityFeedback(this, ${p.correct}, '${p.correct ? "Correcto: el procedimiento protege el control de contaminacion." : "Atencion: usar materiales no aprobados rompe el control y puede generar desviacion."}')">Correcto</button>
+            <button class="option" onclick="activityFeedback(this, ${!p.correct}, '${p.correct ? "Atencion: este escenario si sigue buenas practicas generales." : "Correcto: ese procedimiento no debe aceptarse."}')">Incorrecto</button>
+          </div>
+          <div class="feedback"></div>
+        </div>`).join("")}</div>`;
+    }
+
+    function renderSopActivity() {
+      return `<div class="activity"><h3>Actividad: Analiza un SOP ficticio</h3>
+        <div class="notice warning"><strong>SOP CLN-007 Limpieza de mesa de preparacion</strong><br>Version: 03. Objetivo: remover residuos y reducir biocarga. Alcance: mesas de preparacion ISO 7. Materiales: pano aprobado CR-12, desinfectante aprobado, guantes. Procedimiento: verificar despeje del area, sanitizar guantes, aplicar desinfectante, limpiar con trazos superpuestos, respetar 5 minutos de contacto, registrar fecha/hora/firma/lote.</div>
+        <div class="quiz-question"><strong>Que dato confirma trazabilidad del quimico?</strong><div class="options">
+          <button class="option" onclick="activityFeedback(this, true, 'Correcto: el lote permite trazabilidad del material usado.')">Lote del desinfectante</button>
+          <button class="option" onclick="activityFeedback(this, false, 'No: el color no confirma trazabilidad.')">Color de la botella</button>
+          <button class="option" onclick="activityFeedback(this, false, 'No: la rapidez no documenta el material.')">Tiempo total del turno</button>
+        </div><div class="feedback"></div></div>
+        <div class="quiz-question"><strong>Que paso protege la efectividad del desinfectante?</strong><div class="options">
+          <button class="option" onclick="activityFeedback(this, true, 'Correcto: el tiempo de contacto es critico.')">Respetar 5 minutos de contacto</button>
+          <button class="option" onclick="activityFeedback(this, false, 'No: saltar pasos aumenta riesgo.')">Secar inmediatamente</button>
+          <button class="option" onclick="activityFeedback(this, false, 'No: registrar antes de ejecutar es mala practica.')">Firmar antes de limpiar</button>
+        </div><div class="feedback"></div></div>
+      </div>`;
+    }
+
+    function renderRecordReview() {
+      const items = [
+        ["Fecha completa: 08/06/2026", false, "Dato completo."],
+        ["Hora de inicio en blanco", true, "Espacio en blanco: falta evidencia."],
+        ["Firma del tecnico faltante", true, "Sin firma no hay responsable verificable."],
+        ["Lote de desinfectante registrado", false, "Buena trazabilidad."],
+        ["Correccion con tachon fuerte e ilegible", true, "Correcciones deben hacerse segun SOP, manteniendo legibilidad."]
+      ];
+      return `<div class="activity"><h3>Ejercicio: Revision de registro</h3><p>Marca cuales elementos son errores que deberias corregir o escalar.</p>${items.map(item => `
+        <div class="quiz-question"><strong>${item[0]}</strong><div class="btn-row">
+          <button class="option" onclick="activityFeedback(this, ${item[1]}, '${item[2]}')">Es error</button>
+          <button class="option" onclick="activityFeedback(this, ${!item[1]}, '${item[2]}')">No es error</button>
+        </div><div class="feedback"></div></div>`).join("")}</div>`;
+    }
+
+    function renderAuditSimulator() {
+      const scenarios = [
+        q("Auditor: Como sabe que este personal esta autorizado para entrar?", ["Mostraria matriz/registro de entrenamiento vigente", "Diria que todos tienen experiencia", "No responderia"], 0, "Correcto: usa evidencia controlada."),
+        q("Auditor: Que hace si encuentra una desviacion de limpieza?", ["Contener, notificar, documentar e investigar segun SOP", "Borrarla del registro", "Esperar al siguiente mes"], 0, "Correcto: contencion y escalamiento."),
+        q("Auditor: Por que no usa carton en el area?", ["Puede liberar particulas/fibras y no estar aprobado", "Porque se ve feo", "Porque pesa mucho"], 0, "Correcto: enfoca la respuesta en contaminacion y SOP.")
+      ];
+      return `<div class="activity"><h3>Simulador de auditoria</h3><p>Practica respuestas seguras, breves y basadas en evidencia.</p>${scenarios.map((s, i) => `
+        <div class="quiz-question">
+          <strong>${s.text}</strong>
+          <div class="options">${s.options.map((opt, oi) => `<button class="option" onclick="activityFeedback(this, ${oi === s.answer}, '${s.feedback}')">${opt}</button>`).join("")}</div>
+          <div class="feedback"></div>
+        </div>`).join("")}</div>`;
+    }
+
+    function buildExtras() {
+      document.getElementById("extras").innerHTML = `
+        <article class="module">
+          <header class="module-header"><span class="pill">Recursos</span><h2>Glosario, errores y checklists</h2><p>Material de repaso para prepararte antes de caminar un area, liderar personal o recibir auditoria.</p></header>
+          <div class="module-body">
+            <div class="card"><h3>Tarjetas de memoria</h3><p>Haz clic en cada tarjeta para ver la definicion.</p><div class="flashcards">${flashcards.map(([term, def]) => `
+              <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><span class="pill">Termino</span><strong>${term}</strong></div><div class="flash-face back"><span class="pill green">Definicion</span><p>${def}</p></div></div></div>`).join("")}</div></div>
+            <div class="grid two">
+              <div class="card"><h3>Errores que debo evitar</h3><div class="callout-list">
+                ${["Usar materiales no aprobados por parecer equivalentes.","Firmar registros antes de ejecutar la tarea.","Permitir ingreso por experiencia sin entrenamiento vigente.","Ignorar pequenos hallazgos repetitivos.","Mover carros entre areas sin limpieza o segregacion definida.","Responder auditorias con suposiciones en vez de evidencia.","Cambiar la secuencia de limpieza por conveniencia.","Dejar espacios en blanco en registros."].map(x => `<div>${x}</div>`).join("")}
+              </div></div>
+              <div class="card"><h3>Preguntas que me pueden hacer en auditoria</h3><div class="callout-list">${extraAuditQuestions.map(x => `<div>${x}</div>`).join("")}</div></div>
+            </div>
+            <div class="card"><h3>Checklist para visitar un cleanroom</h3>
+              ${["Confirmar autorizacion y entrenamiento vigente.","Revisar requisitos de gowning antes de entrar.","No ingresar celular, papel, carton u objetos no aprobados.","Observar presiones, puertas, flujo de materiales y limpieza visual.","Verificar que registros esten completos, legibles y en tiempo real.","Preguntar al personal como sabe que el SOP es vigente.","Confirmar que quimicos y paños tengan identificacion/lote si aplica.","Registrar hallazgos, responsables y fechas de seguimiento."].map((x, i) => `<label class="check-item"><input type="checkbox"><span>${x}</span></label>`).join("")}
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function buildFinal() {
+      document.getElementById("final").innerHTML = `
+        <article class="module">
+          <header class="module-header"><span class="pill green">Evaluacion</span><h2>Banco de preguntas final</h2><p>Evalua fundamentos generales de cleanroom, liderazgo operativo, documentacion y auditoria.</p></header>
+          <div class="module-body">
+            <div class="notice">Esta evaluacion es de aprendizaje interno. No sustituye entrenamiento oficial ni calificacion de la empresa.</div>
+            <div class="quiz" id="finalQuiz">${finalQuestions.map((question, i) => `
+              <div class="quiz-question" data-final="${i}">
+                <strong>${i + 1}. ${question.text}</strong>
+                <div class="options">${question.options.map((opt, oi) => `<button class="option" onclick="answerFinal(${i}, ${oi}, this)">${opt}</button>`).join("")}</div>
+                <div class="feedback"></div>
+              </div>`).join("")}</div>
+            <div class="card">
+              <h3>Resultado</h3>
+              <div class="final-score" id="finalScore">${state.finalScore === null ? "--" : state.finalScore + "%"}</div>
+              <p id="finalMessage">Completa todas las preguntas para calcular tu puntuacion.</p>
+              <div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuacion</button><button class="btn secondary" onclick="resetFinal()">Reintentar evaluacion</button></div>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function showSection(id) {
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("active", b.dataset.target === id));
+      document.getElementById("mobileNav").value = id;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function answerQuestion(moduleId, questionIndex, optionIndex, btn) {
+      const m = modules.find(x => x.id === moduleId);
+      const question = m.quiz[questionIndex];
+      const parent = btn.closest(".quiz-question");
+      parent.querySelectorAll(".option").forEach(o => {
+        o.classList.remove("correct", "incorrect");
+        o.disabled = true;
+      });
+      btn.classList.add(optionIndex === question.answer ? "correct" : "incorrect");
+      if (optionIndex !== question.answer) parent.querySelectorAll(".option")[question.answer].classList.add("correct");
+      const fb = parent.querySelector(".feedback");
+      fb.textContent = optionIndex === question.answer ? question.feedback : "Revisa el concepto: " + question.feedback;
+      fb.className = "feedback " + (optionIndex === question.answer ? "good" : "bad");
+      state.quizScores[`${moduleId}-${questionIndex}`] = optionIndex === question.answer;
+      save();
+    }
+
+    const finalAnswers = {};
+    function answerFinal(i, optionIndex, btn) {
+      const question = finalQuestions[i];
+      const parent = btn.closest(".quiz-question");
+      parent.querySelectorAll(".option").forEach(o => o.classList.remove("correct", "incorrect"));
+      btn.classList.add(optionIndex === question.answer ? "correct" : "incorrect");
+      parent.querySelector(".feedback").textContent = optionIndex === question.answer ? question.feedback : "Respuesta recomendada: " + question.options[question.answer];
+      parent.querySelector(".feedback").className = "feedback " + (optionIndex === question.answer ? "good" : "bad");
+      finalAnswers[i] = optionIndex;
+    }
+
+    function calculateFinal() {
+      const answered = Object.keys(finalAnswers).length;
+      if (answered < finalQuestions.length) {
+        alert(`Faltan ${finalQuestions.length - answered} preguntas por responder.`);
+        return;
+      }
+      const correct = finalQuestions.filter((q, i) => finalAnswers[i] === q.answer).length;
+      const score = Math.round((correct / finalQuestions.length) * 100);
+      state.finalScore = score;
+      save();
+      document.getElementById("finalScore").textContent = score + "%";
+      document.getElementById("finalMessage").textContent = score >= 85 ? "Excelente dominio general. Buen nivel para conversar con QA, Facilities y operaciones." : score >= 70 ? "Buen avance. Refuerza los modulos donde dudaste y repite escenarios de auditoria." : "Conviene repasar los fundamentos y practicar con tu SOP real antes de una auditoria.";
+    }
+
+    function resetFinal() {
+      Object.keys(finalAnswers).forEach(k => delete finalAnswers[k]);
+      state.finalScore = null;
+      save();
+      buildFinal();
+    }
+
+    function activityFeedback(btn, correct, text) {
+      const parent = btn.closest(".quiz-question");
+      parent.querySelectorAll(".option").forEach(o => o.classList.remove("correct", "incorrect"));
+      btn.classList.add(correct ? "correct" : "incorrect");
+      const fb = parent.querySelector(".feedback");
+      fb.textContent = (correct ? "Correcto. " : "Revisa. ") + text;
+      fb.className = "feedback " + (correct ? "good" : "bad");
+    }
+
+    function toggleChecklist(moduleId, index, checked) {
+      state.checklists[moduleId] = state.checklists[moduleId] || [];
+      if (checked && !state.checklists[moduleId].includes(index)) state.checklists[moduleId].push(index);
+      if (!checked) state.checklists[moduleId] = state.checklists[moduleId].filter(x => x !== index);
+      save();
+    }
+
+    function checkOrder(moduleId) {
+      const rows = document.querySelectorAll(`#order-${moduleId} .sort-row`);
+      let ok = 0;
+      rows.forEach(row => {
+        const correct = row.dataset.correct;
+        const val = row.querySelector("select").value;
+        row.style.borderColor = val === correct ? "var(--green)" : "var(--red)";
+        if (val === correct) ok++;
+      });
+      const fb = document.getElementById(`order-feedback-${moduleId}`);
+      fb.textContent = ok === rows.length ? "Perfecto: el orden general esta correcto." : `${ok} de ${rows.length} pasos estan en la posicion correcta. Ajusta y vuelve a revisar.`;
+      fb.className = "feedback " + (ok === rows.length ? "good" : "bad");
+    }
+
+    function completeModule(id) {
+      if (!state.completed.includes(id)) state.completed.push(id);
+      document.querySelectorAll(`[data-module-note="${id}"]`).forEach(t => state[`note${id}`] = t.value);
+      save();
+      buildDashboardCards();
+      updateProgress();
+      alert(`Modulo ${id} marcado como completado.`);
+    }
+
+    function updateProgress() {
+      const percent = Math.round((state.completed.length / modules.length) * 100);
+      document.getElementById("progressText").textContent = percent + "%";
+      document.getElementById("progressBar").style.width = percent + "%";
+      document.getElementById("progressDetail").textContent = `${state.completed.length} de ${modules.length} modulos completados`;
+      document.querySelectorAll("[data-dot]").forEach(dot => {
+        const id = dot.dataset.dot;
+        const match = id.match(/module-(\d+)/);
+        if (match && state.completed.includes(Number(match[1]))) {
+          dot.classList.add("done");
+          dot.textContent = "✓";
+        } else if (id === "final" && state.finalScore !== null) {
+          dot.classList.add("done");
+          dot.textContent = "✓";
+        } else {
+          dot.classList.remove("done");
+          dot.textContent = id === "dashboard" ? "⌂" : "-";
+        }
+      });
+    }
+
+    function resetProgress() {
+      if (!confirm("Esto borrara progreso, notas y resultados guardados en este navegador. Deseas continuar?")) return;
+      localStorage.removeItem("cleanroomMasteryState");
+      location.reload();
+    }
+
+    function printSummary() {
+      window.print();
+    }
+
+    function exportProgress() {
+      document.querySelectorAll("[data-module-note]").forEach(t => state[`note${t.dataset.moduleNote}`] = t.value);
+      save();
+      const lines = [
+        "Cleanroom Mastery - Progreso y notas",
+        `Fecha de exportacion: ${new Date().toLocaleString()}`,
+        `Progreso: ${state.completed.length}/${modules.length} modulos`,
+        `Evaluacion final: ${state.finalScore === null ? "sin completar" : state.finalScore + "%"}`,
+        "",
+        "Modulos completados:",
+        ...modules.map(m => `${state.completed.includes(m.id) ? "[x]" : "[ ]"} Modulo ${m.id}: ${m.title}`),
+        "",
+        "Notas generales:",
+        state.notes || "(sin notas)",
+        "",
+        "Notas por modulo:",
+        ...modules.map(m => `Modulo ${m.id}: ${state[`note${m.id}`] || "(sin notas)"}`)
+      ];
+      const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "cleanroom-mastery-progreso.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function shuffle(arr) {
+      return arr.map(v => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+    }
+
+    document.addEventListener("input", e => {
+      if (e.target.matches("[data-module-note]")) {
+        state[`note${e.target.dataset.moduleNote}`] = e.target.value;
+        save();
+      }
+    });
+
+    buildApp();
+  </script>
+</body>
+</html>
