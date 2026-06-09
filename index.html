@@ -1786,6 +1786,83 @@
       ["RCA", "Root Cause Analysis: análisis de causa raíz."]
     );
 
+    const isoLibrary = [
+      ["ISO 14644-1", "Clasificación", "Define cómo clasificar la limpieza del aire por concentración de partículas. Úsala para entender qué significa ISO 5, 6, 7 u 8, no como única evidencia de control operativo.", "Pregúntate: ¿la operación diaria sostiene la clase o solo se logró en una prueba puntual?"],
+      ["ISO 14644-2", "Monitoreo", "Orienta el monitoreo para demostrar que el cleanroom se mantiene en control. Conecta puntos, frecuencia, tendencias, revisión periódica y respuesta ante cambios.", "Pregúntate: ¿qué tendencia muestra deterioro antes de salir de límite?"],
+      ["ISO 14644-3", "Métodos de prueba", "Describe pruebas como conteo de partículas, flujo de aire, presión diferencial, recuperación, fugas de filtros y visualización de flujo, según aplique.", "Pregúntate: ¿qué prueba ayuda a explicar un aumento de partículas o pérdida de control?"],
+      ["ISO 14644-4", "Diseño y construcción", "Relaciona diseño, construcción, layout, materiales, esclusas, flujo, presión y operación esperada. Es clave cuando limpieza lucha contra un diseño difícil.", "Pregúntate: ¿el layout ayuda o sabotea la ruta de limpieza y transferencia?"],
+      ["ISO 14644-5", "Operación", "Se enfoca en prácticas operativas: personal, ropa, limpieza, mantenimiento, materiales, entrenamiento y control diario.", "Pregúntate: ¿qué comportamiento o rutina diaria puede estar degradando el área?"],
+      ["ISO 14644-13", "Limpieza de superficies", "Aborda limpieza de superficies para alcanzar niveles definidos de limpieza. Ayuda a conectar técnica, método, verificación y control de contaminación superficial.", "Pregúntate: ¿cómo demuestras que la superficie quedó apta, más allá de verse limpia?"]
+    ];
+
+    const kpiDashboard = [
+      ["Cumplimiento de SOP", "Porcentaje de tareas observadas o auditadas que coinciden con SOP vigente.", "Bajo cumplimiento indica brecha de entrenamiento, supervisión o procedimiento poco claro.", "Meta sugerida: >95% en tareas críticas."],
+      ["Cumplimiento de entrenamiento", "Personal con entrenamiento vigente y competencia práctica documentada.", "Si baja, aumenta riesgo de errores de gowning, limpieza, documentación y auditoría.", "Meta sugerida: 100% para ingreso a áreas controladas."],
+      ["Hallazgos por auditoría", "Número y criticidad de hallazgos por área, turno o proceso.", "Más importante que el número total es la recurrencia y severidad.", "Analiza por causa: técnica, registro, material, conducta o supervisión."],
+      ["CAPA abiertas", "Acciones correctivas/preventivas activas por responsable y criticidad.", "Muchas CAPA abiertas pueden indicar carga sistémica o falta de cierre efectivo.", "Revisa envejecimiento, bloqueo y evidencia pendiente."],
+      ["CAPA vencidas", "CAPA fuera de fecha comprometida.", "Señal de pérdida de gobernanza; afecta credibilidad con QA y cliente.", "Escala vencidas críticas y renegocia fechas con justificación."],
+      ["Tendencias ambientales", "Comportamiento de partículas, microbiología, presión, temperatura o humedad.", "Una tendencia ascendente puede requerir acción aunque no exceda límite.", "Cruza con cambios de personal, materiales, HVAC y limpieza."],
+      ["Cumplimiento de limpieza", "Tareas ejecutadas en frecuencia, ventana y método definidos.", "Cumplir frecuencia sin técnica correcta no demuestra control.", "Cruza cumplimiento con observaciones en piso y registros."],
+      ["Desviaciones por mes", "Eventos fuera de procedimiento, por área, turno, causa y recurrencia.", "No busques cero artificial; busca detección temprana, contención y cierre robusto.", "Analiza Pareto y define acciones por causa raíz."]
+    ];
+
+    const investigatorCases = [
+      {
+        title: "Partículas +35% durante tres semanas en sala ISO 7",
+        prompt: "Construye tu investigación inicial. Incluye qué revisarías primero, qué datos pedirías y cómo decidirías si es problema de HVAC, personal, materiales, procedimientos, equipos o limpieza.",
+        expected: ["HVAC", "presión", "filtros", "puertas", "personal", "gowning", "materiales", "equipos", "limpieza", "procedimientos", "mantenimiento", "flujo", "tendencia", "turno"],
+        model: "Una investigación experta separa hipótesis: HVAC/filtros/presión, cambios de personal o conducta, ingreso de materiales, mantenimiento/equipos, técnica de limpieza, frecuencia real, puertas y rutas. Debe comparar por punto, turno, fecha, evento y cambio reciente."
+      },
+      {
+        title: "Biocarga aumenta en superficies de alto contacto",
+        prompt: "Define hipótesis, evidencia necesaria y acciones iniciales sin saltar directo a 'reentrenar'.",
+        expected: ["biocarga", "guantes", "contacto", "tiempo de contacto", "desinfectante", "rotación", "paños", "frecuencia", "gowning", "observación", "registro", "turno"],
+        model: "Debe revisar técnica, guantes, superficies tocadas, paños, tiempo de contacto, químico, rotación, frecuencia, entrenamiento por turno y evidencia documental. Reentrenar sin causa raíz puede ser débil."
+      },
+      {
+        title: "Desviaciones documentales repetidas en cierre de turno",
+        prompt: "Investiga por qué aparecen firmas faltantes, horas improbables y espacios en blanco en el mismo turno.",
+        expected: ["ALCOA", "carga", "turno", "supervisión", "formato", "entrenamiento", "tiempo", "revisión", "cierre", "causa raíz", "CAPA"],
+        model: "Una respuesta madura revisa carga de trabajo, ventana de cierre, supervisión, formato, entrenamiento, presión por liberar áreas, cultura de registro y revisión antes de cierre."
+      }
+    ];
+
+    const clientSimulator = [
+      {
+        question: "¿Cómo me demuestra que esta área se mantiene bajo control?",
+        expected: ["SOP", "registros", "monitoreo", "tendencias", "entrenamiento", "desviaciones", "CAPA", "auditorías", "evidencia", "KPIs"],
+        model: "Respuesta fuerte: conectas SOP vigente, personal entrenado, registros completos, monitoreo ambiental, tendencias, desviaciones/CAPA, auditorías internas y KPIs. No basta decir 'se limpia todos los días'."
+      },
+      {
+        question: "¿Qué evidencia tiene de que la limpieza se realizó correctamente?",
+        expected: ["registro", "fecha", "hora", "firma", "químico", "lote", "tiempo de contacto", "supervisión", "SOP", "observación"],
+        model: "Respuesta fuerte: registro aprobado con fecha/hora/firma, químico/lote si aplica, tiempo de contacto, revisión supervisora y concordancia con SOP/observación en piso."
+      },
+      {
+        question: "¿Qué ocurre si un colaborador incumple un procedimiento?",
+        expected: ["contención", "corrección", "desviación", "impacto", "QA", "reentrenamiento", "causa raíz", "CAPA", "documentar", "seguimiento"],
+        model: "Respuesta fuerte: contención inmediata, corrección en piso, evaluación de impacto, escalamiento a QA si aplica, documentación, causa raíz, retraining/CAPA y verificación de efectividad."
+      },
+      {
+        question: "¿Por qué necesita más recursos para sostener el servicio?",
+        expected: ["frecuencia", "criticidad", "cobertura", "ventanas", "gowning", "desviaciones", "overtime", "riesgo", "KPIs", "cliente"],
+        model: "Respuesta fuerte: justificas con carga por frecuencia/criticidad, ventanas operativas, tiempos de gowning/transferencia, desviaciones, overtime, KPIs y riesgo de incumplimiento."
+      }
+    ];
+
+    const areaManagerTopics = [
+      ["Presupuesto", "Conecta costo con riesgo: horas reales, consumibles, químicos, retraining, cobertura, auditorías, desviaciones y costo de falla."],
+      ["Dotación", "Calcula por áreas, frecuencias, ventanas, tiempos de gowning, traslados, criticidad, ausentismo y supervisión requerida."],
+      ["Coberturas", "Define backups entrenados para áreas críticas. Una ausencia no debe forzar atajos ni personal no calificado."],
+      ["Riesgos", "Mantén un registro vivo de riesgos por área: HVAC, materiales, conducta, químicos, documentación, contratistas y EM."],
+      ["Auditorías", "Planifica auditorías internas por riesgo, no solo por calendario. Incluye observación, entrevista y revisión documental."],
+      ["Presentaciones ejecutivas", "Presenta tendencia, impacto, decisión requerida, costo, riesgo y evidencia. Evita listas largas sin conclusión."],
+      ["Reuniones con QA", "Lleva hechos, datos, desviaciones abiertas, CAPA, cambios propuestos y decisiones pendientes."],
+      ["Reuniones con clientes", "Habla en lenguaje de control: cumplimiento, KPIs, riesgos, acciones, fechas y evidencia."],
+      ["Justificación de recursos", "Usa datos: carga, frecuencia, desviaciones, overtime, cumplimiento, crecimiento de alcance y riesgo de no actuar."],
+      ["Planes de mejora", "Define objetivo, línea base, acciones, responsables, fechas, métrica y evidencia de efectividad."]
+    ];
+
     const flashcards = glossaryTerms.slice(0, 8);
 
 
@@ -1840,6 +1917,15 @@
       });
       criticalErrors.forEach(([error, risk, consequence, action]) => {
         add(q("[Error crítico] " + error + ": ¿cuál es la acción correcta?", [action, "Continuar si el área se ve limpia", "Esperar a auditoría para decidir"], 0, risk + " " + consequence));
+      });
+      isoLibrary.forEach(([part, title, use, question]) => {
+        add(q("[Biblioteca ISO] " + part + " se relaciona principalmente con:", [title, "Solo disciplina visual del área", "Solamente entrenamiento anual"], 0, use));
+      });
+      kpiDashboard.forEach(([name, definition, interpretation, action]) => {
+        add(q("[KPI] ¿Cómo interpretarías " + name + "?", [interpretation, "Como dato decorativo sin acción", "Solo como requisito para el cliente"], 0, action));
+      });
+      realAuditScenarios.forEach(([scenario, risk, deviation, capa]) => {
+        add(q("[Auditoría real] " + scenario + ": ¿qué respuesta es más completa?", [risk + " " + deviation + " CAPA: " + capa, "No tiene impacto si el área se ve limpia", "Esperar a que QA defina todo sin aportar datos"], 0, "Una respuesta fuerte integra riesgo, desviación y CAPA."));
       });
       return bank;
     }
@@ -2152,10 +2238,43 @@
 
             <div class="card"><h3>Cleanroom Mastery 2.0: programas profesionales avanzados</h3><p>Esta capa conecta operación, mantenimiento, ISO 14644, guías técnicas IEST, CCS, GMP, monitoreo y documentación con decisiones reales de Facility Services.</p><div class="mastery-grid">${professionalProgramTracks.map(([title, text]) => `
               <article class="mastery-card"><strong>${title}</strong><p>${text}</p></article>`).join("")}</div></div>
+            <div class="card"><h3>Biblioteca ISO 14644 visual</h3><p>No es para memorizar la norma: es para saber qué parte consultar cuando debas entender clasificación, monitoreo, pruebas, diseño, operación o limpieza de superficies.</p><div class="mastery-grid">${isoLibrary.map(([part, title, use, question]) => `
+              <article class="mastery-card">
+                <span class="pill">${part}</span>
+                <strong>${title}</strong>
+                <p>${use}</p>
+                <div class="notice" style="margin-top:10px;">${question}</div>
+              </article>`).join("")}</div></div>
+            <div class="card"><h3>Dashboard de KPIs para cleanroom</h3><p>Indicadores que una Project Manager puede usar para interpretar control, justificar recursos y presentar resultados al cliente.</p><div class="grid two">${kpiDashboard.map(([name, definition, interpretation, action]) => `
+              <article class="qa-card">
+                <strong>${name}</strong>
+                <p>${definition}</p>
+                <div class="why"><strong>Cómo interpretarlo</strong><p>${interpretation}</p></div>
+                <div class="answer"><strong>Uso gerencial</strong><p>${action}</p></div>
+              </article>`).join("")}</div></div>
             <div class="grid two">
               <div class="card"><h3>Nivel Project Manager</h3><p>Competencias para dirigir, auditar, justificar recursos y conversar con QA, EHS y cliente.</p><div class="callout-list">${pmV2Topics.map(([title, text]) => `<div><strong>${title}</strong><br>${text}</div>`).join("")}</div></div>
               <div class="card"><h3>Nivel Facility Management</h3><p>Herramientas para planear frecuencias, rutas, criticidad, químicos, contratistas e indicadores.</p><div class="callout-list">${facilityManagementTopics.map(([title, text]) => `<div><strong>${title}</strong><br>${text}</div>`).join("")}</div></div>
             </div>
+            <div class="card"><h3>Modo Area Manager</h3><p>Enfoque para gestionar una operación completa: presupuesto, dotación, coberturas, riesgos, auditorías, reuniones ejecutivas, cliente y planes de mejora.</p><div class="mastery-grid">${areaManagerTopics.map(([title, text]) => `
+              <article class="mastery-card"><strong>${title}</strong><p>${text}</p></article>`).join("")}</div></div>
+            <div class="card"><h3>Modo Investigador</h3><p>Casos para desarrollar pensamiento gerencial. Escribe tu investigación; el sistema evalúa si cubres las dimensiones críticas.</p><div class="grid two">${investigatorCases.map((c, i) => `
+              <article class="qa-card">
+                <span class="pill red">Investigación ${i + 1}</span>
+                <strong>${c.title}</strong>
+                <p>${c.prompt}</p>
+                <textarea class="analysis-input" id="investigatorAnswer-${i}" placeholder="Incluye hipótesis, evidencias, datos, áreas involucradas, contención, escalamiento y próximos pasos..."></textarea>
+                <div class="btn-row"><button class="btn secondary" onclick="analyzeInvestigatorCase(${i})">Calificar razonamiento</button></div>
+                <div class="analysis-result" id="investigatorResult-${i}">Pendiente de análisis.</div>
+              </article>`).join("")}</div></div>
+            <div class="card"><h3>Simulador de cliente</h3><p>Practica respuestas ejecutivas. El sistema evalúa si mencionas evidencia, control, riesgos, KPIs y seguimiento.</p><div class="grid two">${clientSimulator.map((c, i) => `
+              <article class="qa-card">
+                <span class="pill green">Cliente</span>
+                <strong>${c.question}</strong>
+                <textarea class="analysis-input" id="clientAnswer-${i}" placeholder="Responde como si estuvieras frente al cliente: clara, ejecutiva, con evidencia y sin inventar..."></textarea>
+                <div class="btn-row"><button class="btn secondary" onclick="analyzeClientCase(${i})">Analizar respuesta</button></div>
+                <div class="analysis-result" id="clientResult-${i}">Pendiente de análisis.</div>
+              </article>`).join("")}</div></div>
             <div class="card"><h3>Nivel Resolución de Problemas</h3><p>Escribe qué investigarías. El sistema analiza si cubriste dimensiones críticas como HVAC, personal, materiales, limpieza, procedimientos y flujo.</p><div class="grid two">${problemSolvingCases.map((c, i) => `
               <article class="qa-card">
                 <span class="pill amber">Caso ${i + 1}</span>
@@ -2248,6 +2367,38 @@
         '<p><strong>Dimensiones a considerar:</strong> ' + (missing.length ? missing.join(", ") : "cubres las dimensiones esperadas") + '.</p>' +
         '<p><strong>Modelo de razonamiento:</strong> ' + problem.model + '</p>' +
         '<p><strong>Nota:</strong> En operación real, valida siempre contra SOP vigente, QA/Facilities/EHS y datos objetivos.</p>';
+    }
+
+    function buildAnalysisResult(item, text) {
+      const hits = item.expected.filter(word => text.includes(word.toLowerCase()));
+      const score = Math.round((hits.length / item.expected.length) * 100);
+      const missing = item.expected.filter(word => !hits.includes(word));
+      const level = score >= 75 ? "Sólida" : score >= 45 ? "Parcial" : "Débil";
+      return {
+        score,
+        html:
+          '<span class="score-chip">Cobertura: ' + score + '% · ' + level + '</span>' +
+          '<p><strong>Dimensiones cubiertas:</strong> ' + (hits.length ? hits.join(", ") : "ninguna dimensión crítica detectada") + '.</p>' +
+          '<p><strong>Dimensiones a considerar:</strong> ' + (missing.length ? missing.join(", ") : "cubres las dimensiones esperadas") + '.</p>' +
+          '<p><strong>Modelo de respuesta:</strong> ' + item.model + '</p>' +
+          '<p><strong>Nota:</strong> No inventes evidencia. En operación real, responde según SOP vigente, datos objetivos y escalamiento definido.</p>'
+      };
+    }
+
+    function analyzeInvestigatorCase(index) {
+      const item = investigatorCases[index];
+      const input = document.getElementById("investigatorAnswer-" + index);
+      const output = document.getElementById("investigatorResult-" + index);
+      if (!item || !input || !output) return;
+      output.innerHTML = buildAnalysisResult(item, input.value.toLowerCase()).html;
+    }
+
+    function analyzeClientCase(index) {
+      const item = clientSimulator[index];
+      const input = document.getElementById("clientAnswer-" + index);
+      const output = document.getElementById("clientResult-" + index);
+      if (!item || !input || !output) return;
+      output.innerHTML = buildAnalysisResult(item, input.value.toLowerCase()).html;
     }
 
     function filterGlossary(value) {
