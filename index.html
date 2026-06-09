@@ -1377,6 +1377,80 @@
 
     modules.push(...advancedModules);
 
+
+    function strengthenModuleQuizzes() {
+      const additions = {
+        1: [
+          q("Durante una visita, el área se ve impecable, pero no hay registro de limpieza ni evidencia de materiales aprobados. ¿Cuál es la conclusión más defendible?", ["El área está bajo control porque se ve limpia", "La limpieza no es demostrable y debe evaluarse como brecha de cumplimiento", "Solo falta archivar mejor"], 1, "En cleanroom la apariencia no sustituye evidencia, método ni trazabilidad."),
+          q("Un cliente pregunta por qué limpieza participa en calidad si no toca producto. ¿Qué respuesta es mejor?", ["Porque limpieza controla fuentes de contaminación que pueden afectar producto o proceso", "Porque todos ayudan cuando hay auditoría", "Porque limpieza mejora la estética del área"], 0, "Facility services sostiene barreras de contaminación aunque no fabrique producto."),
+          q("¿Qué variable muestra que un cleanroom es un sistema controlado y no solo un cuarto limpio?", ["Color del uniforme", "Interacción entre aire, presión, personal, materiales, SOP y registros", "Cantidad de personas disponibles"], 1, "El control surge de varias barreras funcionando juntas.")
+        ],
+        2: [
+          q("Una sala ISO 7 cumple conteo de partículas, pero el personal entra con material no aprobado. ¿Qué lectura es más correcta?", ["La clasificación basta para liberar el área", "Existe riesgo operativo aunque el dato de partículas sea aceptable", "ISO solo aplica a paredes y pisos"], 1, "La clasificación no reemplaza comportamiento, materiales ni SOP."),
+          q("Si una tendencia de partículas sube pero aún no supera límite, ¿qué debe hacer una PM?", ["Esperar a que falle", "Revisar cambios de personal, materiales, puertas, limpieza y flujo", "Reducir registros"], 1, "La tendencia permite prevenir antes de incumplir."),
+          q("¿Qué afirmación sobre ISO 14644 es más precisa?", ["Define todo el programa GMP", "Clasifica/controla ambientes por partículas, pero se complementa con SOP y requisitos internos", "Solo sirve para auditorías externas"], 1, "ISO es una referencia técnica, no todo el sistema de calidad.")
+        ],
+        3: [
+          q("Un equipo limpio se mueve por una ruta usada para residuos porque el pasillo aprobado está ocupado. ¿Cuál es el riesgo principal?", ["Contaminación cruzada por flujo incorrecto", "Solo demora logística", "Cambio de clasificación ISO automático"], 0, "Los flujos previenen transferencia de contaminantes entre contextos."),
+          q("Detectas fibras cerca de un punto de transferencia de materiales. ¿Qué investigación inicial tiene más sentido?", ["Revisar empaque, ruta, limpieza de transferencia y materiales aprobados", "Aumentar desinfectante sin investigar", "Ignorar si no hay biocarga"], 0, "Las fibras suelen relacionarse con materiales, empaques o técnica."),
+          q("¿Qué fuente requiere más supervisión continua en un cleanroom?", ["Personas y sus prácticas", "El nombre del área", "El color de la mopa"], 0, "Las personas generan partículas y toman decisiones operativas.")
+        ],
+        4: [
+          q("Un colaborador cumple gowning, pero habla sobre superficies abiertas mientras limpia. ¿Qué evalúas?", ["Riesgo de conducta y posible dispersión/contaminación", "Nada, porque ya tiene gowning", "Solo velocidad"], 0, "La vestimenta no compensa conducta inadecuada."),
+          q("¿Qué observación demuestra disciplina operacional?", ["Caminar lento, tocar solo lo necesario y escalar condiciones anormales", "Terminar rápido aunque cambie la secuencia", "Dejar puertas abiertas para mover carros"], 0, "La disciplina reduce variabilidad y riesgo."),
+          q("Si un técnico repite una mala práctica porque 'así le enseñaron', ¿qué debe hacer la supervisión?", ["Corregir, verificar SOP, evaluar brecha de entrenamiento y documentar si aplica", "Solo regañar", "Esperar auditoría"], 0, "La recurrencia puede indicar falla de entrenamiento o sistema.")
+        ],
+        5: [
+          q("Durante gowning, un guante toca la parte externa de una prenda antes de sanitizarse. ¿Qué decisión es más segura?", ["Continuar si no se ve sucio", "Seguir SOP para cambio/sanitización y evaluar recontaminación", "Registrar al final"], 1, "El riesgo no siempre es visible."),
+          q("¿Por qué el orden de gowning importa?", ["Porque reduce transferencia desde zonas/persona menos controladas hacia la barrera limpia", "Porque hace ver más formal el proceso", "Porque siempre toma menos tiempo"], 0, "La secuencia protege la barrera."),
+          q("Una PM audita gowning. ¿Qué debe buscar además de que la ropa esté puesta?", ["Secuencia, contacto con superficies, cabello cubierto, guantes y conducta", "Solo talla correcta", "Solo color de prenda"], 0, "Gowning es técnica, no solo vestimenta.")
+        ],
+        6: [
+          q("La superficie se ve mojada, pero el operador no sabe concentración ni vencimiento del químico. ¿Cuál es el problema?", ["La eficacia y trazabilidad no son defendibles", "No hay problema si huele fuerte", "Solo falta entrenamiento EHS"], 0, "Químico sin control compromete limpieza y documentación."),
+          q("Un operador usa la misma cara del paño para varias superficies críticas. ¿Qué riesgo aparece?", ["Recontaminación por transferencia", "Mejor uso de consumibles", "Menor necesidad de registros"], 0, "El manejo de paños controla transferencia de contaminantes."),
+          q("¿Qué evidencia sostiene que la limpieza fue correcta?", ["SOP, técnica observada, material aprobado, tiempo de contacto y registro completo", "Área brillante", "Comentario verbal"], 0, "La evidencia debe ser verificable.")
+        ],
+        7: [
+          q("El SOP permite dos interpretaciones para una secuencia crítica. ¿Qué haces antes de entrenar al equipo?", ["Escalar ambigüedad y pedir aclaración formal", "Elegir la opción más rápida", "Crear una instrucción informal"], 0, "La ambigüedad crítica debe resolverse controladamente."),
+          q("¿Qué señal indica que un SOP puede no estar alineado con la operación?", ["El equipo usa pasos no escritos de forma recurrente", "Tiene código y versión", "Incluye responsabilidades"], 0, "La brecha papel-piso requiere evaluación."),
+          q("¿Qué parte de un SOP ayuda a saber si aplica a tu equipo?", ["Alcance y responsabilidades", "Tipografía", "Número de páginas"], 0, "Alcance y responsabilidades definen aplicación.")
+        ],
+        8: [
+          q("Un registro está completo, pero todas las tareas de 4 horas aparecen firmadas al mismo minuto. ¿Qué sospechas?", ["Posible registro no contemporáneo o copiado", "Excelente eficiencia", "No requiere revisión"], 0, "Las horas improbables son señal de integridad de datos."),
+          q("¿Cuál corrección documental es más defendible?", ["Dato original legible, línea simple, iniciales, fecha y razón si aplica", "Borrar hasta que se vea limpio", "Usar corrector líquido"], 0, "La corrección debe preservar trazabilidad."),
+          q("¿Qué error documental puede convertirse en desviación?", ["Firma faltante en tarea crítica", "Letra legible", "Uso de formato vigente"], 0, "La firma faltante afecta responsabilidad y evidencia.")
+        ],
+        9: [
+          q("Un auditor pregunta por una desviación abierta. ¿Qué respuesta es más sólida?", ["Está en investigación, estas fueron la contención, evidencia y próximos pasos", "QA lo está viendo, no sé", "No debería afectar porque el área se ve bien"], 0, "La respuesta debe mostrar control del proceso."),
+          q("¿Qué evidencia conecta entrenamiento con ejecución real?", ["Registro de entrenamiento más observación práctica o verificación en piso", "Solo una lista de asistencia", "Un correo informal"], 0, "Competencia práctica importa en tareas críticas."),
+          q("Si el auditor detecta una brecha real, ¿qué actitud protege credibilidad?", ["Reconocer hechos, no inventar y explicar escalamiento", "Discutir sin evidencia", "Culpar al turno anterior"], 0, "La madurez se demuestra con evidencia y transparencia.")
+        ],
+        10: [
+          q("La PM recibe métricas de registros incompletos en aumento. ¿Qué acción es más estratégica?", ["Analizar patrón por turno/tarea, causa y plan de seguimiento", "Enviar un recordatorio general", "Esperar el cierre mensual"], 0, "Las tendencias requieren gestión de causa y seguimiento."),
+          q("¿Qué demuestra control operativo ante cliente?", ["Riesgos priorizados, evidencia, CAPA y métricas de seguimiento", "Muchas reuniones", "Área visualmente ordenada únicamente"], 0, "El cliente busca sistema de control."),
+          q("¿Cómo debe actuar una PM ante presión para saltar un paso crítico?", ["Escalar, explicar riesgo y proteger SOP vigente", "Aceptar por relación con cliente", "Pedir firma verbal"], 0, "Liderazgo protege cumplimiento bajo presión.")
+        ]
+      };
+      Object.entries(additions).forEach(([id, questions]) => {
+        const module = modules.find(m => m.id === Number(id));
+        if (!module) return;
+        const existing = new Set(module.quiz.map(item => item.text));
+        module.quiz = questions.slice();
+      });
+      modules.forEach(module => {
+        if (module.id <= 10 || !module.decisionCases) return;
+        const existing = new Set(module.quiz.map(item => item.text));
+        module.decisionCases.forEach((c, index) => {
+          const text = "Caso aplicado: " + c.case;
+          if (!existing.has(text)) {
+            module.quiz.push(q(text, c.options, c.answer, c.feedback));
+          }
+        });
+      });
+    }
+
+    strengthenModuleQuizzes();
+
     const masteryTopics = [
       ["Control de contaminación", "Entender fuentes, rutas de transferencia y barreras permite priorizar acciones en piso y explicar riesgos al cliente."],
       ["SOP y procedimientos", "Saber leer, ejecutar y verificar SOP ayuda a convertir requisitos escritos en rutinas repetibles para el equipo."],
@@ -1557,7 +1631,14 @@
 
 
     function buildAdvancedQuestionBank() {
-      const seeds = [
+      const bank = [];
+      const add = (question) => {
+        if (!question || !question.text) return;
+        if (bank.some(item => item.text === question.text)) return;
+        bank.push(question);
+      };
+
+      const directQuestions = [
         ["GMP", "El equipo ejecutó limpieza correcta pero registró al final del turno por memoria. ¿Cuál es el riesgo principal?", ["Pérdida de contemporaneidad e integridad de datos", "Solo una demora administrativa", "No hay riesgo si recuerda bien"], 0, "Registrar tarde debilita ALCOA+ y la defensa ante auditoría."],
         ["GMP", "Producción pide omitir una limpieza intermedia para recuperar tiempo. ¿Qué debe hacer la PM?", ["Aceptar si el área se ve limpia", "Escalar conflicto y seguir SOP/liberación aplicable", "Pedir que firmen después"], 1, "La presión operativa no justifica omitir controles aprobados."],
         ["SOP", "El SOP vigente no menciona una práctica que el equipo usa a diario. ¿Qué procede?", ["Normalizarla porque funciona", "Escalar brecha para evaluación formal", "Eliminar evidencia de la práctica"], 1, "La práctica debe alinearse al documento o evaluarse mediante cambio controlado."],
@@ -1589,13 +1670,17 @@
         ["Control de cambios", "Cambiar frecuencia de limpieza sin aprobación puede:", ["Invalidar estrategia de control", "Mejorar siempre cumplimiento", "No requerir evidencia"], 0, "Frecuencia forma parte del control aprobado."],
         ["Control de cambios", "Nuevo desinfectante requiere típicamente:", ["Evaluación, aprobación, entrenamiento y actualización documental", "Solo compra", "Uso inmediato por necesidad"], 0, "Puede impactar eficacia, seguridad y compatibilidad."]
       ];
-      const bank = [];
-      seeds.forEach((item, idx) => {
-        const [topic, text, options, answer, feedback] = item;
-        bank.push(q("[" + topic + "] " + text, options, answer, feedback));
-        bank.push(q("[" + topic + "] En auditoría te preguntan: " + text, options, answer, feedback + " Responde con SOP vigente y evidencia."));
-        bank.push(q("[" + topic + "] Como PM, ¿qué decisión es más defendible? " + text, options, answer, feedback + " Prioriza riesgo, contención y trazabilidad."));
-        bank.push(q("[" + topic + "] Caso " + (idx + 1) + ": " + text, options, answer, feedback));
+
+      directQuestions.forEach(([topic, text, options, answer, feedback]) => add(q("[" + topic + "] " + text, options, answer, feedback)));
+      modules.forEach(module => {
+        module.quiz.forEach(item => add(q("[Módulo " + module.id + "] " + item.text, item.options, item.answer, item.feedback)));
+        (module.decisionCases || []).forEach(c => add(q("[Caso M" + module.id + "] " + c.case, c.options, c.answer, c.feedback)));
+      });
+      qaClientQuestions.forEach(([cat, question, answer, why]) => {
+        add(q("[QA/EHS/Cliente - " + cat + "] " + question, [answer, "Responder con una opinión general sin evidencia", "Improvisar y documentar después"], 0, why));
+      });
+      criticalErrors.forEach(([error, risk, consequence, action]) => {
+        add(q("[Error crítico] " + error + ": ¿cuál es la acción correcta?", [action, "Continuar si el área se ve limpia", "Esperar a auditoría para decidir"], 0, risk + " " + consequence));
       });
       return bank;
     }
@@ -1604,7 +1689,11 @@
     let currentFinalQuestions = [];
 
     function getFinalQuestions() {
-      if (!state.finalQuestionIds || state.finalQuestionIds.length !== 50) {
+      const hasValidFinalSet = Array.isArray(state.finalQuestionIds)
+        && state.finalQuestionIds.length === 50
+        && new Set(state.finalQuestionIds).size === 50
+        && state.finalQuestionIds.every(i => Number.isInteger(i) && i >= 0 && i < finalQuestionBank.length);
+      if (!hasValidFinalSet) {
         state.finalQuestionIds = shuffle(finalQuestionBank.map((_, i) => i)).slice(0, 50);
         save();
       }
