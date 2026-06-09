@@ -831,7 +831,7 @@
           <strong id="progressText">0%</strong>
         </div>
         <div class="bar"><span id="progressBar"></span></div>
-        <small id="progressDetail">0 de 10 módulos completados</small>
+        <small id="progressDetail">0 de 21 módulos completados</small>
       </div>
 
       <div class="nav-section">Aprendizaje</div>
@@ -857,8 +857,8 @@
                 Guía general: cada empresa debe seguir sus SOP oficiales, requisitos regulatorios, validaciones, hojas de seguridad y entrenamientos aprobados.
               </div>
               <div class="hero-metrics">
-                <div class="metric"><strong>10</strong><span>módulos interactivos</span></div>
-                <div class="metric"><strong>50+</strong><span>preguntas y actividades</span></div>
+                <div class="metric"><strong>21</strong><span>módulos interactivos</span></div>
+                <div class="metric"><strong>250+</strong><span>preguntas y actividades</span></div>
                 <div class="metric"><strong>1</strong><span>evaluación final</span></div>
               </div>
             </div>
@@ -1117,6 +1117,266 @@
       }
     ];
 
+    const advancedModules = [
+      {
+        id: 11,
+        icon: "GMP",
+        title: "GMP aplicado a limpieza en cleanrooms",
+        subtitle: "Cómo se traduce GMP a conducta diaria, evidencia y control operativo.",
+        sections: [
+          ["GMP en la práctica diaria", "GMP no es solo un requisito de producción: también gobierna cómo limpieza ejecuta, documenta, escala y demuestra que el área se mantuvo bajo control. Para facility services, GMP significa disciplina, trazabilidad, materiales aprobados, entrenamiento vigente y cero improvisación."],
+          ["Relación limpieza-calidad", "Una limpieza visualmente correcta puede ser insuficiente si no respeta técnica, frecuencia, tiempo de contacto, segregación o registro. Calidad evalúa si el proceso fue controlado, repetible y defendible ante auditoría."],
+          ["Rol del personal de limpieza", "El equipo de limpieza es una barrera crítica de contaminación. Sus movimientos, cambios de paño, rutas de mopas, manejo de químicos y registros pueden proteger o comprometer un lote, muestra, dispositivo o proceso."],
+          ["Comportamientos GMP esperados", "Seguir SOP vigente, registrar contemporáneamente, no ocultar errores, escalar condiciones anormales, usar materiales aprobados, respetar áreas segregadas y pedir aclaración antes de actuar fuera del procedimiento."],
+          ["Errores GMP comunes", "Firmar antes de ejecutar, copiar datos, usar material no aprobado, corregir registros sin trazabilidad, saltar pasos por presión de tiempo o normalizar una desviación repetitiva."],
+          ["Evidencia de cumplimiento", "Matriz de entrenamiento, registros completos, lotes de químicos, revisión de supervisión, observaciones en piso, cierre de desviaciones y verificación de efectividad."]
+        ],
+        checklist: [
+          "Confirmo versión vigente del SOP antes de entrenar o auditar una tarea.",
+          "Verifico que el registro tenga fecha, hora, responsable, área y datos de material cuando aplique.",
+          "Observo si la práctica real coincide con el procedimiento escrito.",
+          "Escalo cualquier práctica normalizada que no esté aprobada."
+        ],
+        decisionCases: [
+          { case: "Un técnico termina tarde y propone firmar ahora, limpiar después del cambio de turno y avisarte verbalmente.", options: ["Aceptar si confías en él", "Rechazar la firma anticipada, contener la actividad y ajustar el plan según SOP", "Pedir que otro firme por él"], answer: 1, feedback: "La firma anticipada rompe integridad de datos. La acción correcta protege contemporaneidad, responsabilidad y evidencia." },
+          { case: "Producción presiona para liberar un cuarto aunque falta revisión del registro de limpieza.", options: ["Liberar porque la limpieza se ve bien", "Verificar registro y criterios de liberación antes de aceptar uso", "Pedir que QA revise al final del día"], answer: 1, feedback: "La condición visual no sustituye evidencia. Una PM debe proteger el proceso y escalar presión indebida." }
+        ],
+        quiz: [
+          q("¿Cuál situación representa mayor riesgo GMP?", ["Registro completo con corrección trazable", "Uso de químico aprobado con lote registrado", "Limpieza ejecutada correctamente pero no documentada"], 2, "Sin evidencia, la actividad no es defendible."),
+          q("¿Qué demuestra mejor cultura GMP?", ["No reportar errores menores", "Escalar desviaciones temprano", "Corregir registros sin iniciales para que se vean limpios"], 1, "La cultura GMP premia transparencia y control, no apariencia.")
+        ]
+      },
+      {
+        id: 12,
+        icon: "DI",
+        title: "Data Integrity y ALCOA+",
+        subtitle: "Integridad de datos aplicada a registros de limpieza y supervisión.",
+        sections: [
+          ["Qué es integridad de datos", "Es la confianza de que los datos son completos, exactos, disponibles y no manipulados. En limpieza, aplica a registros de áreas, firmas, horas, lotes, concentraciones, verificaciones y correcciones."],
+          ["ALCOA+", "Atribuible, legible, contemporáneo, original, exacto, completo, consistente, duradero y disponible. Una PM debe usar estos principios para revisar registros y entrenar al personal."],
+          ["Aplicación en registros", "Cada entrada debe indicar quién hizo la tarea, cuándo, qué usó y bajo qué procedimiento. Los espacios en blanco, horas imposibles o firmas faltantes son señales de riesgo."],
+          ["Errores graves", "Backdating, completar por otra persona, usar lápiz si no está permitido, destruir registros, borrar datos originales, dejar espacios en blanco o inventar lotes."],
+          ["Corrección adecuada", "La corrección debe mantener legible el dato original, incluir iniciales, fecha y razón si el SOP lo exige. Nunca se debe ocultar el error."],
+          ["Rol de supervisión", "Revisar antes de cierre, detectar patrones, entrenar sobre ALCOA+ y escalar fallas repetitivas como posible brecha sistémica."]
+        ],
+        decisionCases: [
+          { case: "Encuentras tres registros con la misma hora exacta para tareas que físicamente no pudieron ocurrir al mismo tiempo.", options: ["Asumir que fue coincidencia", "Investigar contemporaneidad, entrevistar y escalar si aplica", "Cambiar las horas para que tengan sentido"], answer: 1, feedback: "Horas improbables pueden indicar registro tardío o copiado. Se investiga, no se maquilla." },
+          { case: "Un registro tiene un espacio en blanco en concentración de químico.", options: ["Trazar una línea/corregir según SOP y evaluar impacto", "Dejarlo porque la firma está completa", "Rellenarlo con la concentración usual"], answer: 0, feedback: "Nunca se inventa un dato. Se corrige según procedimiento y se evalúa impacto." }
+        ],
+        quiz: [
+          q("¿Qué principio ALCOA+ se compromete si se registra al final del turno usando memoria?", ["Contemporáneo", "Duradero", "Disponible"], 0, "El dato debe registrarse cuando ocurre o según el momento definido por el SOP."),
+          q("¿Cuál acción es inaceptable?", ["Corrección trazable", "Inicialar una corrección según SOP", "Completar el registro por un colaborador ausente"], 2, "El dato debe ser atribuible a quien ejecutó/verificó.")
+        ]
+      },
+      {
+        id: 13,
+        icon: "DEV",
+        title: "Desviaciones y no conformidades",
+        subtitle: "Clasificar, contener, escalar y documentar eventos fuera de control.",
+        sections: [
+          ["Desviación", "Apartamiento de un procedimiento, parámetro, práctica aprobada o condición esperada. Ejemplo: limpieza fuera de secuencia, químico vencido, puerta abierta o registro incompleto."],
+          ["No conformidad", "Incumplimiento confirmado contra un requisito. Puede venir de auditoría, inspección, reclamo, revisión documental o investigación."],
+          ["Incidente, hallazgo y observación", "Un incidente es un evento; un hallazgo es evidencia de incumplimiento; una observación puede ser oportunidad o riesgo emergente. La clasificación depende del sistema de calidad de la empresa."],
+          ["Qué debe hacer limpieza", "Contener, proteger el área/material, notificar, conservar evidencia, documentar hechos sin opiniones y esperar disposición cuando haya posible impacto."],
+          ["Escalamiento", "Escalar por criticidad: producto expuesto, pérdida de presión, químico incorrecto, biocarga, daño de superficies, ingreso no autorizado o datos no confiables."],
+          ["Documentación", "Registrar qué ocurrió, cuándo, dónde, quién detectó, acción inmediata, materiales involucrados y posibles áreas afectadas."]
+        ],
+        decisionCases: [
+          { case: "Se detecta que una puerta permaneció abierta durante traslado de materiales y no hay alarma registrada.", options: ["Cerrar y no documentar si nadie vio producto expuesto", "Cerrar, notificar y evaluar impacto en presión/flujo según SOP", "Esperar a que QA lo descubra"], answer: 1, feedback: "La ausencia de alarma no elimina el riesgo. Se documentan hechos y se evalúa impacto." },
+          { case: "Un colaborador usó un paño de un área ISO 8 en una zona ISO 7.", options: ["Clasificar como posible contaminación cruzada y escalar", "Permitirlo si el paño se veía limpio", "Desechar el paño sin avisar"], answer: 0, feedback: "La transferencia entre zonas puede afectar control; requiere contención y evaluación." }
+        ],
+        quiz: [
+          q("¿Qué información NO debe faltar al reportar una desviación?", ["Opinión personal sobre culpables", "Hechos, hora, área, acción inmediata y posible impacto", "Una frase general sin detalles"], 1, "Se documentan hechos verificables."),
+          q("¿Qué acción protege mejor la investigación?", ["Conservar evidencia", "Limpiar todo antes de avisar", "Cambiar el registro para que coincida"], 0, "La evidencia permite determinar impacto y causa.")
+        ]
+      },
+      {
+        id: 14,
+        icon: "CAPA",
+        title: "CAPA",
+        subtitle: "Acciones correctivas y preventivas conectadas con causa raíz.",
+        sections: [
+          ["Qué es CAPA", "Sistema para corregir causas de problemas reales y prevenir recurrencia. No es una lista de promesas: debe tener causa raíz, acciones, responsables, fechas, evidencia y verificación de efectividad."],
+          ["Correctiva vs preventiva", "La correctiva elimina la causa de un problema ocurrido. La preventiva reduce la probabilidad de un problema potencial o tendencia antes de que se materialice."],
+          ["Causa raíz", "Una causa raíz no suele ser 'error humano' sin más análisis. Puede involucrar entrenamiento insuficiente, SOP ambiguo, carga de trabajo, materiales parecidos, diseño del área o supervisión débil."],
+          ["Ejemplos en limpieza", "Reentrenamiento con observación práctica, rediseño de carro de limpieza, etiquetas por color, actualización de SOP, checklist de cierre, revisión diaria de registros o cambio de frecuencia."],
+          ["Seguimiento", "Una CAPA sin verificación puede cerrarse en papel pero fallar en piso. Se necesitan evidencias como auditorías, tendencias, registros revisados y observaciones."],
+          ["Rol PM", "Priorizar CAPA por riesgo, asignar responsables, remover barreras, medir cumplimiento y presentar avances a QA, cliente o gerencia."]
+        ],
+        decisionCases: [
+          { case: "Se repiten firmas faltantes cada viernes por tres semanas.", options: ["Reentrenar una vez y cerrar", "Investigar patrón, carga de cierre, revisión supervisora y diseñar CAPA verificable", "Cambiar el formato para quitar firmas"], answer: 1, feedback: "La recurrencia exige causa raíz y verificación de efectividad, no solo recordatorios." },
+          { case: "La causa propuesta dice 'operador descuidado'.", options: ["Aceptar si el operador falló", "Pedir análisis más profundo del sistema", "Cerrar por disciplina"], answer: 1, feedback: "Una causa raíz robusta evalúa condiciones que permitieron el error." }
+        ],
+        quiz: [
+          q("¿Cuál es mejor evidencia de efectividad de CAPA?", ["Correo indicando que se habló con el equipo", "Tres semanas sin recurrencia con registros auditados", "Una reunión sin acta"], 1, "La efectividad requiere evidencia objetiva."),
+          q("¿Qué es una acción preventiva?", ["Una acción para reducir un riesgo antes de que ocurra", "Una corrección de ortografía", "Una firma tardía"], 0, "Previene ocurrencia o recurrencia potencial.")
+        ]
+      },
+      {
+        id: 15,
+        icon: "MAP",
+        title: "Control de contaminación avanzado",
+        subtitle: "Flujos, biocarga, partículas viables/no viables y mapa de riesgos.",
+        sections: [
+          ["Flujo de personas", "Cada ingreso, movimiento, conversación, giro o contacto puede liberar partículas. La supervisión debe observar conducta, densidad de personal, rutas y tiempo de permanencia."],
+          ["Flujo de materiales", "Materiales deben ingresar aprobados, limpios, segregados y por rutas definidas. Cartón, madera, empaques externos y herramientas no dedicadas son fuentes comunes de riesgo."],
+          ["Flujo de residuos", "La salida de residuos debe evitar cruces con materiales limpios, acumulación, derrames y apertura innecesaria de puertas."],
+          ["Viables y no viables", "Partículas no viables son polvo/fibras; viables incluyen microorganismos. Ambas importan: unas afectan clasificación y otras biocarga."],
+          ["Presión, puertas y HVAC", "Puertas abiertas, rejillas bloqueadas o retornos obstruidos pueden alterar cascadas de presión y patrones de aire."],
+          ["Mapa de riesgos", "Una PM debe mapear puntos de transferencia: gowning, esclusas, carros, mopas, químicos, residuos, áreas de espera y registros."]
+        ],
+        decisionCases: [
+          { case: "El equipo estaciona carros frente a un retorno porque 'solo son 10 minutos'.", options: ["Permitirlo si no bloquea el paso", "Moverlos y tratarlo como riesgo de flujo de aire", "Esperar a mantenimiento"], answer: 1, feedback: "Bloquear retornos puede afectar patrón de aire; se corrige y se previene recurrencia." },
+          { case: "Un material limpio cruza por la ruta de residuos por conveniencia.", options: ["Aceptar si está cerrado", "Detener y redirigir por flujo aprobado", "Documentar solo si el cliente lo pregunta"], answer: 1, feedback: "Los flujos están diseñados para evitar contaminación cruzada." }
+        ],
+        quiz: [
+          q("¿Qué combina mejor control de contaminación?", ["Limpieza visual y rapidez", "Flujos, conducta, materiales, aire, registros y supervisión", "Solo usar más desinfectante"], 1, "El control es un sistema."),
+          q("¿Qué puede indicar aumento de partículas no viables?", ["Movimiento excesivo, material particulante o falla de técnica", "Siempre biocarga", "Solo cambio de temperatura"], 0, "Debe investigarse la fuente.")
+        ]
+      },
+      {
+        id: 16,
+        icon: "EM",
+        title: "Monitoreo ambiental",
+        subtitle: "Qué se monitorea, tendencias, límites y respuesta operativa.",
+        sections: [
+          ["Concepto general", "El monitoreo ambiental verifica si el ambiente se mantiene dentro de controles definidos. Limpieza no siempre toma muestras, pero debe entender qué significan los resultados."],
+          ["Qué se monitorea", "Partículas, microbiología de aire, superficies, personal, presión diferencial, temperatura, humedad y otros parámetros según proceso."],
+          ["Alerta y acción", "Un límite de alerta advierte tendencia; uno de acción puede exigir investigación formal. La respuesta depende del SOP y del impacto potencial."],
+          ["Tendencias", "Un resultado dentro de límite puede ser preocupante si sube repetidamente. Las tendencias ayudan a detectar degradación antes de fallar."],
+          ["Rol de limpieza", "Revisar cambios de práctica, químicos, rutas, frecuencia, personal, materiales, puertas, eventos y registros cercanos al resultado."],
+          ["Comunicación con QA/EHS", "Responder con hechos: qué se limpió, cuándo, con qué, quién estuvo, qué cambios ocurrieron y qué evidencia existe."]
+        ],
+        decisionCases: [
+          { case: "Hay tres semanas de aumento de unidades microbiológicas, aún bajo límite de acción.", options: ["No hacer nada porque no excedió", "Revisar tendencia, prácticas y posibles preventivas", "Esperar al fallo"], answer: 1, feedback: "Las tendencias permiten prevención antes de incumplimiento." },
+          { case: "Un resultado fuera de límite aparece después de cambio de químico.", options: ["Asumir coincidencia", "Aportar datos de cambio, lotes, técnica y entrenamiento a la investigación", "Culpar al muestreo"], answer: 1, feedback: "La investigación requiere correlacionar cambios operativos con datos." }
+        ],
+        quiz: [
+          q("¿Qué significa un límite de alerta?", ["Una señal temprana para investigar tendencia", "Un permiso para ignorar", "Siempre cierre del área"], 0, "Depende del SOP, pero alerta no es indiferente."),
+          q("¿Qué debe aportar limpieza en una investigación EM?", ["Hechos operativos y registros", "Opiniones sin evidencia", "Solo fotografías decorativas"], 0, "La evidencia operativa es clave.")
+        ]
+      },
+      {
+        id: 17,
+        icon: "CHEM",
+        title: "Químicos, desinfectantes y rotación",
+        subtitle: "Selección, dilución, compatibilidad, residuos y uso correcto.",
+        sections: [
+          ["Detergente, sanitizante, desinfectante, esporicida", "Detergente remueve suciedad; sanitizante reduce carga; desinfectante inactiva microorganismos; esporicida apunta a esporas. No son intercambiables sin aprobación."],
+          ["Tiempo de contacto", "La superficie debe permanecer húmeda el tiempo definido. Aplicar y secar de inmediato puede invalidar la eficacia."],
+          ["Dilución y preparación", "Dilución incorrecta puede ser ineficaz, dejar residuos o generar riesgo EHS. Deben controlarse concentración, fecha, vencimiento, etiqueta y lote."],
+          ["Compatibilidad", "Químicos pueden dañar superficies, empaques, guantes, pisos o equipos. También pueden dejar residuos que afecten procesos."],
+          ["Rotación", "La rotación se define para controlar espectro microbiano y residuos, no por preferencia del turno. Debe seguir calendario/SOP."],
+          ["Riesgos", "Mezclas no autorizadas, químicos vencidos, botellas sin etiqueta, esporicida mal enjuagado, uso en superficie incompatible o falta de EPP."]
+        ],
+        decisionCases: [
+          { case: "El desinfectante aprobado se agotó y el cliente pide usar uno comercial similar.", options: ["Usarlo si tiene olor parecido", "No usarlo sin aprobación; escalar continuidad operativa", "Diluir otro químico más fuerte"], answer: 1, feedback: "La equivalencia debe aprobarse; continuidad no justifica romper control químico." },
+          { case: "La superficie se seca antes del tiempo de contacto.", options: ["Registrar como completo", "Reaplicar según SOP para cumplir tiempo húmedo", "Reducir el tiempo en el formato"], answer: 1, feedback: "La eficacia depende del contacto real, no solo de aplicar químico." }
+        ],
+        quiz: [
+          q("¿Qué dato es crítico en una botella preparada?", ["Etiqueta, concentración, fecha/vencimiento y responsable", "Color de la tapa únicamente", "Ubicación del carro"], 0, "Permite trazabilidad y uso seguro."),
+          q("¿Por qué no mezclar químicos?", ["Puede generar incompatibilidad, vapores o pérdida de eficacia", "Porque toma tiempo", "Porque cambia el color del paño"], 0, "También es riesgo EHS.")
+        ]
+      },
+      {
+        id: 18,
+        icon: "TECH",
+        title: "Técnicas avanzadas de limpieza",
+        subtitle: "Secuencias, traslape, superficies críticas y prevención de recontaminación.",
+        sections: [
+          ["Unidireccional y traslape", "La técnica debe mover contaminación en una dirección controlada. El traslape evita franjas sin cubrir y reduce variabilidad entre operadores."],
+          ["Secuencia por criticidad", "Se priorizan áreas limpias/críticas antes de menos limpias, y superficies altas antes de bajas, salvo que el SOP indique otra lógica validada."],
+          ["Superficies", "Paredes, pisos, puertas, ventanas, rejillas, equipos y mobiliario requieren técnicas, frecuencias y materiales distintos."],
+          ["Mopas y paños", "Doblar paños por caras, cambiar al saturarse o según SOP, evitar reintroducir cara sucia y controlar mopas por área."],
+          ["Evitar recontaminación", "No tocar superficies limpias con guantes contaminados, no apoyar paños usados, no cruzar rutas y no regresar de zona menos limpia a más limpia."],
+          ["Supervisión técnica", "Observar ángulo, presión, patrón, cambio de consumibles, preparación del carro, orden de trabajo y registro inmediato."]
+        ],
+        decisionCases: [
+          { case: "Un técnico limpia una pared de abajo hacia arriba para evitar agacharse.", options: ["Aceptar si termina toda la pared", "Corregir técnica y evaluar necesidad de retraining", "Solo pedir que lo haga más rápido"], answer: 1, feedback: "La técnica protege contra caída de partículas sobre superficies ya tratadas." },
+          { case: "Una mopa toca el área exterior de la esclusa y luego se usa dentro.", options: ["Continuar si está húmeda", "Segregar/cambiar mopa y evaluar contaminación cruzada", "Enjuagar con agua común"], answer: 1, feedback: "La transferencia entre zonas compromete control." }
+        ],
+        quiz: [
+          q("¿Qué busca el traslape?", ["Evitar áreas sin cubrir", "Gastar más químico", "Hacer dibujos uniformes"], 0, "Reduce variabilidad."),
+          q("¿Qué debe observar una PM en técnica?", ["Patrón, secuencia, materiales y registro", "Solo velocidad", "Solo apariencia final"], 0, "La apariencia no prueba control.")
+        ]
+      },
+      {
+        id: 19,
+        icon: "DOC",
+        title: "Gestión documental y SOPs avanzados",
+        subtitle: "Lectura crítica, vigencia, control de cambios y brechas entre papel y piso.",
+        sections: [
+          ["Leer críticamente un SOP", "No basta leer pasos. Debes entender alcance, frecuencia, responsabilidades, criterios de aceptación, registros asociados, seguridad, materiales y puntos de decisión."],
+          ["Versión vigente", "La fuente oficial debe estar definida. Copias impresas, fotos o archivos personales pueden volverse obsoletos y generar desviaciones."],
+          ["SOP vs práctica real", "Si el procedimiento no coincide con lo que se hace, no se normaliza la brecha: se escala para evaluación, cambio controlado o retraining."],
+          ["Registros asociados", "Un SOP sin registros adecuados deja huecos de evidencia. La PM debe verificar qué formatos sostienen cada actividad crítica."],
+          ["Control de cambios", "Cambiar químico, frecuencia, ruta, material, equipo o método puede requerir evaluación de impacto, aprobación y entrenamiento antes de implementar."],
+          ["Entrenamiento documentado", "El personal debe entrenarse en versión vigente y, para tareas críticas, demostrar competencia práctica."]
+        ],
+        decisionCases: [
+          { case: "El SOP dice limpiar rejillas semanalmente, pero el equipo lo hace mensual porque 'siempre fue así'.", options: ["Aceptar tradición", "Escalar brecha y evaluar impacto/documentación", "Cambiar el registro manualmente"], answer: 1, feedback: "La práctica debe alinearse al SOP o cambiarse formalmente." },
+          { case: "QA aprueba una nueva versión del SOP y el turno nocturno aún usa la anterior.", options: ["Esperar a la próxima reunión", "Contener uso, entrenar y documentar transición", "No importa si los pasos son parecidos"], answer: 1, feedback: "La vigencia documental es crítica." }
+        ],
+        quiz: [
+          q("¿Qué cambio suele requerir control formal?", ["Cambiar desinfectante aprobado", "Cambiar color de bolígrafo permitido por SOP", "Leer el SOP antes de trabajar"], 0, "Puede afectar eficacia, compatibilidad y validación."),
+          q("¿Qué hacer si el SOP es ambiguo?", ["Improvisar", "Escalar y pedir aclaración formal", "Usar el método más rápido"], 1, "La ambigüedad debe resolverse controladamente.")
+        ]
+      },
+      {
+        id: 20,
+        icon: "AUD+",
+        title: "Auditoría avanzada para limpieza en cleanroom",
+        subtitle: "Evidencias, respuestas difíciles y manejo profesional de presión.",
+        sections: [
+          ["Preparación", "Revisar SOP vigentes, registros críticos, matrices de entrenamiento, desviaciones abiertas, CAPA, materiales aprobados, rutas y estado visual del área."],
+          ["Responder preguntas", "Contesta con hechos, evidencia y límites claros. Si no sabes, indica dónde se verifica o a quién se escala. No inventes."],
+          ["Evidencias listas", "Registros, listas de químicos aprobados, lotes, bitácoras de limpieza, entrenamiento, observaciones, revisión supervisora, desviaciones y CAPA."],
+          ["Qué nunca decir", "No digas 'siempre lo hacemos así' sin SOP, 'QA lo arregla', 'no sé pero creo', 'lo firmamos después', o 'eso no se documenta aunque se hace'."],
+          ["Manejo de nervios", "Pausa, escucha la pregunta, responde lo preguntado, muestra evidencia y evita extenderte hacia temas que no dominas."],
+          ["Rol PM", "Traducir operación a lenguaje de control: riesgo, procedimiento, evidencia, escalamiento y mejora."]
+        ],
+        decisionCases: [
+          { case: "Un auditor pregunta por un registro incompleto frente al cliente.", options: ["Justificar que el turno estaba ocupado", "Reconocer el hallazgo, explicar proceso de corrección/evaluación y mostrar escalamiento", "Decir que no es importante"], answer: 1, feedback: "Una respuesta madura reconoce hechos y demuestra sistema de control." },
+          { case: "El auditor pide que expliques una tendencia ambiental que no conoces.", options: ["Inventar una causa probable", "Indicar que revisarás con QA/EM y aportarás evidencia operativa disponible", "Culpar al muestreador"], answer: 1, feedback: "No inventar protege credibilidad." }
+        ],
+        quiz: [
+          q("¿Qué respuesta es más sólida ante auditoría?", ["Porque siempre lo hacemos así", "El SOP vigente define X y este registro evidencia Y", "No estoy segura, pero seguro está bien"], 1, "Une procedimiento con evidencia."),
+          q("¿Qué debe preparar una PM antes de visita?", ["Solo presentación bonita", "Registros, entrenamiento, área, materiales y narrativa de control", "Nada; auditoría es de QA"], 1, "La operación debe demostrar control.")
+        ]
+      },
+      {
+        id: 21,
+        icon: "LEAD",
+        title: "Liderazgo operativo en cleanrooms",
+        subtitle: "Cultura de cumplimiento, métricas, coaching y plan de mejora.",
+        sections: [
+          ["Rol del supervisor", "Asegurar ejecución correcta turno a turno: observar, corregir, revisar registros, confirmar materiales, escalar riesgos y cerrar brechas."],
+          ["Rol del Project Manager", "Diseñar sistema operativo: recursos, entrenamiento, métricas, gobernanza, comunicación con QA/EHS/cliente y mejora continua."],
+          ["Cultura de cumplimiento", "La cultura se ve cuando el equipo reporta errores temprano, consulta SOP, documenta correctamente y no sacrifica control por velocidad."],
+          ["Corregir sin resistencia", "Corregir en el momento, explicar riesgo, escuchar barreras, acordar acción y dar seguimiento. La disciplina debe ser justa y basada en hechos."],
+          ["Métricas", "Cumplimiento de registros, retraining, observaciones en piso, desviaciones, CAPA a tiempo, hallazgos de auditoría, uso de químicos y tendencias de calidad."],
+          ["Plan de 30 días", "Semana 1 diagnóstico; semana 2 estandarización; semana 3 coaching y verificación; semana 4 métricas, ajustes y presentación de resultados."]
+        ],
+        checklist: [
+          "Tengo una rutina de caminatas Gemba enfocadas en riesgo.",
+          "Reviso registros críticos antes del cierre operativo.",
+          "Conozco las desviaciones abiertas y su impacto.",
+          "Puedo explicar CAPA y evidencias al cliente.",
+          "Uso métricas para priorizar entrenamiento y supervisión."
+        ],
+        decisionCases: [
+          { case: "El equipo ve tus observaciones como crítica personal.", options: ["Dejar de observar", "Conectar cada corrección con riesgo, SOP y protección del trabajo", "Corregir solo por correo"], answer: 1, feedback: "El liderazgo traduce cumplimiento en sentido operativo." },
+          { case: "Hay muchas brechas; no puedes corregir todo en una semana.", options: ["Priorizar por riesgo y definir plan de 30 días", "Atacar lo más visible únicamente", "Esperar auditoría"], answer: 0, feedback: "La PM debe priorizar con enfoque de riesgo y seguimiento." }
+        ],
+        quiz: [
+          q("¿Qué métrica ayuda a prevenir recurrencia?", ["Hallazgos repetidos por turno/área", "Número de correos enviados", "Color de uniformes"], 0, "Las tendencias dirigen acciones."),
+          q("¿Qué demuestra control operativo?", ["Saber explicar riesgos, evidencia y seguimiento", "Depender de memoria", "Tener registros incompletos pero área limpia"], 0, "Control es práctica más evidencia.")
+        ]
+      }
+    ];
+
+    modules.push(...advancedModules);
+
     const masteryTopics = [
       ["Control de contaminación", "Entender fuentes, rutas de transferencia y barreras permite priorizar acciones en piso y explicar riesgos al cliente."],
       ["SOP y procedimientos", "Saber leer, ejecutar y verificar SOP ayuda a convertir requisitos escritos en rutinas repetibles para el equipo."],
@@ -1158,20 +1418,201 @@
       ["Change Control", "Proceso formal para evaluar, aprobar, implementar y documentar cambios antes de afectar una operación controlada."]
     ];
 
+    glossaryTerms.push(
+      ["Partículas viables", "Partículas que transportan o contienen microorganismos y pueden afectar el estado microbiológico del área."],
+      ["Partículas no viables", "Partículas sin vida, como polvo o fibras, usadas para evaluar clasificación y control de aire."],
+      ["Presión diferencial", "Diferencia de presión entre áreas para dirigir flujo de aire desde zonas más limpias hacia menos limpias."],
+      ["Flujo unidireccional", "Movimiento de aire en una dirección controlada para proteger zonas críticas o reducir turbulencia."],
+      ["HEPA", "Filtro de alta eficiencia usado para remover partículas del aire en sistemas HVAC o equipos críticos."],
+      ["HVAC", "Sistema de calefacción, ventilación y aire acondicionado que sostiene temperatura, humedad, presión y filtración."],
+      ["Zona crítica", "Área donde producto, componente, muestra o superficie sensible tiene mayor exposición a contaminación."],
+      ["Límite de alerta", "Nivel que advierte una tendencia o condición que requiere evaluación antes de llegar a incumplimiento."],
+      ["Límite de acción", "Nivel que exige investigación, acción documentada o escalamiento según procedimiento."],
+      ["Tendencia", "Patrón repetido en datos que puede indicar degradación del control aunque no exista un fallo puntual."],
+      ["Registro", "Documento o formato que evidencia una actividad ejecutada, revisada o verificada."],
+      ["Versión vigente", "Versión aprobada y efectiva de un documento que debe usarse en la operación."],
+      ["Entrenamiento documentado", "Evidencia formal de que una persona fue capacitada y autorizada para ejecutar una tarea."],
+      ["Causa raíz", "Causa fundamental que permitió que ocurriera un problema y que debe corregirse para evitar recurrencia."],
+      ["Acción correctiva", "Acción para eliminar la causa de un problema ocurrido."],
+      ["Acción preventiva", "Acción para eliminar o reducir la causa de un problema potencial."],
+      ["Auditoría interna", "Evaluación realizada por la organización para verificar cumplimiento y preparación."],
+      ["Auditoría externa", "Evaluación realizada por cliente, autoridad, certificador u otra parte externa."],
+      ["Hallazgo", "Evidencia de incumplimiento o brecha contra un requisito."],
+      ["Observación", "Comentario de mejora o riesgo potencial que puede no ser incumplimiento formal."],
+      ["Riesgo", "Combinación de probabilidad e impacto de un evento que puede afectar calidad, seguridad o cumplimiento."],
+      ["Mitigación", "Acción para reducir probabilidad, impacto o exposición a un riesgo."],
+      ["Calificación", "Evidencia de que equipo, sistema o área cumple requisitos definidos para operar."],
+      ["Materiales aprobados", "Consumibles, herramientas o químicos autorizados para uso en el área bajo criterios definidos."],
+      ["Segregación", "Separación física o lógica para evitar mezcla, confusión o contaminación cruzada."],
+      ["Transferencia de materiales", "Proceso controlado para mover materiales entre áreas sin comprometer limpieza o trazabilidad."],
+      ["Flujo de residuos", "Ruta y método para retirar residuos sin cruzar con materiales limpios ni comprometer presión o limpieza."],
+      ["Housekeeping GMP", "Orden y limpieza sostenidos bajo reglas GMP, no solo apariencia visual."],
+      ["Esclusa", "Área de transición que ayuda a controlar presión, gowning, materiales o flujo de personal."],
+      ["Airlock", "Esclusa con control de acceso o presión para proteger áreas limpias."],
+      ["Limpieza unidireccional", "Técnica que mueve el paño o mopa en una dirección para evitar redistribuir contaminación."],
+      ["Traslape", "Superposición controlada de pasadas para evitar áreas sin cubrir."],
+      ["Recontaminación", "Contaminar nuevamente una superficie o área que ya había sido limpiada o desinfectada."],
+      ["Tiempo de espera", "Periodo definido antes, durante o después de una actividad para cumplir condiciones del proceso."],
+      ["Hold time", "Tiempo máximo permitido para mantener una condición antes de repetir limpieza o verificar estado."],
+      ["EPP", "Equipo de protección personal requerido para proteger al trabajador, producto o ambiente."],
+      ["SDS", "Hoja de datos de seguridad con peligros, manejo, EPP y respuesta ante emergencias de químicos."],
+      ["Especificación", "Requisito medible o criterio que define aceptación."],
+      ["Impact assessment", "Evaluación de impacto potencial de un evento, cambio o desviación."],
+      ["SME", "Experto en la materia que apoya interpretación técnica o investigación."],
+      ["Gemba", "Observación directa en el lugar donde ocurre el trabajo real."],
+      ["Right first time", "Indicador de actividades ejecutadas correctamente desde la primera vez, sin correcciones o retrabajo."],
+      ["Backdating", "Registrar una fecha u hora anterior a la real; práctica inaceptable para integridad de datos."]
+    );
+
+    const criticalErrors = [
+      ["Entrar sin gowning correcto", "Aumenta partículas y biocarga.", "Puede comprometer clasificación, producto o investigación.", "Detener ingreso, corregir gowning, evaluar exposición y documentar si aplica."],
+      ["Usar químico incorrecto", "Puede ser ineficaz o incompatible.", "Residuos, daño de superficies o falta de desinfección.", "Segregar químico, notificar, verificar lista aprobada y evaluar impacto."],
+      ["No respetar tiempo de contacto", "Reduce eficacia microbiológica.", "Superficie aparentemente limpia pero no desinfectada.", "Reaplicar según SOP y reforzar técnica."],
+      ["Limpiar de zona sucia a zona limpia", "Transfiere contaminación.", "Contaminación cruzada entre áreas.", "Reiniciar secuencia según SOP y evaluar área afectada."],
+      ["No documentar la limpieza", "No existe evidencia verificable.", "La actividad puede considerarse no realizada.", "Registrar contemporáneamente o escalar registro faltante según SOP."],
+      ["Firmar antes de ejecutar", "Rompe integridad de datos.", "Hallazgo crítico en auditoría.", "Anular/corregir según SOP, investigar y reentrenar."],
+      ["Usar versión incorrecta del SOP", "Ejecuta pasos potencialmente obsoletos.", "Desviación documental y operativa.", "Verificar fuente oficial y evaluar impacto de lo ejecutado."],
+      ["No escalar una desviación", "Retrasa contención.", "Aumenta impacto y recurrencia.", "Reportar hechos, conservar evidencia y seguir flujo de calidad."],
+      ["Reutilizar paños incorrectamente", "Redistribuye contaminantes.", "Recontaminación de superficies.", "Cambiar paño por cara/frecuencia aprobada."],
+      ["Bloquear rejillas o retornos", "Altera flujo de aire.", "Pérdida de control ambiental.", "Retirar obstrucción y reportar si hubo exposición."],
+      ["No controlar ingreso de materiales", "Introduce polvo, fibras o biocarga.", "Riesgo de contaminación cruzada.", "Aplicar transferencia aprobada y segregación."],
+      ["Dejar espacios en blanco en registros", "Genera dudas de completitud.", "Debilita trazabilidad.", "Cerrar espacios según procedimiento documental."],
+      ["No reportar daño en superficies", "Grietas o corrosión retienen contaminación.", "Dificulta limpieza efectiva.", "Segregar/identificar, notificar mantenimiento/QA."],
+      ["No respetar flujo de residuos", "Cruza residuos con material limpio.", "Contaminación cruzada.", "Usar rutas y horarios aprobados."],
+      ["Usar mopa de otra clasificación", "Transfiere carga entre zonas.", "Puede afectar áreas más limpias.", "Segregar mopa, limpiar área y evaluar impacto."],
+      ["Preparar dilución sin registrar", "No hay trazabilidad de concentración.", "Eficacia no demostrable.", "Preparar y etiquetar según SOP."],
+      ["Mezclar químicos no autorizados", "Riesgo EHS y pérdida de eficacia.", "Vapores, residuos o daño.", "Detener, ventilar/contener según SDS y reportar."],
+      ["Ignorar alarma de presión", "Puede indicar pérdida de cascada.", "Ingreso de aire menos controlado.", "Escalar a Facilities/QA y seguir respuesta definida."],
+      ["Abrir puertas simultáneamente", "Rompe barrera de aire.", "Intercambio no controlado entre áreas.", "Reentrenar y verificar controles de acceso."],
+      ["Ingresar cartón no aprobado", "Libera fibras.", "Aumenta partículas.", "Retirar y transferir material por empaque aprobado."],
+      ["Registrar por otra persona", "Dato no atribuible.", "Violación de integridad de datos.", "Corregir según SOP e investigar."],
+      ["Limpiar alrededor de equipo sin despeje", "Puede dejar zonas sin cubrir.", "Residuo o contaminación persistente.", "Coordinar despeje y repetir limpieza si aplica."],
+      ["No cambiar guantes contaminados", "Transfiere contaminación por contacto.", "Recontaminación de superficies limpias.", "Cambiar/sanitizar guantes según SOP."],
+      ["No verificar vencimiento de químico", "Eficacia incierta.", "Desinfección no defendible.", "Retirar químico y evaluar superficies tratadas."],
+      ["Omitir revisión supervisora", "Errores pasan al cierre.", "Hallazgos tardíos y retrabajo.", "Implementar revisión antes de liberación."],
+      ["Aceptar atajos por presión de producción", "Normaliza incumplimiento.", "Riesgo regulatorio y de cliente.", "Escalar conflicto y proteger procedimiento."],
+      ["No entrenar tras cambio de SOP", "Personal ejecuta versión anterior.", "Desviación sistémica.", "Bloquear ejecución hasta entrenamiento documentado."],
+      ["No investigar tendencias", "Pierde señales tempranas.", "Fallas repetitivas.", "Analizar datos y definir acciones preventivas."],
+      ["No conservar evidencia", "Debilita investigación.", "Causa raíz incierta.", "Fotografiar, segregar o documentar según procedimiento."],
+      ["Usar herramientas no dedicadas", "Transfiere residuos o partículas.", "Contaminación cruzada.", "Usar herramientas aprobadas o limpiar/liberar según SOP."]
+    ];
+
+    const pmModeTopics = [
+      ["Revisar cumplimiento sin ejecutar", "Observa la tarea, compara contra SOP, verifica materiales y confirma registro. Tu rol es asegurar el sistema, no sustituir evidencia con confianza personal."],
+      ["Auditar al equipo", "Haz preguntas de piso: qué SOP aplica, qué químico usas, cuál es el tiempo de contacto, qué haces si detectas una desviación."],
+      ["Validar registros", "Busca completitud, contemporaneidad, legibilidad, firmas, lotes, horas lógicas, correcciones trazables y revisión supervisora."],
+      ["Detectar brechas", "Compara práctica real contra documento vigente, entrenamiento, materiales disponibles y condiciones reales de trabajo."],
+      ["Preparar personal", "Entrena con demostración, observación práctica, preguntas tipo auditoría y retroalimentación específica."],
+      ["Conversar con QA", "Habla en términos de riesgo, impacto, evidencia, contención, causa raíz, CAPA y efectividad."],
+      ["Presentar hallazgos al cliente", "Muestra hechos, acciones, responsables, fechas y evidencia de seguimiento. Evita culpas y suposiciones."],
+      ["Priorizar riesgos", "Da prioridad a producto expuesto, pérdida de presión, químico incorrecto, datos no íntegros, contaminación cruzada y recurrencia."],
+      ["Dar seguimiento a CAPA", "No cierres solo por acción ejecutada; verifica que el problema no se repite y que la evidencia lo demuestra."],
+      ["Demostrar control operativo", "Une SOP vigente, personal entrenado, práctica observada, registro completo, métricas y mejora continua."]
+    ];
+
+    const qaClientQuestions = [
+      ["SOP", "¿Cómo confirmas que usas el SOP vigente?", "Consulto la fuente oficial, verifico código, título, versión, fecha efectiva y estado aprobado.", "Demuestra control documental y evita copias obsoletas."],
+      ["SOP", "¿Qué haces si el SOP no coincide con la práctica real?", "Detengo la normalización de la brecha, escalo a QA/supervisión y solicito evaluación formal.", "Una brecha entre papel y piso puede ser desviación o requerir cambio controlado."],
+      ["SOP", "¿Cómo entrenas un cambio de procedimiento?", "Uso la versión aprobada, registro entrenamiento y verifico competencia práctica si la tarea es crítica.", "El cambio no está implementado hasta que el personal afectado lo entiende y puede ejecutarlo."],
+      ["SOP", "¿Qué parte del SOP revisas antes de limpiar?", "Alcance, frecuencia, materiales, secuencia, seguridad, registros y criterios de aceptación.", "Evita ejecutar con información parcial."],
+      ["Limpieza", "¿Cómo aseguras que la técnica fue correcta?", "Observo secuencia, traslape, dirección, cambio de paños/mopas, tiempo de contacto y registro.", "La limpieza se controla por método y evidencia, no solo apariencia."],
+      ["Limpieza", "¿Por qué se limpia de arriba hacia abajo?", "Para evitar que partículas o residuos caigan sobre superficies ya tratadas.", "Explica la lógica de control de contaminación."],
+      ["Limpieza", "¿Qué haces si una superficie se seca antes del tiempo de contacto?", "Reaplico según SOP para cumplir el tiempo húmedo requerido.", "La eficacia depende del tiempo real de contacto."],
+      ["Limpieza", "¿Cómo evitas recontaminar una superficie limpia?", "Cambio cara de paño, guantes o mopa según SOP y mantengo flujo limpio a menos limpio.", "Controla transferencia por contacto."],
+      ["Documentación", "¿Qué significa 'si no está documentado, no se hizo'?", "Que sin evidencia verificable la actividad no puede defenderse como ejecutada.", "Refuerza trazabilidad e integridad de datos."],
+      ["Documentación", "¿Qué haces con un registro incompleto?", "No invento datos; escalo, corrijo según SOP y evalúo impacto.", "Protege ALCOA+."],
+      ["Documentación", "¿Cómo corriges un error documental?", "Mantengo dato original legible, agrego corrección, iniciales, fecha y razón si aplica.", "Evita ocultamiento o manipulación."],
+      ["Documentación", "¿Qué revisas antes de cerrar turno?", "Firmas, horas, áreas, químicos, lotes, espacios en blanco, correcciones y revisión supervisora.", "Previene hallazgos tardíos."],
+      ["Contaminación", "¿Cómo se evita contaminación cruzada?", "Con flujos definidos, segregación, materiales aprobados, técnica, gowning y control de residuos.", "Muestra visión de sistema."],
+      ["Contaminación", "¿Qué fuentes de contaminación aporta el personal?", "Partículas, biocarga, contacto, movimiento, errores de gowning y objetos no permitidos.", "El personal es barrera y fuente de riesgo."],
+      ["Contaminación", "¿Qué haces si se bloquea un retorno?", "Retiro obstrucción, notifico y evalúo si afectó flujo o presión.", "Los retornos sostienen patrones de aire."],
+      ["Contaminación", "¿Qué observas en un mapa de riesgo?", "Puntos de transferencia: personas, materiales, residuos, químicos, puertas, carros y registros.", "Ayuda a priorizar controles."],
+      ["Químicos", "¿Cómo sabes qué químico usar?", "Verifico SOP, lista aprobada, etiqueta, concentración, lote, vencimiento y SDS si aplica.", "Evita uso por costumbre."],
+      ["Químicos", "¿Qué es tiempo de contacto?", "Tiempo que el químico debe permanecer húmedo para lograr eficacia esperada.", "Concepto crítico de desinfección."],
+      ["Químicos", "¿Por qué existe rotación de químicos?", "Para cubrir espectro de control definido, manejar residuos y cumplir estrategia aprobada.", "No se rota por preferencia del turno."],
+      ["Químicos", "¿Qué haces si un químico está vencido?", "Lo retiro/segrego, notifico y evalúo superficies donde pudo usarse.", "Protege eficacia y trazabilidad."],
+      ["Desviaciones", "¿Qué haces si observas una desviación?", "Contengo, notifico, documento hechos, conservo evidencia y sigo el flujo aprobado.", "Prioriza riesgo y trazabilidad."],
+      ["Desviaciones", "¿Qué información reportas?", "Qué ocurrió, cuándo, dónde, quién detectó, acción inmediata, material/área afectada y evidencia.", "Facilita investigación."],
+      ["Desviaciones", "¿Cuándo escalas de inmediato?", "Producto expuesto, presión fuera de control, químico incorrecto, ingreso no autorizado o dato no confiable.", "Enfoca criticidad."],
+      ["Desviaciones", "¿Qué no debes hacer ante una desviación?", "Ocultarla, corregir evidencia o esperar a ver si alguien pregunta.", "Aumenta impacto y riesgo regulatorio."],
+      ["CAPA", "¿Qué diferencia hay entre corrección y CAPA?", "La corrección arregla el evento; CAPA elimina causa raíz y previene recurrencia.", "Evita confundir contención con solución sistémica."],
+      ["CAPA", "¿Qué es causa raíz?", "La condición fundamental que permitió el problema y que debe corregirse para evitar repetición.", "No basta culpar al operador."],
+      ["CAPA", "¿Cómo verificas efectividad?", "Con datos posteriores: auditorías, registros, observaciones y ausencia de recurrencia.", "Cierra el ciclo de mejora."],
+      ["CAPA", "¿Qué CAPA propondrías ante firmas faltantes repetidas?", "Analizar carga de cierre, rediseñar revisión, reentrenar y medir cumplimiento por turno.", "Ataca sistema y recurrencia."],
+      ["Gowning", "¿Qué revisas antes de ingresar?", "Autorización, entrenamiento, higiene, objetos prohibidos, gowning requerido y condición personal.", "Control antes de la barrera."],
+      ["Gowning", "¿Qué haces si el gowning toca el piso?", "Sigo SOP: cambio prenda o repito paso y evalúo contacto.", "Evita introducir contaminación."],
+      ["Gowning", "¿Por qué sanitizar guantes?", "Reduce transferencia por contacto durante ingreso o tarea.", "Los guantes también se contaminan."],
+      ["Gowning", "¿Cómo entrenas gowning?", "Demostración, práctica observada, criterios de aceptación y registro de competencia.", "No es solo lectura."],
+      ["Auditoría", "¿Qué evidencias tienes listas?", "SOP, registros, entrenamiento, químicos aprobados, desviaciones, CAPA y revisión supervisora.", "Une proceso con evidencia."],
+      ["Auditoría", "¿Qué haces si no sabes responder?", "No invento; indico cómo lo verificaré y con quién corresponde.", "Protege credibilidad."],
+      ["Auditoría", "¿Qué nunca dirías?", "Siempre lo hacemos así, lo firmamos después o QA lo arregla.", "Frases que exponen brecha de control."],
+      ["Auditoría", "¿Cómo respondes a un hallazgo?", "Reconozco hechos, muestro contención, evaluación, acción y seguimiento.", "Demuestra madurez."],
+      ["Supervisión", "¿Cómo auditas al equipo sin hacer la tarea?", "Observo, pregunto, comparo contra SOP y reviso evidencia.", "Supervisión es verificación del sistema."],
+      ["Supervisión", "¿Qué métricas usas?", "Registros correctos, desviaciones, retraining, observaciones, CAPA a tiempo y hallazgos.", "Mide control, no solo actividad."],
+      ["Supervisión", "¿Cómo priorizas brechas?", "Por impacto a calidad, seguridad, cumplimiento, cliente y recurrencia.", "Enfoque basado en riesgo."],
+      ["Supervisión", "¿Cómo preparas al personal para cliente?", "Practico preguntas, reviso registros, confirmo SOP y observo tareas críticas.", "Prepara evidencia y confianza."]
+    ];
+
     const flashcards = glossaryTerms.slice(0, 8);
 
-    const finalQuestions = [
-      q("Una PM observa que el equipo usa paños no aprobados porque 'son iguales'. ¿Qué debe hacer?", ["Permitirlo si limpian bien", "Detener/contener, verificar SOP, escalar y corregir", "Comprar más sin avisar"], 1, "Correcto: materiales no aprobados pueden afectar control y cumplimiento."),
-      q("¿Cuál es la razón principal para documentar limpieza?", ["Tener evidencia verificable de ejecución", "Llenar archivos", "Evitar conversar con auditoría"], 0, "Correcto."),
-      q("Una sala ISO 5 es comparada con ISO 8. ¿Cuál es más estricta?", ["ISO 5", "ISO 8", "Son iguales"], 0, "Correcto."),
-      q("¿Qué acción reduce dispersión de partículas por personal?", ["Movimientos lentos y controlados", "Caminar rápido", "Abrir puertas para ventilar"], 0, "Correcto."),
-      q("¿Qué representa contaminación cruzada?", ["Transferencia no deseada entre áreas/productos/herramientas", "Limpieza con dos personas", "Cambio de uniforme"], 0, "Correcto."),
-      q("¿Qué debe hacer alguien si no entiende un paso del SOP?", ["Escalar la duda antes de improvisar", "Omitirlo", "Usar memoria"], 0, "Correcto."),
-      q("¿Qué error documental es crítico?", ["Firma faltante", "Letra clara", "Fecha completa"], 0, "Correcto."),
-      q("¿¿Qué revisan comúnmente los auditores?", ["SOP, registros, entrenamiento y prácticas reales", "Solo decoración", "Solo velocidad del equipo"], 0, "Correcto."),
-      q("¿Qué significa limpiar de arriba hacia abajo?", ["Controlar que partículas caigan antes de limpiar zonas bajas", "Ahorrar escalera", "No limpiar pisos"], 0, "Correcto."),
-      q("¿Qué hace efectiva una acción correctiva?", ["Causa raíz, responsable, fecha, evidencia y verificación", "Solo pedir más cuidado", "Cambiar el nombre del formato"], 0, "Correcto.")
-    ];
+
+    function buildAdvancedQuestionBank() {
+      const seeds = [
+        ["GMP", "El equipo ejecutó limpieza correcta pero registró al final del turno por memoria. ¿Cuál es el riesgo principal?", ["Pérdida de contemporaneidad e integridad de datos", "Solo una demora administrativa", "No hay riesgo si recuerda bien"], 0, "Registrar tarde debilita ALCOA+ y la defensa ante auditoría."],
+        ["GMP", "Producción pide omitir una limpieza intermedia para recuperar tiempo. ¿Qué debe hacer la PM?", ["Aceptar si el área se ve limpia", "Escalar conflicto y seguir SOP/liberación aplicable", "Pedir que firmen después"], 1, "La presión operativa no justifica omitir controles aprobados."],
+        ["SOP", "El SOP vigente no menciona una práctica que el equipo usa a diario. ¿Qué procede?", ["Normalizarla porque funciona", "Escalar brecha para evaluación formal", "Eliminar evidencia de la práctica"], 1, "La práctica debe alinearse al documento o evaluarse mediante cambio controlado."],
+        ["SOP", "Una copia impresa no coincide con el sistema documental. ¿Cuál usas?", ["La copia con anotaciones", "La fuente oficial vigente", "La que conoce el turno"], 1, "La fuente oficial controla vigencia y aprobación."],
+        ["Data Integrity", "Un supervisor completa una firma faltante de un técnico ausente. ¿Qué principio se compromete?", ["Atribuible", "Flujo unidireccional", "Rotación química"], 0, "Cada dato debe atribuirse a quien ejecutó o verificó."],
+        ["Data Integrity", "Un registro tiene hora de finalización anterior a la de inicio. ¿Qué indica?", ["Posible error o dato no confiable que requiere corrección/evaluación", "Mejor eficiencia", "No requiere acción"], 0, "Las inconsistencias temporales deben investigarse."],
+        ["ALCOA+", "¿Qué significa contemporáneo en registros de limpieza?", ["Registrar cuando ocurre o en el momento definido", "Registrar cuando haya tiempo", "Registrar solo si hay auditoría"], 0, "Contemporaneidad evita reconstrucción por memoria."],
+        ["Contaminación", "Un carro bloquea un retorno HVAC durante la limpieza. ¿Cuál es la mejor acción?", ["Moverlo y evaluar posible impacto", "Dejarlo si no estorba", "Tapar la rejilla completamente"], 0, "El retorno puede afectar flujo y presión."],
+        ["Contaminación", "Material limpio cruza por ruta de residuos. ¿Qué riesgo domina?", ["Contaminación cruzada", "Exceso de documentación", "Menor consumo de químicos"], 0, "Los flujos evitan transferencia de contaminantes."],
+        ["Gowning", "La manga del gown toca el piso durante colocación. ¿Qué haces?", ["Seguir SOP para cambio/repetición y evaluar contacto", "Sacudirla y continuar", "Ocultarlo si no se ensució visualmente"], 0, "El piso es fuente de contaminación aunque no sea visible."],
+        ["Químicos", "La superficie se secó antes del tiempo de contacto. ¿Qué implica?", ["La eficacia puede no estar demostrada", "La limpieza fue mejor", "El registro se completa igual sin nota"], 0, "El tiempo húmedo es parte del método."],
+        ["Químicos", "Un químico no tiene etiqueta completa. ¿Qué haces?", ["Segregar/no usar y notificar", "Usarlo si huele correcto", "Poner cualquier fecha estimada"], 0, "Etiqueta sostiene seguridad, trazabilidad y uso correcto."],
+        ["Desviaciones", "Encuentras mopa de ISO 8 usada en ISO 7. ¿Cómo clasificas inicialmente?", ["Posible contaminación cruzada/desviación", "Mejora de eficiencia", "No conformidad cerrada automáticamente"], 0, "Requiere contención y evaluación de impacto."],
+        ["Desviaciones", "¿Qué es lo primero ante una condición fuera de procedimiento con posible impacto?", ["Contener y notificar", "Buscar culpable", "Esperar cierre de turno"], 0, "La contención limita impacto."],
+        ["CAPA", "Una CAPA dice solo 'reentrenar'. ¿Qué falta evaluar?", ["Causa raíz y efectividad", "Color del formato", "Firma del cliente únicamente"], 0, "Reentrenar puede ser insuficiente si la causa es sistémica."],
+        ["CAPA", "Tres recurrencias del mismo error documental indican:", ["Posible falla sistémica", "Mala suerte", "Que el formato es perfecto"], 0, "La recurrencia exige análisis de causa y acciones robustas."],
+        ["Monitoreo ambiental", "Resultados suben tres semanas pero no exceden acción. ¿Qué haces?", ["Analizar tendencia y posibles preventivas", "Ignorar hasta fallar", "Cambiar datos"], 0, "Las tendencias permiten prevenir."],
+        ["Monitoreo ambiental", "Un resultado fuera de límite aparece tras cambio de desinfectante. ¿Qué aporta limpieza?", ["Fechas, lotes, técnica, entrenamiento y cambios operativos", "Opiniones sin evidencia", "Nada, es asunto de laboratorio"], 0, "La investigación necesita contexto operativo."],
+        ["Auditoría", "Auditor pregunta algo que no sabes. ¿Mejor respuesta?", ["No inventar; indicar cómo verificarás y con quién", "Inventar para sonar segura", "Cambiar de tema"], 0, "La credibilidad depende de honestidad y evidencia."],
+        ["Auditoría", "¿Cuál frase es riesgosa ante cliente?", ["Lo firmamos después si hace falta", "El SOP vigente indica esta secuencia", "Este registro evidencia la tarea"], 0, "Sugiere mala práctica documental."],
+        ["Limpieza", "¿Qué observa una PM para verificar técnica?", ["Secuencia, traslape, paños, mopas, contacto y registro", "Solo brillo final", "Solo rapidez"], 0, "La técnica controlada sostiene cumplimiento."],
+        ["Limpieza", "Limpiar de menos limpio a más limpio puede causar:", ["Transferencia de contaminación", "Mejor flujo documental", "Menos necesidad de SOP"], 0, "La secuencia controla dirección del riesgo."],
+        ["EHS", "Mezclar químicos no autorizados puede generar:", ["Vapores, incompatibilidad o pérdida de eficacia", "Mejor desinfección siempre", "Menos documentación"], 0, "También compromete seguridad del personal."],
+        ["EHS", "Un colaborador reporta irritación por químico. ¿Qué priorizas?", ["Seguridad, SDS, contención y reporte", "Terminar la limpieza primero", "Cambiar el registro"], 0, "EHS y respuesta inmediata son parte del control."],
+        ["Liderazgo", "¿Qué métrica revela debilidad de control?", ["Hallazgos repetidos por turno o área", "Número de reuniones sociales", "Color de etiquetas"], 0, "Las tendencias permiten dirigir supervisión."],
+        ["Liderazgo", "Corregir sin resistencia implica:", ["Explicar riesgo, escuchar barrera y dar seguimiento", "Regañar sin contexto", "Ignorar por evitar conflicto"], 0, "El coaching efectivo conecta conducta con riesgo."],
+        ["Materiales", "Ingresar cartón externo no aprobado genera riesgo de:", ["Fibras/partículas y contaminación", "Mejor protección", "Menor biocarga garantizada"], 0, "Los empaques externos suelen liberar partículas."],
+        ["Materiales", "Herramienta no dedicada entra al área. ¿Qué haces?", ["Verificar aprobación/limpieza y escalar si no cumple", "Usarla si es útil", "Registrar al final del mes"], 0, "Las herramientas pueden transferir contaminantes."],
+        ["Control de cambios", "Cambiar frecuencia de limpieza sin aprobación puede:", ["Invalidar estrategia de control", "Mejorar siempre cumplimiento", "No requerir evidencia"], 0, "Frecuencia forma parte del control aprobado."],
+        ["Control de cambios", "Nuevo desinfectante requiere típicamente:", ["Evaluación, aprobación, entrenamiento y actualización documental", "Solo compra", "Uso inmediato por necesidad"], 0, "Puede impactar eficacia, seguridad y compatibilidad."]
+      ];
+      const bank = [];
+      seeds.forEach((item, idx) => {
+        const [topic, text, options, answer, feedback] = item;
+        bank.push(q("[" + topic + "] " + text, options, answer, feedback));
+        bank.push(q("[" + topic + "] En auditoría te preguntan: " + text, options, answer, feedback + " Responde con SOP vigente y evidencia."));
+        bank.push(q("[" + topic + "] Como PM, ¿qué decisión es más defendible? " + text, options, answer, feedback + " Prioriza riesgo, contención y trazabilidad."));
+        bank.push(q("[" + topic + "] Caso " + (idx + 1) + ": " + text, options, answer, feedback));
+      });
+      return bank;
+    }
+
+    const finalQuestionBank = buildAdvancedQuestionBank();
+    let currentFinalQuestions = [];
+
+    function getFinalQuestions() {
+      if (!state.finalQuestionIds || state.finalQuestionIds.length !== 50) {
+        state.finalQuestionIds = shuffle(finalQuestionBank.map((_, i) => i)).slice(0, 50);
+        save();
+      }
+      currentFinalQuestions = state.finalQuestionIds.map(i => finalQuestionBank[i]);
+      return currentFinalQuestions;
+    }
+
+    const finalQuestions = finalQuestionBank;
 
     const auditFaqs = [
       ["¿Qué haces si observas una desviación durante la limpieza?", "Detengo o contengo la actividad si hay riesgo, notifico al supervisor/QA según el flujo definido, documento el evento y espero la evaluación antes de continuar si aplica.", "La respuesta muestra control inmediato del riesgo, escalamiento y trazabilidad. Nota: siempre responde y actúa según el SOP oficial de la empresa."],
@@ -1299,6 +1740,7 @@
             ${m.sop ? renderSopActivity() : ""}
             ${m.recordReview ? renderRecordReview() : ""}
             ${m.audit ? renderAuditSimulator() : ""}
+            ${m.decisionCases ? renderDecisionCases(m) : ""}
             ${renderQuiz(m)}
             <div class="card">
               <h3>Notas del módulo</h3>
@@ -1380,6 +1822,21 @@
         </div>`).join("")}</div>`;
     }
 
+    function renderDecisionCases(m) {
+      return `<div class="activity">
+        <h3>Casos de decisión operativa</h3>
+        <p>Analiza el escenario como líder de limpieza/facility services. La respuesta correcta prioriza contención, evidencia, escalamiento y cumplimiento del SOP vigente.</p>
+        ${m.decisionCases.map((c, i) => `
+          <div class="quiz-question">
+            <strong>${i + 1}. ${c.case}</strong>
+            <div class="options">
+              ${c.options.map((opt, oi) => `<button class="option" onclick="activityFeedback(this, ${oi === c.answer}, '${c.feedback.replace(/'/g, "\\'")}')">${opt}</button>`).join("")}
+            </div>
+            <div class="feedback"></div>
+          </div>`).join("")}
+      </div>`;
+    }
+
     function renderSopActivity() {
       return `<div class="activity"><h3>Actividad: Analiza un SOP ficticio</h3>
         <div class="notice warning"><strong>SOP CLN-007 Limpieza de mesa de preparación</strong><br>Versión: 03. Objetivo: remover residuos y reducir biocarga. Alcance: mesas de preparacion ISO 7. Materiales: paño aprobado CR-12, desinfectante aprobado, guantes. Procedimiento: verificar despeje del área, sanitizar guantes, aplicar desinfectante, limpiar con trazos superpuestos, respetar 5 minutos de contacto, registrar fecha/hora/firma/lote.</div>
@@ -1444,7 +1901,31 @@
           <div class="module-body">
             <div class="card"><h3>Tarjetas de memoria</h3><p>Haz clic en cada tarjeta para ver la definición.</p><div class="flashcards">${flashcards.map(([term, def]) => `
               <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><span class="pill">Término</span><strong>${term}</strong></div><div class="flash-face back"><span class="pill green">Definición</span><p>${def}</p></div></div></div>`).join("")}</div></div>
-            <div class="card"><h3>Glosario técnico</h3><p>Definiciones breves para hablar con QA, EHS, Facilities y clientes con más precisión.</p><div class="glossary-grid">${glossaryTerms.map(([term, def]) => `
+            <div class="card"><h3>Modo Project Manager</h3><p>Enfoque ejecutivo para demostrar control operativo sin ejecutar directamente cada tarea.</p><div class="mastery-grid">${pmModeTopics.map(([title, text]) => `
+              <article class="mastery-card"><strong>${title}</strong><p>${text}</p></article>`).join("")}</div>
+              <h4 style="margin-top:16px;">Checklist ejecutivo</h4>
+              ${["Puedo explicar el SOP vigente y sus registros asociados.","Sé qué desviaciones están abiertas y cuál es su impacto.","Reviso datos con criterio ALCOA+ antes del cierre.","Observo tareas críticas en piso y documento tendencias.","Tengo evidencia de entrenamiento y competencia práctica.","Puedo presentar riesgos, CAPA y métricas al cliente sin improvisar."].map(x => `<label class="check-item"><input type="checkbox"><span>${x}</span></label>`).join("")}
+            </div>
+            <div class="card"><h3>Errores críticos que pueden comprometer un cleanroom</h3><p>Cada error incluye riesgo, consecuencia y acción correcta. Úsalo como checklist de auditoría interna.</p><div class="grid two">${criticalErrors.map(([error, risk, consequence, action]) => `
+              <article class="qa-card">
+                <div><strong>${error}</strong></div>
+                <div class="why"><strong>Riesgo</strong><p>${risk}</p></div>
+                <div class="answer"><strong>Consecuencia</strong><p>${consequence}</p></div>
+                <div><strong>Acción correcta</strong><p>${action}</p></div>
+              </article>`).join("")}</div></div>
+            <div class="card"><h3>Preguntas que debo poder responder ante QA, EHS o cliente</h3><p>Banco por categoría para practicar respuestas con evidencia. Recuerda: siempre prevalece el SOP oficial, la versión vigente y los requisitos de tu empresa, cliente o autoridad aplicable.</p><div class="grid two">${qaClientQuestions.map(([cat, question, answer, why]) => `
+              <article class="qa-card">
+                <span class="pill">${cat}</span>
+                <div><strong>${question}</strong></div>
+                <div class="answer"><strong>Respuesta sugerida</strong><p>${answer}</p></div>
+                <div class="why"><strong>Por qué funciona</strong><p>${why}</p></div>
+              </article>`).join("")}</div></div>
+            <div class="card"><h3>Modo repaso</h3><p>Repaso rápido para antes de caminar el área, entrenar personal o enfrentar una auditoría.</p><div class="grid three">
+              <div class="card"><h4>Conceptos clave</h4><div class="callout-list">${glossaryTerms.slice(0, 12).map(([t, d]) => `<div><strong>${t}:</strong> ${d}</div>`).join("")}</div></div>
+              <div class="card"><h4>Errores frecuentes</h4><div class="callout-list">${criticalErrors.slice(0, 10).map(([e, r]) => `<div><strong>${e}:</strong> ${r}</div>`).join("")}</div></div>
+              <div class="card"><h4>Auditoría express</h4><div class="callout-list">${qaClientQuestions.slice(0, 10).map(([cat, q]) => `<div><span class="pill">${cat}</span> ${q}</div>`).join("")}</div></div>
+            </div></div>
+            <div class="card"><h3>Glosario técnico avanzado</h3><p>Definiciones breves para hablar con QA, EHS, Facilities y clientes con más precisión.</p><input id="glossarySearch" class="notes" style="min-height:44px; resize:none; margin-bottom:12px;" placeholder="Buscar término: CAPA, HEPA, ALCOA+, presión diferencial..." oninput="filterGlossary(this.value)"><div class="glossary-grid" id="glossaryGrid">${glossaryTerms.map(([term, def]) => `
               <article class="glossary-item"><strong>${term}</strong><p>${def}</p></article>`).join("")}</div></div>
             <div class="grid two">
               <div class="card"><h3>Errores que debo evitar</h3><div class="callout-list">
@@ -1460,25 +1941,32 @@
     }
 
     function buildFinal() {
-      document.getElementById("final").innerHTML = `
-        <article class="module">
-          <header class="module-header"><span class="pill green">Evaluación</span><h2>Banco de preguntas final</h2><p>Evalúa fundamentos generales de cleanroom, liderazgo operativo, documentación y auditoría.</p></header>
-          <div class="module-body">
-            <div class="notice">Esta evaluación es de aprendizaje interno. No sustituye entrenamiento oficial ni calificación de la empresa.</div>
-            <div class="quiz" id="finalQuiz">${finalQuestions.map((question, i) => `
-              <div class="quiz-question" data-final="${i}">
-                <strong>${i + 1}. ${question.text}</strong>
-                <div class="options">${question.options.map((opt, oi) => `<button class="option" onclick="answerFinal(${i}, ${oi}, this)">${opt}</button>`).join("")}</div>
-                <div class="feedback"></div>
-              </div>`).join("")}</div>
-            <div class="card">
-              <h3>Resultado</h3>
-              <div class="final-score" id="finalScore">${state.finalScore === null ? "--" : state.finalScore + "%"}</div>
-              <p id="finalMessage">Completa todas las preguntas para calcular tu puntuación.</p>
-              <div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuación</button><button class="btn secondary" onclick="resetFinal()">Reintentar evaluación</button></div>
-            </div>
-          </div>
-        </article>`;
+      currentFinalQuestions = getFinalQuestions();
+      const quizHtml = currentFinalQuestions.map(function(question, i) {
+        const optionsHtml = question.options.map(function(opt, oi) {
+          return '<button class="option" onclick="answerFinal(' + i + ', ' + oi + ', this)">' + opt + '</button>';
+        }).join("");
+        return '<div class="quiz-question" data-final="' + i + '"><strong>' + (i + 1) + '. ' + question.text + '</strong><div class="options">' + optionsHtml + '</div><div class="feedback"></div></div>';
+      }).join("");
+      document.getElementById("final").innerHTML =
+        '<article class="module">' +
+          '<header class="module-header"><span class="pill green">Evaluación avanzada</span><h2>Examen final aleatorio</h2><p>50 preguntas seleccionadas de un banco de ' + finalQuestionBank.length + '. Evalúa razonamiento operativo, documentación, GMP, ALCOA+, CAPA, desviaciones, auditoría y control de contaminación.</p></header>' +
+          '<div class="module-body">' +
+            '<div class="notice">Esta evaluación es de aprendizaje interno. No sustituye entrenamiento oficial ni calificación de la empresa. No está diseñada para ser fácil: busca detectar criterio operativo real.</div>' +
+            '<div class="quiz" id="finalQuiz">' + quizHtml + '</div>' +
+            '<div class="card"><h3>Resultado</h3><div class="final-score" id="finalScore">' + (state.finalScore === null ? "--" : state.finalScore + "%") + '</div><p id="finalMessage">Completa las 50 preguntas para calcular tu puntuación, nivel y recomendación de repaso.</p><div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuación</button><button class="btn secondary" onclick="resetFinal()">Nuevo set aleatorio</button></div></div>' +
+          '</div>' +
+        '</article>';
+    }
+
+    function filterGlossary(value) {
+      const term = (value || "").toLowerCase();
+      const grid = document.getElementById("glossaryGrid");
+      if (!grid) return;
+      grid.innerHTML = glossaryTerms
+        .filter(([name, def]) => (name + " " + def).toLowerCase().includes(term))
+        .map(([name, def]) => `<article class="glossary-item"><strong>${name}</strong><p>${def}</p></article>`)
+        .join("");
     }
 
     function showSection(id) {
@@ -1508,32 +1996,43 @@
 
     const finalAnswers = {};
     function answerFinal(i, optionIndex, btn) {
-      const question = finalQuestions[i];
+      const question = currentFinalQuestions[i];
       const parent = btn.closest(".quiz-question");
       parent.querySelectorAll(".option").forEach(o => o.classList.remove("correct", "incorrect"));
       btn.classList.add(optionIndex === question.answer ? "correct" : "incorrect");
-      parent.querySelector(".feedback").textContent = optionIndex === question.answer ? question.feedback : "Respuesta recomendada: " + question.options[question.answer];
+      parent.querySelector(".feedback").textContent = optionIndex === question.answer ? question.feedback : "Respuesta recomendada: " + question.options[question.answer] + ". " + question.feedback;
       parent.querySelector(".feedback").className = "feedback " + (optionIndex === question.answer ? "good" : "bad");
       finalAnswers[i] = optionIndex;
     }
 
     function calculateFinal() {
       const answered = Object.keys(finalAnswers).length;
-      if (answered < finalQuestions.length) {
-        alert(`Faltan ${finalQuestions.length - answered} preguntas por responder.`);
+      if (answered < currentFinalQuestions.length) {
+        alert("Faltan " + (currentFinalQuestions.length - answered) + " preguntas por responder.");
         return;
       }
-      const correct = finalQuestions.filter((q, i) => finalAnswers[i] === q.answer).length;
-      const score = Math.round((correct / finalQuestions.length) * 100);
+      const correct = currentFinalQuestions.filter((q, i) => finalAnswers[i] === q.answer).length;
+      const score = Math.round((correct / currentFinalQuestions.length) * 100);
+      const level = score >= 92 ? "Listo para auditoría" : score >= 82 ? "Avanzado" : score >= 70 ? "Intermedio" : "Básico";
+      const recommendation = score >= 92
+        ? "Mantén práctica con escenarios difíciles y prepara evidencia real de tu operación."
+        : score >= 82
+          ? "Refuerza CAPA, Data Integrity y preguntas de auditoría con casos reales de tu sitio."
+          : score >= 70
+            ? "Repasa módulos avanzados 11-21 y practica decisiones de desviación, químicos y documentación."
+            : "Vuelve a estudiar fundamentos, glosario, errores críticos y SOP antes de exponerte a una auditoría.";
       state.finalScore = score;
+      state.finalLevel = level;
       save();
       document.getElementById("finalScore").textContent = score + "%";
-      document.getElementById("finalMessage").textContent = score >= 85 ? "Excelente dominio general. Buen nivel para conversar con QA, Facilities y operaciones." : score >= 70 ? "Buen avance. Refuerza los módulos donde dudaste y repite escenarios de auditoría." : "Conviene repasar los fundamentos y practicar con tu SOP real antes de una auditoría.";
+      document.getElementById("finalMessage").innerHTML = "<strong>Nivel obtenido: " + level + "</strong><br>" + recommendation;
     }
 
     function resetFinal() {
       Object.keys(finalAnswers).forEach(k => delete finalAnswers[k]);
       state.finalScore = null;
+      state.finalLevel = null;
+      delete state.finalQuestionIds;
       save();
       buildFinal();
     }
