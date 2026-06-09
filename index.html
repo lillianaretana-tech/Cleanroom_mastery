@@ -435,6 +435,37 @@
       padding: 10px 12px;
     }
 
+    .analysis-input {
+      width: 100%;
+      min-height: 120px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      resize: vertical;
+      background: #fff;
+    }
+
+    .analysis-result {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      color: var(--ink);
+      margin-top: 10px;
+    }
+
+    .score-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      background: var(--green-soft);
+      color: #1f7a59;
+      margin-bottom: 8px;
+    }
+
     .glossary-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -850,7 +881,7 @@
         <section id="dashboard" class="section active">
           <div class="hero">
             <div>
-              <span class="pill green">Academia corporativa</span>
+              <span class="pill green">Academia corporativa · Versión 2.0 profesional</span>
               <h2>Cleanroom Mastery | Academia Operativa para Facility Services</h2>
               <p>Bienvenida. Esta plataforma resume fundamentos, buenas prácticas y escenarios operativos para una Project Manager que lidera limpieza, soporte y facility services en ambientes controlados.</p>
               <div class="notice success">
@@ -858,7 +889,7 @@
               </div>
               <div class="hero-metrics">
                 <div class="metric"><strong>21</strong><span>módulos interactivos</span></div>
-                <div class="metric"><strong>250+</strong><span>preguntas y actividades</span></div>
+                <div class="metric"><strong>350+</strong><span>preguntas, casos y actividades</span></div>
                 <div class="metric"><strong>1</strong><span>evaluación final</span></div>
               </div>
             </div>
@@ -1627,6 +1658,134 @@
       ["Supervisión", "¿Cómo preparas al personal para cliente?", "Practico preguntas, reviso registros, confirmo SOP y observo tareas críticas.", "Prepara evidencia y confianza."]
     ];
 
+
+    const professionalProgramTracks = [
+      ["Operación y mantenimiento de cleanrooms", "Gobernanza diaria de presión, HVAC, accesos, limpieza, mantenimiento, alarmas, limpieza post-mantenimiento, liberación de áreas y coordinación con Facilities/QA. Una PM debe distinguir mantenimiento planeado, correctivo y actividades con posible impacto ambiental."],
+      ["ISO 14644 + guías IEST", "ISO 14644 no se limita a clase ISO: se conecta con estrategia de monitoreo, pruebas periódicas, recuperación, integridad de filtros, flujo de aire, partículas y operación sostenida. Las prácticas IEST suelen usarse como referencia técnica para filtros, pruebas, garments, wipers, mopas y consumibles."],
+      ["Estrategia de Control de Contaminación (CCS)", "La CCS integra instalaciones, personal, limpieza, desinfección, monitoreo, materiales, mantenimiento, validación, desviaciones y CAPA. Para limpieza, significa demostrar que cada actividad reduce o contiene un riesgo específico."],
+      ["Control de contaminación avanzado", "Incluye transferencia de materiales, flujo de residuos, comportamiento del personal, biocarga, partículas viables/no viables, presión diferencial, puertas, rutas, segregación y prevención de recontaminación."],
+      ["Monitoreo ambiental y respuesta operativa", "La PM debe entender tendencias, límites de alerta/acción, investigación de OOL/OOT, relación con limpieza, cambios recientes y evidencia que puede aportar el equipo de facility services."],
+      ["GMP y documentación", "GMP exige que limpieza sea ejecutada, verificada y documentada con integridad. ALCOA+, control documental, versión vigente, entrenamiento, revisión supervisora y trazabilidad son parte del servicio."],
+      ["Transferencia de materiales", "Controla ingreso, sanitización, cuarentena, estatus, rutas, empaque, doble bolsa, carros, herramientas, residuos y puntos de contacto para evitar transferencia de partículas o biocarga."],
+      ["Investigación de desviaciones", "Implica contención, hechos, evaluación de impacto, causa raíz, CAPA y efectividad. Limpieza debe aportar datos de ejecución, materiales, personal, rutas, tiempos, químicos y eventos anormales."]
+    ];
+
+    const pmV2Topics = [
+      ["Cómo auditar un servicio de limpieza", "Define checklist por riesgo, observa tareas críticas, entrevista personal, revisa registros, confirma materiales aprobados, compara práctica contra SOP y documenta hallazgos por criticidad."],
+      ["Verificar cumplimiento sin ejecutar", "Usa evidencia triangular: observación en piso, registro completo y conocimiento del operador. Si una de las tres falla, hay brecha de control."],
+      ["Construir KPIs de cleanroom", "Mide right-first-time documental, desviaciones por turno/área, retraining, hallazgos repetidos, CAPA a tiempo, observaciones de comportamiento y cumplimiento de frecuencia."],
+      ["Presentar resultados al cliente", "Presenta tendencia, riesgo, acción, responsable, fecha y evidencia. Evita reportes decorativos; muestra control operacional y decisiones basadas en datos."],
+      ["Justificar aumento de recursos", "Conecta carga de trabajo, frecuencias, tiempos de gowning, traslados, ventanas de limpieza, desviaciones, overtime, retrasos y riesgo de incumplimiento."],
+      ["Detectar brechas de capacitación", "Busca errores repetidos, respuestas débiles ante preguntas de auditoría, diferencias entre turnos, fallas de técnica y registros corregidos frecuentemente."],
+      ["Evaluar supervisores", "Evalúa si detectan riesgos antes de QA, revisan registros a tiempo, corrigen en piso, documentan coaching, escalan desviaciones y usan métricas para mejorar."],
+      ["Conversar con QA/EHS/cliente", "Habla en lenguaje de riesgo, evidencia, SOP, impacto, contención, CAPA, seguridad química y continuidad operacional."]
+    ];
+
+    const facilityManagementTopics = [
+      ["Planeación de frecuencias", "Define frecuencias por criticidad, uso, exposición, resultados EM, histórico de desviaciones, mantenimiento y requerimientos del cliente. Frecuencia alta sin técnica correcta no garantiza control."],
+      ["Diseño de rutas de limpieza", "Las rutas deben respetar flujo limpio a menos limpio, arriba hacia abajo, esclusas, residuos, acceso de materiales y ventanas operativas. Deben ser entrenables y auditables."],
+      ["Matriz de criticidad de áreas", "Clasifica áreas por exposición de producto/proceso, clasificación ISO, flujo de personal/materiales, historial EM, complejidad de limpieza y consecuencias de falla."],
+      ["Gestión de químicos", "Controla aprobación, SDS, concentración, vencimiento, preparación, rotación, compatibilidad, residuos, EPP, almacenamiento, etiquetas y trazabilidad de lotes."],
+      ["Gestión documental", "Mantén SOP, WI, formatos, bitácoras, registros de entrenamiento, cambios, desviaciones y CAPA alineados. Documento obsoleto en piso es riesgo real."],
+      ["Control de contratistas", "Asegura inducción, gowning, permisos, acompañamiento, herramientas aprobadas, limpieza post-trabajo, retiro de residuos y evaluación de impacto."],
+      ["Indicadores de desempeño", "No midas solo horas o asistencia; mide cumplimiento, calidad documental, hallazgos, recurrencia, tiempo de cierre, retraining efectivo y satisfacción del cliente."],
+      ["Ventanas operativas", "Planifica limpieza sin interferir con producción, monitoreo, mantenimiento y transferencias. Las ventanas deben considerar gowning, preparación y documentación."]
+    ];
+
+    const problemSolvingCases = [
+      {
+        title: "Conteo de partículas aumenta 35% por dos semanas consecutivas",
+        prompt: "El conteo no viable subió 35% durante dos semanas, aún dentro de límite de acción. ¿Qué investigarías primero y por qué?",
+        expected: ["HVAC", "presión", "puertas", "personal", "materiales", "limpieza", "procedimientos", "flujo de personas", "mantenimiento", "tendencia"],
+        model: "Una respuesta fuerte revisa primero cambios recientes y fuentes probables: HVAC/flujo/presión, puertas abiertas, aumento de personal, ingreso de materiales, cambios de limpieza, mantenimiento cercano, técnica de mopas/paños, cumplimiento de rutas y tendencia por punto/turno."
+      },
+      {
+        title: "Resultado microbiológico fuera de tendencia después de cambio de turno",
+        prompt: "Aparece aumento microbiológico en superficies de una esclusa, principalmente en turno nocturno. ¿Cómo estructurarías la investigación?",
+        expected: ["biocarga", "gowning", "turno", "entrenamiento", "guantes", "tiempo de contacto", "químico", "registro", "observación", "superficies"],
+        model: "Debe revisar gowning, sanitización de guantes, técnica, tiempo de contacto, químico usado, registros, entrenamiento del turno, frecuencia real, flujo de materiales y observación directa de la práctica."
+      },
+      {
+        title: "Puerta de esclusa con aperturas prolongadas",
+        prompt: "BMS reporta aperturas prolongadas en una esclusa de materiales. No hubo alarma crítica. ¿Qué evalúas?",
+        expected: ["BMS", "puertas", "presión", "materiales", "flujo", "transferencia", "tiempo", "registros", "impacto", "QA"],
+        model: "Revisa duración, frecuencia, presión diferencial, tipo de material transferido, estado de empaque, limpieza de transferencia, personal involucrado, registros y si requiere evaluación de impacto con QA/Facilities."
+      },
+      {
+        title: "Registro firmado antes de ejecutar limpieza",
+        prompt: "Detectas que un registro fue firmado antes de la hora real de ejecución. ¿Qué riesgo existe, qué desviación se genera y qué CAPA propondrías?",
+        expected: ["Data Integrity", "ALCOA", "contemporáneo", "desviación", "investigación", "causa raíz", "CAPA", "reentrenamiento", "supervisión", "efectividad"],
+        model: "Debe identificar riesgo de integridad de datos, desviación documental/GMP, posible impacto sobre liberación, investigación de causa raíz, contención del registro, retraining, revisión supervisora reforzada y verificación de efectividad."
+      }
+    ];
+
+    const realAuditScenarios = [
+      ["Registro firmado antes de ejecución", "Riesgo de Data Integrity: el dato no es contemporáneo ni confiable.", "Desviación GMP/documental; posible impacto si el área fue liberada con evidencia no confiable.", "Contener registro, evaluar impacto, investigar causa raíz, reentrenar, reforzar revisión supervisora y verificar efectividad."],
+      ["Químico vencido encontrado en carro de limpieza", "Riesgo de eficacia no demostrable y posible incumplimiento EHS/documental.", "Desviación por material no conforme o uso potencial de químico no apto.", "Segregar químico, identificar superficies potencialmente tratadas, evaluar impacto, mejorar control visual/kanban y auditorías de carro."],
+      ["Auditor observa bloqueo de retorno HVAC", "Riesgo de alterar patrón de aire, presión o remoción de partículas.", "Desviación de housekeeping/GMP o condición de facility fuera de control.", "Retirar obstrucción, evaluar duración/impacto, rediseñar ubicación de carros, entrenar y monitorear cumplimiento."],
+      ["Operador no puede explicar tiempo de contacto", "Riesgo de ejecución mecánica sin comprensión de parámetro crítico.", "Brecha de capacitación y posible desviación si la práctica fue incorrecta.", "Evaluar competencia, reentrenar con demostración, observación práctica y preguntas de verificación."],
+      ["Material ingresa sin transferencia aprobada", "Riesgo de partículas, biocarga y contaminación cruzada.", "Desviación de flujo de materiales y control de contaminación.", "Contener material, evaluar área, reforzar punto de transferencia, etiquetas/estatus y autorización de ingreso."]
+    ];
+
+
+
+    glossaryTerms.push(
+      ["TBD", "To Be Determined o To Be Defined: pendiente de definir. En documentos controlados debe cerrarse antes de aprobación si afecta ejecución."],
+      ["TBC", "To Be Confirmed: pendiente de confirmar."],
+      ["N/A", "Not Applicable: no aplica. Debe usarse solo cuando el formato o SOP lo permita."],
+      ["FYI", "For Your Information: para información; no sustituye una aprobación formal."],
+      ["ASAP", "As Soon As Possible: lo antes posible; en GMP conviene traducirlo a fecha/responsable concretos."],
+      ["ETA", "Estimated Time of Arrival: tiempo estimado de llegada."],
+      ["EOD", "End Of Day: fin del día."],
+      ["COB", "Close Of Business: cierre de jornada laboral."],
+      ["SME", "Subject Matter Expert: experto en la materia."],
+      ["QA", "Quality Assurance: aseguramiento de calidad."],
+      ["QC", "Quality Control: control de calidad."],
+      ["EHS", "Environment, Health and Safety: ambiente, salud y seguridad."],
+      ["FM", "Facility Management: gestión de instalaciones y servicios."],
+      ["BMS", "Building Management System: sistema que monitorea/controla variables del edificio como presión, temperatura o alarmas."],
+      ["EMS", "Environmental Monitoring System: sistema/programa de monitoreo ambiental."],
+      ["EM", "Environmental Monitoring: monitoreo ambiental."],
+      ["OOL", "Out Of Limit: fuera de límite."],
+      ["OOT", "Out Of Trend: fuera de tendencia."],
+      ["OOS", "Out Of Specification: fuera de especificación."],
+      ["CAPA Owner", "Responsable asignado de ejecutar y cerrar una CAPA."],
+      ["RFT", "Right First Time: correcto desde la primera vez."],
+      ["KPI", "Key Performance Indicator: indicador clave de desempeño."],
+      ["SLA", "Service Level Agreement: acuerdo de nivel de servicio."],
+      ["WI", "Work Instruction: instrucción de trabajo."],
+      ["JSA", "Job Safety Analysis: análisis de seguridad de la tarea."],
+      ["PTW", "Permit To Work: permiso de trabajo."],
+      ["LOTO", "Lockout/Tagout: bloqueo y etiquetado de energías peligrosas."],
+      ["PPE", "Personal Protective Equipment: EPP, equipo de protección personal."],
+      ["IPA", "Isopropyl Alcohol: alcohol isopropílico, común en limpieza/desinfección según aprobación."],
+      ["WFI", "Water For Injection: agua para inyección, término común en ambientes farmacéuticos."],
+      ["PW", "Purified Water: agua purificada."],
+      ["RO", "Reverse Osmosis: ósmosis inversa."],
+      ["DI Water", "Deionized Water: agua desionizada."],
+      ["CFU", "Colony Forming Unit: unidad formadora de colonia en microbiología."],
+      ["RODAC", "Replicate Organism Detection and Counting: placa de contacto para superficies."],
+      ["TSA", "Tryptic Soy Agar: medio de cultivo general."],
+      ["SDA", "Sabouraud Dextrose Agar: medio usado comúnmente para hongos/levaduras."],
+      ["PAO", "Polyalphaolefin: aerosol usado en pruebas de integridad de filtros HEPA."],
+      ["DOP", "Dioctyl Phthalate: término histórico asociado a pruebas de filtros; muchas operaciones usan PAO."],
+      ["ACH", "Air Changes per Hour: cambios de aire por hora."],
+      ["ACPH", "Air Changes Per Hour: otra abreviación para cambios de aire por hora."],
+      ["DP", "Differential Pressure: presión diferencial."],
+      ["UR/RH", "Relative Humidity: humedad relativa."],
+      ["Temp", "Temperature: temperatura."],
+      ["MAL", "Material Airlock: esclusa de materiales."],
+      ["PAL", "Personnel Airlock: esclusa de personal."],
+      ["CNC", "Controlled Not Classified: área controlada no clasificada."],
+      ["CCS", "Contamination Control Strategy: estrategia integral de control de contaminación."],
+      ["URS", "User Requirement Specification: especificación de requisitos de usuario."],
+      ["DQ/IQ/OQ/PQ", "Design, Installation, Operational and Performance Qualification: etapas de calificación."],
+      ["PM", "Preventive Maintenance o Project Manager según contexto; confirmar significado en el documento."],
+      ["CMMS", "Computerized Maintenance Management System: sistema para gestionar mantenimiento."],
+      ["WIP", "Work In Progress: trabajo en proceso."],
+      ["RCA", "Root Cause Analysis: análisis de causa raíz."]
+    );
+
     const flashcards = glossaryTerms.slice(0, 8);
 
 
@@ -1990,6 +2149,30 @@
           <div class="module-body">
             <div class="card"><h3>Tarjetas de memoria</h3><p>Haz clic en cada tarjeta para ver la definición.</p><div class="flashcards">${flashcards.map(([term, def]) => `
               <div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-face"><span class="pill">Término</span><strong>${term}</strong></div><div class="flash-face back"><span class="pill green">Definición</span><p>${def}</p></div></div></div>`).join("")}</div></div>
+
+            <div class="card"><h3>Cleanroom Mastery 2.0: programas profesionales avanzados</h3><p>Esta capa conecta operación, mantenimiento, ISO 14644, guías técnicas IEST, CCS, GMP, monitoreo y documentación con decisiones reales de Facility Services.</p><div class="mastery-grid">${professionalProgramTracks.map(([title, text]) => `
+              <article class="mastery-card"><strong>${title}</strong><p>${text}</p></article>`).join("")}</div></div>
+            <div class="grid two">
+              <div class="card"><h3>Nivel Project Manager</h3><p>Competencias para dirigir, auditar, justificar recursos y conversar con QA, EHS y cliente.</p><div class="callout-list">${pmV2Topics.map(([title, text]) => `<div><strong>${title}</strong><br>${text}</div>`).join("")}</div></div>
+              <div class="card"><h3>Nivel Facility Management</h3><p>Herramientas para planear frecuencias, rutas, criticidad, químicos, contratistas e indicadores.</p><div class="callout-list">${facilityManagementTopics.map(([title, text]) => `<div><strong>${title}</strong><br>${text}</div>`).join("")}</div></div>
+            </div>
+            <div class="card"><h3>Nivel Resolución de Problemas</h3><p>Escribe qué investigarías. El sistema analiza si cubriste dimensiones críticas como HVAC, personal, materiales, limpieza, procedimientos y flujo.</p><div class="grid two">${problemSolvingCases.map((c, i) => `
+              <article class="qa-card">
+                <span class="pill amber">Caso ${i + 1}</span>
+                <strong>${c.title}</strong>
+                <p>${c.prompt}</p>
+                <textarea class="analysis-input" id="problemAnswer-${i}" placeholder="Escribe tu análisis: hipótesis, datos que pedirías, evidencias, áreas a revisar, contención y escalamiento..."></textarea>
+                <div class="btn-row"><button class="btn secondary" onclick="analyzeProblemCase(${i})">Analizar mi respuesta</button></div>
+                <div class="analysis-result" id="problemResult-${i}">Pendiente de análisis.</div>
+              </article>`).join("")}</div></div>
+            <div class="card"><h3>Nivel Auditoría Real</h3><p>Escenarios tipo auditor externo/cliente. No basta contestar “qué es”; debes explicar riesgo, desviación y CAPA defendible.</p><div class="grid two">${realAuditScenarios.map(([scenario, risk, deviation, capa]) => `
+              <article class="qa-card">
+                <strong>${scenario}</strong>
+                <div class="why"><strong>Riesgo</strong><p>${risk}</p></div>
+                <div class="answer"><strong>Desviación probable</strong><p>${deviation}</p></div>
+                <div><strong>CAPA sugerida</strong><p>${capa}</p></div>
+                <span class="pill amber">Responder según SOP oficial</span>
+              </article>`).join("")}</div></div>
             <div class="card"><h3>Modo Project Manager</h3><p>Enfoque ejecutivo para demostrar control operativo sin ejecutar directamente cada tarea.</p><div class="mastery-grid">${pmModeTopics.map(([title, text]) => `
               <article class="mastery-card"><strong>${title}</strong><p>${text}</p></article>`).join("")}</div>
               <h4 style="margin-top:16px;">Checklist ejecutivo</h4>
@@ -2046,6 +2229,25 @@
             '<div class="card"><h3>Resultado</h3><div class="final-score" id="finalScore">' + (state.finalScore === null ? "--" : state.finalScore + "%") + '</div><p id="finalMessage">Completa las 50 preguntas para calcular tu puntuación, nivel y recomendación de repaso.</p><div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuación</button><button class="btn secondary" onclick="resetFinal()">Nuevo set aleatorio</button></div></div>' +
           '</div>' +
         '</article>';
+    }
+
+
+    function analyzeProblemCase(index) {
+      const problem = problemSolvingCases[index];
+      const input = document.getElementById("problemAnswer-" + index);
+      const output = document.getElementById("problemResult-" + index);
+      if (!problem || !input || !output) return;
+      const text = input.value.toLowerCase();
+      const hits = problem.expected.filter(word => text.includes(word.toLowerCase()));
+      const score = Math.round((hits.length / problem.expected.length) * 100);
+      const missing = problem.expected.filter(word => !hits.includes(word));
+      const level = score >= 75 ? "Sólida" : score >= 45 ? "Parcial" : "Débil";
+      output.innerHTML =
+        '<span class="score-chip">Cobertura: ' + score + '% · ' + level + '</span>' +
+        '<p><strong>Dimensiones cubiertas:</strong> ' + (hits.length ? hits.join(", ") : "ninguna dimensión crítica detectada") + '.</p>' +
+        '<p><strong>Dimensiones a considerar:</strong> ' + (missing.length ? missing.join(", ") : "cubres las dimensiones esperadas") + '.</p>' +
+        '<p><strong>Modelo de razonamiento:</strong> ' + problem.model + '</p>' +
+        '<p><strong>Nota:</strong> En operación real, valida siempre contra SOP vigente, QA/Facilities/EHS y datos objetivos.</p>';
     }
 
     function filterGlossary(value) {
