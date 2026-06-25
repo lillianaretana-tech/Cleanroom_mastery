@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cleanroom Mastery | Academia Operativa para Facility Services</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --ink: #1f2a37;
@@ -23,6 +24,86 @@
       --shadow: 0 16px 40px rgba(31, 42, 55, .10);
       --radius: 8px;
     }
+
+    /* ===== Certificado ===== */
+    .cert-gate { margin-top: 14px; padding: 16px; border-radius: var(--radius); background: var(--blue-soft); border: 1px solid var(--line); }
+    .cert-gate.locked { background: var(--soft); }
+    .cert-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+    .cert-fields .full { grid-column: 1 / -1; }
+    .cert-fields label { display: block; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .cert-fields input { width: 100%; padding: 11px 12px; font-size: 16px; border: 1px solid var(--line); border-radius: 6px; box-sizing: border-box; }
+    @media (max-width: 620px){ .cert-fields { grid-template-columns: 1fr; } }
+
+    .cert-overlay { display: none; position: fixed; inset: 0; background: rgba(15,42,55,.55); z-index: 9999; overflow: auto; padding: 24px; }
+    .cert-overlay.show { display: block; }
+    .cert-toolbar { max-width: 1000px; margin: 0 auto 14px; display: flex; gap: 10px; justify-content: flex-end; }
+    .cert-sheet {
+      max-width: 1000px; margin: 0 auto; background: #fff; padding: 48px 56px;
+      border: 14px solid var(--blue-dark); border-radius: 6px; position: relative;
+      box-shadow: 0 24px 60px rgba(0,0,0,.4); font-family: Georgia, 'Times New Roman', serif;
+    }
+    .cert-sheet::before {
+      content: ""; position: absolute; inset: 10px; border: 2px solid var(--blue);
+      border-radius: 4px; pointer-events: none;
+    }
+    .cert-inner { position: relative; text-align: center; }
+    .cert-badge {
+      width: 64px; height: 64px; margin: 0 auto 10px; border-radius: 14px;
+      background: var(--blue-dark); color: #fff; font-family: Arial, sans-serif; font-weight: 800;
+      font-size: 24px; display: flex; align-items: center; justify-content: center; letter-spacing: 1px;
+    }
+    .cert-brand { font-family: Arial, sans-serif; font-size: 15px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); font-weight: 700; }
+    .cert-title { font-size: 40px; color: var(--ink); margin: 6px 0 2px; font-weight: 700; }
+    .cert-sub { font-family: Arial, sans-serif; font-size: 14px; color: var(--muted); letter-spacing: 1px; margin-bottom: 26px; }
+    .cert-pre { font-size: 16px; color: var(--muted); margin-bottom: 6px; }
+    .cert-name { font-size: 38px; color: var(--blue-dark); font-weight: 700; padding: 4px 0 6px; border-bottom: 2px solid var(--line); display: inline-block; min-width: 60%; margin-bottom: 8px; }
+    .cert-org { font-family: Arial, sans-serif; font-size: 15px; color: var(--muted); margin-bottom: 22px; }
+    .cert-body { font-size: 17px; line-height: 1.6; color: var(--ink); max-width: 680px; margin: 0 auto 26px; }
+    .cert-body strong { color: var(--blue-dark); }
+    .cert-meta { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 34px; gap: 20px; }
+    .cert-meta .col { flex: 1; font-family: Arial, sans-serif; }
+    .cert-meta .col.center { text-align: center; }
+    .cert-line { border-top: 1.5px solid var(--ink); padding-top: 6px; font-size: 13px; color: var(--muted); }
+    .cert-score-chip { font-family: Arial, sans-serif; display: inline-block; background: var(--blue-soft); color: var(--blue-dark); font-weight: 700; padding: 6px 16px; border-radius: 20px; font-size: 15px; }
+    .cert-code { font-family: 'Courier New', monospace; font-size: 13px; color: var(--ink); letter-spacing: 1px; }
+    .cert-verify { font-family: Arial, sans-serif; font-size: 11px; color: var(--muted); margin-top: 18px; }
+
+    @media print {
+      body * { visibility: hidden !important; }
+      .cert-overlay, .cert-overlay * { visibility: visible !important; }
+      .cert-overlay { position: absolute; inset: 0; background: #fff; padding: 0; overflow: visible; }
+      .cert-toolbar { display: none !important; }
+      .cert-sheet { box-shadow: none; margin: 0 auto; max-width: 100%; border-width: 10px; }
+      @page { size: landscape; margin: 12mm; }
+    }
+
+    /* ===== Auth ===== */
+    .auth-overlay { position: fixed; inset: 0; background: linear-gradient(135deg,#0f4f83,#1769aa); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .auth-card { background: #fff; border-radius: 12px; padding: 30px; width: 100%; max-width: 400px; box-shadow: 0 24px 60px rgba(0,0,0,.3); }
+    .auth-card .brand-mark { width: 52px; height: 52px; border-radius: 12px; background: var(--blue-dark); color: #fff; font-weight: 800; font-size: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+    .auth-card h2 { text-align: center; margin: 0 0 4px; font-size: 22px; color: var(--ink); }
+    .auth-card .auth-sub { text-align: center; color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+    .auth-card label { display: block; font-size: 14px; font-weight: 600; margin: 10px 0 4px; }
+    .auth-card input { width: 100%; padding: 11px 12px; font-size: 16px; border: 1px solid var(--line); border-radius: 6px; box-sizing: border-box; }
+    .auth-card .btn { width: 100%; justify-content: center; margin-top: 16px; }
+    .auth-toggle { text-align: center; margin-top: 14px; font-size: 14px; color: var(--blue); cursor: pointer; }
+    .auth-msg { margin-top: 12px; font-size: 14px; padding: 8px 10px; border-radius: 6px; display: none; }
+    .auth-msg.show { display: block; }
+    .auth-msg.err { background: var(--red-soft); color: var(--red); }
+    .auth-msg.ok { background: var(--green-soft); color: var(--green); }
+
+    .session-bar { padding: 10px 12px; background: var(--blue-soft); border-radius: 8px; margin-bottom: 14px; font-size: 13px; }
+    .session-bar strong { display: block; color: var(--ink); }
+    .session-bar .rol { color: var(--blue); font-weight: 600; text-transform: capitalize; }
+    .session-bar button { margin-top: 8px; }
+
+    .people-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+    .people-table th, .people-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    .people-table th { color: var(--muted); font-weight: 600; }
+    .people-table input, .people-table select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 5px; font-size: 13px; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+    .tag.ok { background: var(--green-soft); color: var(--green); }
+    .tag.no { background: var(--soft); color: var(--muted); }
 
     * { box-sizing: border-box; }
 
@@ -856,6 +937,8 @@
         </div>
       </div>
 
+      <div class="session-bar" id="sessionBar" style="display:none;"></div>
+
       <div class="progress-box">
         <div class="progress-row">
           <span>Progreso general</span>
@@ -921,10 +1004,23 @@
 
           <h3 style="margin-top:22px;">Módulos</h3>
           <div class="grid cards" id="moduleCards"></div>
+
+          <div class="card" style="margin-top:22px;">
+            <h3>Verificar un certificado</h3>
+            <p>¿Recibiste un certificado y quieres confirmar que es legítimo? Escribe el código de verificación (formato CM-XXXX-XXXX).</p>
+            <div class="cert-fields" style="grid-template-columns:1fr auto;align-items:end;">
+              <div><label>Código de verificación</label>
+                <input id="verifyInput" type="text" placeholder="CM-XXXX-XXXX" style="text-transform:uppercase;"></div>
+              <div><button class="btn" onclick="verificarCertificado()">Verificar</button></div>
+            </div>
+            <div id="verifyResult"></div>
+          </div>
         </section>
 
         <section id="extras" class="section"></section>
         <section id="final" class="section"></section>
+        <section id="panelEquipo" class="section"></section>
+        <section id="panelDuena" class="section"></section>
       </div>
     </main>
   </div>
@@ -1868,9 +1964,19 @@
 
     function buildAdvancedQuestionBank() {
       const bank = [];
+      const seenKeys = new Set();
+      const normKey = (txt) => txt
+        .toLowerCase()
+        .replace(/\[[^\]]*\]/g, " ")        // quita etiquetas [Módulo X], [Caso MX], etc.
+        .replace(/caso aplicado:?/g, " ")   // unifica "Caso aplicado:" con el caso suelto
+        .replace(/[^a-záéíóúñ0-9 ]/g, " ")  // conserva dígitos (ISO 14644-2 ≠ 14644-13)
+        .replace(/\s+/g, " ")
+        .trim();
       const add = (question) => {
         if (!question || !question.text) return;
-        if (bank.some(item => item.text === question.text)) return;
+        const key = normKey(question.text);
+        if (seenKeys.has(key)) return;
+        seenKeys.add(key);
         bank.push(question);
       };
 
@@ -1912,20 +2018,31 @@
         module.quiz.forEach(item => add(q("[Módulo " + module.id + "] " + item.text, item.options, item.answer, item.feedback)));
         (module.decisionCases || []).forEach(c => add(q("[Caso M" + module.id + "] " + c.case, c.options, c.answer, c.feedback)));
       });
-      qaClientQuestions.forEach(([cat, question, answer, why]) => {
-        add(q("[QA/EHS/Cliente - " + cat + "] " + question, [answer, "Responder con una opinión general sin evidencia", "Improvisar y documentar después"], 0, why));
+      qaClientQuestions.forEach(([cat, question, answer, why], idx) => {
+        const others = qaClientQuestions.filter((_, j) => j !== idx).map(r => r[2]);
+        const distractors = shuffle(others).slice(0, 2);
+        add(q("[QA/EHS/Cliente - " + cat + "] " + question, [answer].concat(distractors), 0, why));
       });
-      criticalErrors.forEach(([error, risk, consequence, action]) => {
-        add(q("[Error crítico] " + error + ": ¿cuál es la acción correcta?", [action, "Continuar si el área se ve limpia", "Esperar a auditoría para decidir"], 0, risk + " " + consequence));
+      criticalErrors.forEach(([error, risk, consequence, action], idx) => {
+        const others = criticalErrors.filter((_, j) => j !== idx).map(r => r[3]);
+        const distractors = shuffle(others).slice(0, 2);
+        add(q("[Error crítico] " + error + ": ¿cuál es la acción correcta?", [action].concat(distractors), 0, risk + " " + consequence));
       });
-      isoLibrary.forEach(([part, title, use, question]) => {
-        add(q("[Biblioteca ISO] " + part + " se relaciona principalmente con:", [title, "Solo disciplina visual del área", "Solamente entrenamiento anual"], 0, use));
+      isoLibrary.forEach(([part, title, use, question], idx) => {
+        const others = isoLibrary.filter((_, j) => j !== idx).map(r => r[1]);
+        const distractors = shuffle(others).slice(0, 2);
+        add(q("[Biblioteca ISO] " + part + " se relaciona principalmente con:", [title].concat(distractors), 0, use));
       });
-      kpiDashboard.forEach(([name, definition, interpretation, action]) => {
-        add(q("[KPI] ¿Cómo interpretarías " + name + "?", [interpretation, "Como dato decorativo sin acción", "Solo como requisito para el cliente"], 0, action));
+      kpiDashboard.forEach(([name, definition, interpretation, action], idx) => {
+        const others = kpiDashboard.filter((_, j) => j !== idx).map(r => r[2]);
+        const distractors = shuffle(others).slice(0, 2);
+        add(q("[KPI] ¿Cómo interpretarías " + name + "?", [interpretation].concat(distractors), 0, action));
       });
-      realAuditScenarios.forEach(([scenario, risk, deviation, capa]) => {
-        add(q("[Auditoría real] " + scenario + ": ¿qué respuesta es más completa?", [risk + " " + deviation + " CAPA: " + capa, "No tiene impacto si el área se ve limpia", "Esperar a que QA defina todo sin aportar datos"], 0, "Una respuesta fuerte integra riesgo, desviación y CAPA."));
+      realAuditScenarios.forEach(([scenario, risk, deviation, capa], idx) => {
+        const correct = risk + " " + deviation + " CAPA: " + capa;
+        const others = realAuditScenarios.filter((_, j) => j !== idx).map(r => r[1] + " " + r[2] + " CAPA: " + r[3]);
+        const distractors = shuffle(others).slice(0, 2);
+        add(q("[Auditoría real] " + scenario + ": ¿qué respuesta es más completa?", [correct].concat(distractors), 0, "Una respuesta fuerte integra riesgo, desviación y CAPA."));
       });
       return bank;
     }
@@ -1940,9 +2057,28 @@
         && state.finalQuestionIds.every(i => Number.isInteger(i) && i >= 0 && i < finalQuestionBank.length);
       if (!hasValidFinalSet) {
         state.finalQuestionIds = shuffle(finalQuestionBank.map((_, i) => i)).slice(0, 50);
+        state.finalOptionOrders = null;
         save();
       }
-      currentFinalQuestions = state.finalQuestionIds.map(i => finalQuestionBank[i]);
+      // Orden de opciones estable por set: se mezcla una vez y se guarda
+      const ordersValid = Array.isArray(state.finalOptionOrders)
+        && state.finalOptionOrders.length === state.finalQuestionIds.length;
+      if (!ordersValid) {
+        state.finalOptionOrders = state.finalQuestionIds.map(function(qi) {
+          return shuffle(finalQuestionBank[qi].options.map(function(_, k) { return k; }));
+        });
+        save();
+      }
+      currentFinalQuestions = state.finalQuestionIds.map(function(qi, pos) {
+        const base = finalQuestionBank[qi];
+        const order = state.finalOptionOrders[pos];
+        return {
+          text: base.text,
+          feedback: base.feedback,
+          options: order.map(function(oldIdx) { return base.options[oldIdx]; }),
+          answer: order.indexOf(base.answer)
+        };
+      });
       return currentFinalQuestions;
     }
 
@@ -1974,6 +2110,279 @@
     state.checklists = state.checklists || {};
     state.notes = state.notes || "";
     state.finalScore = state.finalScore || null;
+    state.certName = state.certName || "";
+    state.certOrg = state.certOrg || "";
+
+    var CERT_PASS = 80; // % mínimo para certificar (estándar industria regulada)
+
+    // ===== Supabase (auth, progreso y certificados) =====
+    var SB_URL = "https://jrxbrcskgosdkjlmuaga.supabase.co";
+    var SB_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyeGJyY3NrZ29zZGtqbG11YWdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMzkzMjAsImV4cCI6MjA5NzkxNTMyMH0.-_f-BLnhJ74R44L4cXDxE5Qf5JEIdAw34yN2W_na1Vo";
+    var sb = (window.supabase && window.supabase.createClient)
+      ? window.supabase.createClient(SB_URL, SB_ANON)
+      : null;
+
+    var sessionUser = null;   // { id, email }
+    var perfil = null;        // { nombre, organizacion, rol }
+    var authMode = "login";   // "login" | "register"
+    var syncTimer = null;
+
+    // ---------- Arranque ----------
+    async function initAuth() {
+      if (!sb) {
+        // Sin conexión: modo invitado local, la app igual funciona
+        bootGuest();
+        return;
+      }
+      try {
+        var s = await sb.auth.getSession();
+        if (s.data && s.data.session) {
+          await onLogin(s.data.session.user);
+        } else {
+          showAuth();
+        }
+        sb.auth.onAuthStateChange(function (_evt, session) {
+          if (session && session.user && (!sessionUser || sessionUser.id !== session.user.id)) {
+            onLogin(session.user);
+          }
+        });
+      } catch (e) {
+        bootGuest();
+      }
+    }
+
+    function bootGuest() {
+      hideAuth();
+      buildApp();
+      buildRoleUI();
+    }
+
+    function showAuth() { document.getElementById("authOverlay").style.display = "flex"; }
+    function hideAuth() { document.getElementById("authOverlay").style.display = "none"; }
+
+    function authToggleMode() {
+      authMode = (authMode === "login") ? "register" : "login";
+      document.getElementById("authTitle").textContent = authMode === "login" ? "Iniciar sesión" : "Crear cuenta";
+      document.getElementById("authSubmit").textContent = authMode === "login" ? "Entrar" : "Registrarme";
+      document.getElementById("authNameWrap").style.display = authMode === "register" ? "block" : "none";
+      document.getElementById("authToggle").textContent = authMode === "login"
+        ? "¿No tienes cuenta? Regístrate" : "¿Ya tienes cuenta? Inicia sesión";
+      authMsg("", "");
+    }
+
+    function authMsg(text, kind) {
+      var m = document.getElementById("authMsg");
+      m.textContent = text;
+      m.className = "auth-msg" + (text ? " show " + kind : "");
+    }
+
+    async function authSubmit() {
+      if (!sb) { authMsg("Sin conexión.", "err"); return; }
+      var email = document.getElementById("authEmail").value.trim();
+      var pass = document.getElementById("authPass").value;
+      var name = document.getElementById("authName").value.trim();
+      if (!email || !pass) { authMsg("Completa correo y contraseña.", "err"); return; }
+      if (authMode === "register" && !name) { authMsg("Escribe tu nombre.", "err"); return; }
+      authMsg("Procesando…", "ok");
+      try {
+        if (authMode === "register") {
+          var r = await sb.auth.signUp({ email: email, password: pass, options: { data: { nombre: name } } });
+          if (r.error) { authMsg(r.error.message, "err"); return; }
+          if (!r.data.session) { authMsg("Cuenta creada. Revisa tu correo para confirmar y luego inicia sesión.", "ok"); authToggleMode(); return; }
+          await onLogin(r.data.user);
+        } else {
+          var l = await sb.auth.signInWithPassword({ email: email, password: pass });
+          if (l.error) { authMsg(l.error.message, "err"); return; }
+          await onLogin(l.data.user);
+        }
+      } catch (e) { authMsg(String(e), "err"); }
+    }
+
+    async function onLogin(user) {
+      sessionUser = { id: user.id, email: user.email };
+      // Cargar perfil
+      try {
+        var pr = await sb.from("perfiles").select("nombre,organizacion,rol").eq("id", user.id).single();
+        perfil = pr.data || { nombre: user.email, organizacion: null, rol: "estudiante" };
+      } catch (e) { perfil = { nombre: user.email, organizacion: null, rol: "estudiante" }; }
+      // Cargar progreso de la nube
+      try {
+        var pg = await sb.from("progreso").select("datos,final_score,final_level").eq("user_id", user.id).single();
+        if (pg.data && pg.data.datos && Object.keys(pg.data.datos).length) {
+          state = Object.assign(state, pg.data.datos);
+          if (pg.data.final_score != null) state.finalScore = pg.data.final_score;
+          if (pg.data.final_level) state.finalLevel = pg.data.final_level;
+        }
+      } catch (e) {}
+      state.certName = state.certName || perfil.nombre || "";
+      hideAuth();
+      buildApp();
+      buildRoleUI();
+      renderSessionBar();
+    }
+
+    async function logout() {
+      if (sb) { try { await sb.auth.signOut(); } catch (e) {} }
+      sessionUser = null; perfil = null;
+      location.reload();
+    }
+
+    function renderSessionBar() {
+      var bar = document.getElementById("sessionBar");
+      if (!sessionUser || !perfil) { bar.style.display = "none"; return; }
+      bar.style.display = "block";
+      bar.innerHTML =
+        "<strong>" + (perfil.nombre || sessionUser.email) + "</strong>" +
+        "<span class='rol'>" + (perfil.rol || "estudiante") +
+        (perfil.organizacion ? " · " + perfil.organizacion : "") + "</span>" +
+        "<button class='btn secondary' onclick='logout()'>Cerrar sesión</button>";
+    }
+
+    // ---------- Sincronización de progreso a la nube ----------
+    function syncProgress() {
+      if (!sb || !sessionUser) return;
+      if (syncTimer) clearTimeout(syncTimer);
+      syncTimer = setTimeout(function () {
+        sb.from("progreso").upsert({
+          user_id: sessionUser.id,
+          datos: state,
+          final_score: state.finalScore,
+          final_level: state.finalLevel || null,
+          actualizado: new Date().toISOString()
+        }, { onConflict: "user_id" }).then(function () {}, function () {});
+      }, 1200);
+    }
+
+    // ---------- Paneles por rol ----------
+    function buildRoleUI() {
+      var extraNav = document.getElementById("extraNav");
+      if (!perfil) return;
+      if (perfil.rol === "supervisor" || perfil.rol === "duena") {
+        if (extraNav.querySelector('[data-target="panelEquipo"]') === null) {
+          extraNav.innerHTML += navButton("panelEquipo", "Panel de equipo", "👥");
+        }
+        renderPanelEquipo();
+      }
+      if (perfil.rol === "duena") {
+        if (extraNav.querySelector('[data-target="panelDuena"]') === null) {
+          extraNav.innerHTML += navButton("panelDuena", "Modo dueña", "★");
+        }
+        renderPanelDuena();
+      }
+    }
+
+    async function renderPanelEquipo() {
+      var el = document.getElementById("panelEquipo");
+      el.innerHTML = '<div class="card"><h3>Panel de equipo</h3><p>Cargando…</p></div>';
+      if (!sb) { el.innerHTML = '<div class="card"><h3>Panel de equipo</h3><p>Sin conexión.</p></div>'; return; }
+      try {
+        var people = await sb.from("perfiles").select("id,nombre,email,organizacion").order("nombre");
+        var prog = await sb.from("progreso").select("user_id,final_score,final_level");
+        var certs = await sb.from("certificados").select("codigo,user_id,nombre,puntuacion,nivel,fecha");
+        var pmap = {}; (prog.data || []).forEach(function (r) { pmap[r.user_id] = r; });
+        var cmap = {}; (certs.data || []).forEach(function (r) { cmap[r.user_id] = r; });
+        var rows = (people.data || []).filter(function (p) { return p.id !== sessionUser.id; }).map(function (p) {
+          var pr = pmap[p.id] || {};
+          var c = cmap[p.id];
+          var estado = pr.final_score != null ? (pr.final_score + "% · " + (pr.final_level || "")) : "Sin examen";
+          var cert = c ? '<button class="btn secondary" onclick=\'verCertDe(' + JSON.stringify(c).replace(/'/g, "&#39;") + ')\'>Ver certificado</button>' : '<span class="tag no">Sin certificado</span>';
+          return "<tr><td>" + (p.nombre || "—") + "</td><td>" + (p.email || "") + "</td><td>" + estado + "</td><td>" + cert + "</td></tr>";
+        }).join("");
+        el.innerHTML =
+          '<div class="card"><h3>Panel de equipo</h3>' +
+          '<p>Avance y certificados de tu organización' + (perfil.organizacion ? " (" + perfil.organizacion + ")" : "") + '.</p>' +
+          '<table class="people-table"><thead><tr><th>Nombre</th><th>Correo</th><th>Examen</th><th>Certificado</th></tr></thead><tbody>' +
+          (rows || '<tr><td colspan="4">Aún no hay personas en tu organización.</td></tr>') + '</tbody></table></div>';
+      } catch (e) {
+        el.innerHTML = '<div class="card"><h3>Panel de equipo</h3><p>Error al cargar: ' + String(e) + '</p></div>';
+      }
+    }
+
+    function verCertDe(c) {
+      var fecha = new Date(c.fecha).toLocaleDateString("es-CR", { day: "2-digit", month: "long", year: "numeric" });
+      document.getElementById("certName").textContent = c.nombre;
+      document.getElementById("certOrg").textContent = c.organizacion || "";
+      document.getElementById("certDate").textContent = fecha;
+      document.getElementById("certScore").textContent = "Puntuación " + c.puntuacion + "%" + (c.nivel ? " · " + c.nivel : "");
+      document.getElementById("certCode").textContent = c.codigo;
+      var note = document.querySelector(".cert-verify");
+      if (note) note.innerHTML = 'Código de verificación: <span class="cert-code">' + c.codigo + '</span>';
+      document.getElementById("certOverlay").classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    async function renderPanelDuena() {
+      var el = document.getElementById("panelDuena");
+      el.innerHTML = '<div class="card"><h3>Modo dueña</h3><p>Cargando…</p></div>';
+      if (!sb) { el.innerHTML = '<div class="card"><h3>Modo dueña</h3><p>Sin conexión.</p></div>'; return; }
+      try {
+        var people = await sb.from("perfiles").select("id,nombre,email,organizacion,rol").order("creado");
+        var rows = (people.data || []).map(function (p) {
+          return '<tr data-uid="' + p.id + '">' +
+            "<td>" + (p.nombre || "—") + "</td>" +
+            "<td>" + (p.email || "") + "</td>" +
+            '<td><input type="text" value="' + (p.organizacion || "") + '" placeholder="Empresa" data-org></td>' +
+            '<td><select data-rol><option value="estudiante"' + (p.rol === "estudiante" ? " selected" : "") + '>estudiante</option>' +
+            '<option value="supervisor"' + (p.rol === "supervisor" ? " selected" : "") + '>supervisor</option>' +
+            '<option value="duena"' + (p.rol === "duena" ? " selected" : "") + '>dueña</option></select></td>' +
+            '<td><button class="btn secondary" onclick="guardarPerfil(\'' + p.id + '\')">Guardar</button></td></tr>';
+        }).join("");
+        el.innerHTML =
+          '<div class="card"><h3>Modo dueña — Personas</h3>' +
+          '<p>Asigna empresa y rol a cada persona. El supervisor verá solo a la gente de su misma empresa.</p>' +
+          '<table class="people-table"><thead><tr><th>Nombre</th><th>Correo</th><th>Empresa</th><th>Rol</th><th></th></tr></thead><tbody>' +
+          (rows || '<tr><td colspan="5">Aún no hay personas registradas.</td></tr>') + '</tbody></table></div>';
+      } catch (e) {
+        el.innerHTML = '<div class="card"><h3>Modo dueña</h3><p>Error al cargar: ' + String(e) + '</p></div>';
+      }
+    }
+
+    async function guardarPerfil(uid) {
+      if (!sb) return;
+      var tr = document.querySelector('#panelDuena tr[data-uid="' + uid + '"]');
+      if (!tr) return;
+      var org = tr.querySelector("[data-org]").value.trim();
+      var rol = tr.querySelector("[data-rol]").value;
+      var btn = tr.querySelector("button");
+      btn.textContent = "Guardando…";
+      try {
+        var r = await sb.from("perfiles").update({ organizacion: org || null, rol: rol }).eq("id", uid);
+        btn.textContent = r.error ? "Error" : "Guardado ✓";
+      } catch (e) { btn.textContent = "Error"; }
+      setTimeout(function () { btn.textContent = "Guardar"; }, 1500);
+    }
+
+    async function registrarCertificado(rec) {
+      if (!sb || !sessionUser) return { ok: false, reason: "offline" };
+      try {
+        rec.user_id = sessionUser.id;
+        var res = await sb.from("certificados").upsert(rec, { onConflict: "codigo" });
+        return res.error ? { ok: false, reason: res.error.message } : { ok: true };
+      } catch (e) {
+        return { ok: false, reason: String(e) };
+      }
+    }
+
+    async function verificarCertificado() {
+      var out = document.getElementById("verifyResult");
+      var input = document.getElementById("verifyInput");
+      var code = (input ? input.value : "").trim().toUpperCase();
+      if (!code) { out.innerHTML = '<div class="notice">Escribe un código.</div>'; return; }
+      if (!sb) { out.innerHTML = '<div class="notice">No hay conexión para verificar en línea.</div>'; return; }
+      out.innerHTML = '<div class="notice">Verificando…</div>';
+      try {
+        var res = await sb.rpc("verificar_certificado", { p_codigo: code });
+        if (res.error) { out.innerHTML = '<div class="notice bad">Error: ' + res.error.message + '</div>'; return; }
+        var row = (res.data && res.data.length) ? res.data[0] : null;
+        if (!row) { out.innerHTML = '<div class="notice bad"><strong>No encontrado.</strong> No existe un certificado con ese código.</div>'; return; }
+        var fecha = new Date(row.fecha).toLocaleDateString("es-CR", { day: "2-digit", month: "long", year: "numeric" });
+        out.innerHTML =
+          '<div class="notice success"><strong>✓ Certificado válido</strong><br>' +
+          'Emitido a: <strong>' + row.nombre + '</strong>' + (row.organizacion ? ' (' + row.organizacion + ')' : '') + '<br>' +
+          'Puntuación: ' + row.puntuacion + '%' + (row.nivel ? ' · ' + row.nivel : '') + '<br>' +
+          'Fecha: ' + fecha + '<br>Código: ' + row.codigo + '</div>';
+      } catch (e) { out.innerHTML = '<div class="notice bad">Error: ' + String(e) + '</div>'; }
+    }
 
     function q(text, options, answer, feedback) {
       return { text, options, answer, feedback };
@@ -1982,6 +2391,7 @@
     function save() {
       localStorage.setItem("cleanroomMasteryState", JSON.stringify(state));
       updateProgress();
+      syncProgress();
     }
 
     function buildApp() {
@@ -2345,9 +2755,10 @@
           '<div class="module-body">' +
             '<div class="notice">Esta evaluación es de aprendizaje interno. No sustituye entrenamiento oficial ni calificación de la empresa. No está diseñada para ser fácil: busca detectar criterio operativo real.</div>' +
             '<div class="quiz" id="finalQuiz">' + quizHtml + '</div>' +
-            '<div class="card"><h3>Resultado</h3><div class="final-score" id="finalScore">' + (state.finalScore === null ? "--" : state.finalScore + "%") + '</div><p id="finalMessage">Completa las 50 preguntas para calcular tu puntuación, nivel y recomendación de repaso.</p><div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuación</button><button class="btn secondary" onclick="resetFinal()">Nuevo set aleatorio</button></div></div>' +
+            '<div class="card"><h3>Resultado</h3><div class="final-score" id="finalScore">' + (state.finalScore === null ? "--" : state.finalScore + "%") + '</div><p id="finalMessage">Completa las 50 preguntas para calcular tu puntuación, nivel y recomendación de repaso.</p><div class="btn-row"><button class="btn" onclick="calculateFinal()">Calcular puntuación</button><button class="btn secondary" onclick="resetFinal()">Nuevo set aleatorio</button></div><div id="certGate"></div></div>' +
           '</div>' +
         '</article>';
+      renderCertGate();
     }
 
 
@@ -2468,6 +2879,87 @@
       save();
       document.getElementById("finalScore").textContent = score + "%";
       document.getElementById("finalMessage").innerHTML = "<strong>Nivel obtenido: " + level + "</strong><br>" + recommendation;
+      renderCertGate();
+    }
+
+    function renderCertGate() {
+      var gate = document.getElementById("certGate");
+      if (!gate) return;
+      if (state.finalScore === null) { gate.innerHTML = ""; return; }
+      if (state.finalScore < CERT_PASS) {
+        gate.innerHTML =
+          '<div class="cert-gate locked"><strong>Certificado</strong>' +
+          '<p style="margin:6px 0 0">Necesitas al menos <strong>' + CERT_PASS + '%</strong> para emitir el certificado. ' +
+          'Vas en ' + state.finalScore + '%. Repasa y vuelve a intentar con un nuevo set.</p></div>';
+        return;
+      }
+      gate.innerHTML =
+        '<div class="cert-gate"><strong>¡Aprobado! Emite tu certificado</strong>' +
+        '<div class="cert-fields">' +
+          '<div class="full"><label>Nombre completo</label>' +
+            '<input id="certNameInput" type="text" placeholder="Nombre y apellidos" value="' + (state.certName || "") + '"></div>' +
+          '<div class="full"><label>Empresa u organización (opcional)</label>' +
+            '<input id="certOrgInput" type="text" placeholder="Ej. Laboratorios XYZ" value="' + (state.certOrg || "") + '"></div>' +
+        '</div>' +
+        '<button class="btn" onclick="openCertificate()">Generar certificado</button></div>';
+    }
+
+    function certCode(name, score, dateStr) {
+      var base = (name + "|" + score + "|" + dateStr).toUpperCase();
+      var h = 0;
+      for (var i = 0; i < base.length; i++) { h = (h * 31 + base.charCodeAt(i)) >>> 0; }
+      var hex = h.toString(16).toUpperCase().padStart(8, "0");
+      return "CM-" + hex.slice(0, 4) + "-" + hex.slice(4, 8);
+    }
+
+    function openCertificate() {
+      var nameEl = document.getElementById("certNameInput");
+      var orgEl = document.getElementById("certOrgInput");
+      var name = (nameEl ? nameEl.value : "").trim();
+      if (!name) { alert("Escribe tu nombre completo para el certificado."); return; }
+      var org = (orgEl ? orgEl.value : "").trim();
+      state.certName = name;
+      state.certOrg = org;
+      save();
+
+      var today = new Date();
+      var dateStr = today.toLocaleDateString("es-CR", { day: "2-digit", month: "long", year: "numeric" });
+      var level = state.finalLevel || "";
+      var code = certCode(name, state.finalScore, today.toISOString().slice(0, 10));
+
+      document.getElementById("certName").textContent = name;
+      document.getElementById("certOrg").textContent = org ? org : "";
+      document.getElementById("certDate").textContent = dateStr;
+      document.getElementById("certScore").textContent = "Puntuación " + state.finalScore + "%" + (level ? " · " + level : "");
+      document.getElementById("certCode").textContent = code;
+      document.getElementById("certOverlay").classList.add("show");
+      document.body.style.overflow = "hidden";
+
+      // Registrar para verificación en línea (no bloquea la vista del certificado)
+      registrarCertificado({
+        codigo: code,
+        nombre: name,
+        organizacion: org || (perfil && perfil.organizacion) || null,
+        puntuacion: state.finalScore,
+        nivel: level || null,
+        fecha: today.toISOString()
+      }).then(function (r) {
+        var note = document.querySelector(".cert-verify");
+        if (!note) return;
+        if (r.ok) {
+          note.innerHTML = 'Código de verificación: <span class="cert-code">' + code +
+            '</span> · <span style="color:var(--green)">registrado para verificación en línea</span>';
+        } else if (r.reason === "offline") {
+          note.innerHTML = 'Código de verificación: <span class="cert-code">' + code + '</span>';
+        } else {
+          note.innerHTML = 'Código de verificación: <span class="cert-code">' + code + '</span>';
+        }
+      });
+    }
+
+    function closeCertificate() {
+      document.getElementById("certOverlay").classList.remove("show");
+      document.body.style.overflow = "";
     }
 
     function resetFinal() {
@@ -2475,6 +2967,7 @@
       state.finalScore = null;
       state.finalLevel = null;
       delete state.finalQuestionIds;
+      delete state.finalOptionOrders;
       save();
       buildFinal();
     }
@@ -2587,7 +3080,61 @@
       }
     });
 
-    buildApp();
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initAuth);
+    } else {
+      initAuth();
+    }
   </script>
+
+  <div class="auth-overlay" id="authOverlay" style="display:none;">
+    <div class="auth-card">
+      <div class="brand-mark">CM</div>
+      <h2 id="authTitle">Iniciar sesión</h2>
+      <div class="auth-sub">Cleanroom Mastery</div>
+      <div id="authNameWrap" style="display:none;">
+        <label>Nombre completo</label>
+        <input id="authName" type="text" placeholder="Nombre y apellidos" autocomplete="name">
+      </div>
+      <label>Correo</label>
+      <input id="authEmail" type="email" placeholder="correo@ejemplo.com" autocomplete="email">
+      <label>Contraseña</label>
+      <input id="authPass" type="password" placeholder="Mínimo 6 caracteres" autocomplete="current-password">
+      <button class="btn" id="authSubmit" onclick="authSubmit()">Entrar</button>
+      <div class="auth-msg" id="authMsg"></div>
+      <div class="auth-toggle" id="authToggle" onclick="authToggleMode()">¿No tienes cuenta? Regístrate</div>
+    </div>
+  </div>
+
+  <div class="cert-overlay" id="certOverlay">
+    <div class="cert-toolbar">
+      <button class="btn" onclick="window.print()">Descargar / Imprimir (PDF)</button>
+      <button class="btn secondary" onclick="closeCertificate()">Cerrar</button>
+    </div>
+    <div class="cert-sheet">
+      <div class="cert-inner">
+        <div class="cert-badge">CM</div>
+        <div class="cert-brand">Cleanroom Mastery</div>
+        <div class="cert-title">Certificado de Aprovechamiento</div>
+        <div class="cert-sub">ACADEMIA OPERATIVA PARA FACILITY SERVICES</div>
+        <div class="cert-pre">Se otorga el presente certificado a</div>
+        <div class="cert-name" id="certName">—</div>
+        <div class="cert-org" id="certOrg"></div>
+        <div class="cert-body">
+          Por completar y aprobar el programa de formación en operación, control de
+          contaminación y cumplimiento en cuartos limpios, demostrando criterio operativo
+          conforme a <strong>ISO 14644, GMP, ALCOA+ y prácticas de auditoría</strong>.
+        </div>
+        <div class="cert-meta">
+          <div class="col"><div class="cert-line">Fecha de emisión<br><span id="certDate"></span></div></div>
+          <div class="col center"><span class="cert-score-chip" id="certScore"></span></div>
+          <div class="col" style="text-align:right"><div class="cert-line">Lilliana Retana Tech<br>Emisor del programa</div></div>
+        </div>
+        <div class="cert-verify">
+          Código de verificación: <span class="cert-code" id="certCode"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
