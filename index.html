@@ -756,6 +756,7 @@
     }
 
     .option:hover { border-color: #9bc6e6; background: #f6fbff; }
+    .option.selected { border-color: var(--blue); background: var(--blue-soft); font-weight: 600; }
     .option.correct { border-color: var(--green); background: var(--green-soft); }
     .option.incorrect { border-color: var(--red); background: var(--red-soft); }
 
@@ -957,6 +958,7 @@
         <button class="btn secondary" onclick="exportProgress()">Exportar notas/progreso</button>
         <button class="btn danger" onclick="resetProgress()">Reiniciar progreso</button>
       </div>
+      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:12px;">Cleanroom Mastery · versión 7 (examen sin trampa)</div>
     </aside>
 
     <main class="main">
@@ -977,6 +979,19 @@
               </div>
             </div>
             <div class="cleanroom-visual" aria-hidden="true"><div class="person"></div></div>
+          </div>
+
+          <div class="card" style="margin-top:22px;">
+            <h3>Qué incluye esta plataforma</h3>
+            <p>Más que una lista de módulos: cada uno combina concepto, aplicación operativa y práctica. Esto es todo lo que vas a encontrar:</p>
+            <div class="mastery-grid">
+              <article class="mastery-card"><strong>21 módulos interactivos</strong><p>Desde fundamentos hasta GMP, ISO 14644, ALCOA+, CAPA, monitoreo ambiental, auditoría y preparación para visitas de cliente.</p></article>
+              <article class="mastery-card"><strong>Varios tipos de ejercicio</strong><p>Mini quizzes, casos de decisión, ordenar pasos, identificar riesgos, elegir el procedimiento correcto y análisis de SOP ficticios.</p></article>
+              <article class="mastery-card"><strong>Práctica de respuesta abierta</strong><p>En algunos casos escribes tu respuesta y el sistema te muestra qué conceptos clave cubriste y cuáles te faltaron. Es una guía para practicar y reforzar, no una calificación exacta: si dices la idea correcta con otras palabras, puede no detectarla.</p></article>
+              <article class="mastery-card"><strong>Glosario técnico con buscador</strong><p>Definiciones breves para hablar con QA, EHS, Facilities y cliente con precisión. Lo encuentras en "Glosario y recursos".</p></article>
+              <article class="mastery-card"><strong>Errores críticos y checklists</strong><p>Material de repaso para antes de caminar un área, liderar personal o recibir una auditoría.</p></article>
+              <article class="mastery-card"><strong>Examen final + certificado</strong><p>Evaluación con banco de preguntas aleatorias. Al aprobar (80%+) generas un certificado con código verificable en línea.</p></article>
+            </div>
           </div>
 
           <div class="grid two">
@@ -1358,7 +1373,7 @@
         ],
         quiz: [
           q("¿Qué combina mejor control de contaminación?", ["Limpieza visual y rapidez", "Flujos, conducta, materiales, aire, registros y supervisión", "Solo usar más desinfectante"], 1, "El control es un sistema."),
-          q("¿Qué puede indicar aumento de partículas no viables?", ["Movimiento excesivo, material particulante o falla de técnica", "Siempre biocarga", "Solo cambio de temperatura"], 0, "Debe investigarse la fuente.")
+          q("¿Qué puede indicar aumento de partículas no viables?", ["Movimiento excesivo, material particulante o falla de técnica", "Crecimiento microbiológico en superficies de la sala", "Una variación normal de la temperatura del HVAC"], 0, "Debe investigarse la fuente.")
         ]
       },
       {
@@ -1379,7 +1394,7 @@
           { case: "Un resultado fuera de límite aparece después de cambio de químico.", options: ["Asumir coincidencia", "Aportar datos de cambio, lotes, técnica y entrenamiento a la investigación", "Culpar al muestreo"], answer: 1, feedback: "La investigación requiere correlacionar cambios operativos con datos." }
         ],
         quiz: [
-          q("¿Qué significa un límite de alerta?", ["Una señal temprana para investigar tendencia", "Un permiso para ignorar", "Siempre cierre del área"], 0, "Depende del SOP, pero alerta no es indiferente."),
+          q("¿Qué significa un límite de alerta?", ["Una señal temprana para investigar tendencia", "El punto donde se debe detener la operación de inmediato", "El valor máximo permitido por la especificación del SOP"], 0, "Depende del SOP, pero alerta no es indiferente."),
           q("¿Qué debe aportar limpieza en una investigación EM?", ["Hechos operativos y registros", "Opiniones sin evidencia", "Solo fotografías decorativas"], 0, "La evidencia operativa es clave.")
         ]
       },
@@ -1424,7 +1439,7 @@
         ],
         quiz: [
           q("¿Qué busca el traslape?", ["Evitar áreas sin cubrir", "Gastar más químico", "Hacer dibujos uniformes"], 0, "Reduce variabilidad."),
-          q("¿Qué debe observar una PM en técnica?", ["Patrón, secuencia, materiales y registro", "Solo velocidad", "Solo apariencia final"], 0, "La apariencia no prueba control.")
+          q("¿Qué debe observar una PM en técnica?", ["Patrón, secuencia, materiales y registro", "El tiempo total que tarda en completar la tarea", "El resultado visual final de la superficie limpiada"], 0, "La apariencia no prueba control.")
         ]
       },
       {
@@ -1446,7 +1461,7 @@
         ],
         quiz: [
           q("¿Qué cambio suele requerir control formal?", ["Cambiar desinfectante aprobado", "Cambiar color de bolígrafo permitido por SOP", "Leer el SOP antes de trabajar"], 0, "Puede afectar eficacia, compatibilidad y validación."),
-          q("¿Qué hacer si el SOP es ambiguo?", ["Improvisar", "Escalar y pedir aclaración formal", "Usar el método más rápido"], 1, "La ambigüedad debe resolverse controladamente.")
+          q("¿Qué hacer si el SOP es ambiguo?", ["Aplicar la interpretación que usa el turno con más experiencia", "Escalar y pedir aclaración formal", "Documentar ambas interpretaciones y decidir más adelante"], 1, "La ambigüedad debe resolverse controladamente.")
         ]
       },
       {
@@ -1468,7 +1483,7 @@
         ],
         quiz: [
           q("¿Qué respuesta es más sólida ante auditoría?", ["Porque siempre lo hacemos así", "El SOP vigente define X y este registro evidencia Y", "No estoy segura, pero seguro está bien"], 1, "Une procedimiento con evidencia."),
-          q("¿Qué debe preparar una PM antes de visita?", ["Solo presentación bonita", "Registros, entrenamiento, área, materiales y narrativa de control", "Nada; auditoría es de QA"], 1, "La operación debe demostrar control.")
+          q("¿Qué debe preparar una PM antes de visita?", ["Una presentación ejecutiva de resultados del trimestre", "Registros, entrenamiento, área, materiales y narrativa de control", "Coordinar que QA responda todas las preguntas del auditor"], 1, "La operación debe demostrar control.")
         ]
       },
       {
@@ -1523,14 +1538,14 @@
           q("¿Qué fuente requiere más supervisión continua en un cleanroom?", ["Personas y sus prácticas", "El nombre del área", "El color de la mopa"], 0, "Las personas generan partículas y toman decisiones operativas.")
         ],
         4: [
-          q("Un colaborador cumple gowning, pero habla sobre superficies abiertas mientras limpia. ¿Qué evalúas?", ["Riesgo de conducta y posible dispersión/contaminación", "Nada, porque ya tiene gowning", "Solo velocidad"], 0, "La vestimenta no compensa conducta inadecuada."),
+          q("Un colaborador cumple gowning, pero habla sobre superficies abiertas mientras limpia. ¿Qué evalúas?", ["Riesgo de conducta y posible dispersión/contaminación", "Ninguno mientras los conteos de partículas sigan dentro de límite", "Riesgo solo si deja de usar mascarilla en ese momento"], 0, "La vestimenta no compensa conducta inadecuada."),
           q("¿Qué observación demuestra disciplina operacional?", ["Caminar lento, tocar solo lo necesario y escalar condiciones anormales", "Terminar rápido aunque cambie la secuencia", "Dejar puertas abiertas para mover carros"], 0, "La disciplina reduce variabilidad y riesgo."),
           q("Si un técnico repite una mala práctica porque 'así le enseñaron', ¿qué debe hacer la supervisión?", ["Corregir, verificar SOP, evaluar brecha de entrenamiento y documentar si aplica", "Solo regañar", "Esperar auditoría"], 0, "La recurrencia puede indicar falla de entrenamiento o sistema.")
         ],
         5: [
-          q("Durante gowning, un guante toca la parte externa de una prenda antes de sanitizarse. ¿Qué decisión es más segura?", ["Continuar si no se ve sucio", "Seguir SOP para cambio/sanitización y evaluar recontaminación", "Registrar al final"], 1, "El riesgo no siempre es visible."),
+          q("Durante gowning, un guante toca la parte externa de una prenda antes de sanitizarse. ¿Qué decisión es más segura?", ["Sanitizar el guante y continuar sin registrar el contacto", "Seguir SOP para cambio/sanitización y evaluar recontaminación", "Evaluar al final del proceso solo si hubo contacto visible"], 1, "El riesgo no siempre es visible."),
           q("¿Por qué el orden de gowning importa?", ["Porque reduce transferencia desde zonas/persona menos controladas hacia la barrera limpia", "Porque hace ver más formal el proceso", "Porque siempre toma menos tiempo"], 0, "La secuencia protege la barrera."),
-          q("Una PM audita gowning. ¿Qué debe buscar además de que la ropa esté puesta?", ["Secuencia, contacto con superficies, cabello cubierto, guantes y conducta", "Solo talla correcta", "Solo color de prenda"], 0, "Gowning es técnica, no solo vestimenta.")
+          q("Una PM audita gowning. ¿Qué debe buscar además de que la ropa esté puesta?", ["Secuencia, contacto con superficies, cabello cubierto, guantes y conducta", "Que la talla y el ajuste de cada prenda sean correctos", "Que el registro de ingreso al área esté firmado"], 0, "Gowning es técnica, no solo vestimenta.")
         ],
         6: [
           q("La superficie se ve mojada, pero el operador no sabe concentración ni vencimiento del químico. ¿Cuál es el problema?", ["La eficacia y trazabilidad no son defendibles", "No hay problema si huele fuerte", "Solo falta entrenamiento EHS"], 0, "Químico sin control compromete limpieza y documentación."),
@@ -2047,6 +2062,22 @@
       return bank;
     }
 
+    // Barajar opciones de cada pregunta UNA vez al cargar, para que la posición
+    // no sea pista (antes la correcta casi nunca caía en la 3ª opción).
+    (function shuffleAllModuleOptions() {
+      function mix(item) {
+        if (!item || !Array.isArray(item.options) || typeof item.answer !== "number") return;
+        var order = shuffle(item.options.map(function (_, k) { return k; }));
+        var newOptions = order.map(function (o) { return item.options[o]; });
+        item.answer = order.indexOf(item.answer);
+        item.options = newOptions;
+      }
+      modules.forEach(function (m) {
+        (m.quiz || []).forEach(mix);
+        (m.decisionCases || []).forEach(mix);
+      });
+    })();
+
     const finalQuestionBank = buildAdvancedQuestionBank();
     let currentFinalQuestions = [];
 
@@ -2454,6 +2485,8 @@
     }
 
     function buildModules() {
+      // Evitar duplicados si buildApp se ejecuta más de una vez (p.ej. eventos de auth)
+      document.querySelectorAll('.content section[id^="module-"]').forEach(function (s) { s.remove(); });
       modules.forEach(m => {
         const section = document.createElement("section");
         section.id = `module-${m.id}`;
@@ -2849,12 +2882,11 @@
 
     const finalAnswers = {};
     function answerFinal(i, optionIndex, btn) {
-      const question = currentFinalQuestions[i];
       const parent = btn.closest(".quiz-question");
-      parent.querySelectorAll(".option").forEach(o => o.classList.remove("correct", "incorrect"));
-      btn.classList.add(optionIndex === question.answer ? "correct" : "incorrect");
-      parent.querySelector(".feedback").textContent = optionIndex === question.answer ? question.feedback : "Respuesta recomendada: " + question.options[question.answer] + ". " + question.feedback;
-      parent.querySelector(".feedback").className = "feedback " + (optionIndex === question.answer ? "good" : "bad");
+      // Durante el examen NO se revela si es correcta ni cuál es la buena.
+      // Solo se marca la opción elegida. Se puede cambiar hasta calcular.
+      parent.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+      btn.classList.add("selected");
       finalAnswers[i] = optionIndex;
     }
 
@@ -2862,6 +2894,9 @@
       const answered = Object.keys(finalAnswers).length;
       if (answered < currentFinalQuestions.length) {
         alert("Faltan " + (currentFinalQuestions.length - answered) + " preguntas por responder.");
+        return;
+      }
+      if (!confirm("Al calcular tu puntuación, tus respuestas quedan registradas y NO podrás cambiarlas. ¿Continuar?")) {
         return;
       }
       const correct = currentFinalQuestions.filter((q, i) => finalAnswers[i] === q.answer).length;
@@ -2879,6 +2914,25 @@
       save();
       document.getElementById("finalScore").textContent = score + "%";
       document.getElementById("finalMessage").innerHTML = "<strong>Nivel obtenido: " + level + "</strong><br>" + recommendation;
+      // Revisión: ahora SÍ se revela qué acertaste y qué no, y se bloquea todo.
+      currentFinalQuestions.forEach(function (q, i) {
+        var parent = document.querySelector('.quiz-question[data-final="' + i + '"]');
+        if (!parent) return;
+        var opts = parent.querySelectorAll(".option");
+        opts.forEach(function (o) { o.disabled = true; o.classList.remove("selected"); });
+        var chosen = finalAnswers[i];
+        if (chosen === q.answer) {
+          if (opts[chosen]) opts[chosen].classList.add("correct");
+        } else {
+          if (opts[chosen]) opts[chosen].classList.add("incorrect");
+          if (opts[q.answer]) opts[q.answer].classList.add("correct");
+        }
+        var fb = parent.querySelector(".feedback");
+        if (fb) {
+          fb.textContent = (chosen === q.answer ? "Correcto. " : "Respuesta correcta: " + q.options[q.answer] + ". ") + q.feedback;
+          fb.className = "feedback " + (chosen === q.answer ? "good" : "bad");
+        }
+      });
       renderCertGate();
     }
 
