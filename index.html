@@ -2156,6 +2156,49 @@
       ? window.supabase.createClient(SB_URL, SB_ANON)
       : null;
 
+    /* ===== LillyTech Core — analítica central (no bloquea la app) ===== */
+    var CORE_URL = "https://vgkyoyosjewdygxtnqvu.supabase.co";
+    var CORE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZna3lveW9zamV3ZHlneHRucXZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NTAxNDAsImV4cCI6MjA5ODIyNjE0MH0.oDxSWg61UFLqMh2MeEW6yxarZAjobhEA6TWm0KS_7CA";
+    var CORE_COMPANY_ID = "2821771b-aa0b-40c0-92eb-c42fc384e96a"; // empresa demo
+    var CORE_APP_KEY = "cleanroom_mastery";
+    var CORE_COURSE_KEY = "core_foundations";
+    var CORE_ACADEMIA = "Cleanroom Mastery";
+    var coreSb = (window.supabase && window.supabase.createClient)
+      ? window.supabase.createClient(CORE_URL, CORE_ANON)
+      : null;
+
+    // Reporta al Core que alguien aprobó el examen final. Tolerante a fallos.
+    async function reportFinalToCore(score) {
+      try {
+        if (!coreSb || !sessionUser || !sessionUser.email) return; // sin sesión: no se reporta
+        if (!reportFinalToCore._ids) {
+          var appRes = await coreSb.from("apps").select("id").eq("app_key", CORE_APP_KEY).maybeSingle();
+          var appId = appRes.data ? appRes.data.id : null;
+          var courseId = null;
+          if (appId) {
+            var cRes = await coreSb.from("courses").select("id").eq("app_id", appId).eq("course_key", CORE_COURSE_KEY).maybeSingle();
+            courseId = cRes.data ? cRes.data.id : null;
+          }
+          reportFinalToCore._ids = { appId: appId, courseId: courseId };
+        }
+        var ids = reportFinalToCore._ids;
+        var profileId = null;
+        var pRes = await coreSb.from("users_profile").select("id").eq("company_id", CORE_COMPANY_ID).eq("email", sessionUser.email).maybeSingle();
+        if (pRes.data) { profileId = pRes.data.id; }
+        else {
+          var nombre = (perfil && perfil.nombre) ? perfil.nombre : sessionUser.email;
+          var iRes = await coreSb.from("users_profile").insert({ company_id: CORE_COMPANY_ID, email: sessionUser.email, full_name: nombre, status: "active" }).select("id").maybeSingle();
+          profileId = iRes.data ? iRes.data.id : null;
+        }
+        var base = { app_id: ids.appId, course_id: ids.courseId, user_profile_id: profileId, company_id: CORE_COMPANY_ID, source_app: CORE_APP_KEY };
+        await coreSb.from("analytics_events").insert([
+          Object.assign({}, base, { event_type: "quiz_completed",        score: score, metadata: { quiz_name: "Evaluación final", passed: true, academia: CORE_ACADEMIA } }),
+          Object.assign({}, base, { event_type: "course_completed",      score: score, metadata: { academia: CORE_ACADEMIA } }),
+          Object.assign({}, base, { event_type: "certificate_generated", score: score, metadata: { academia: CORE_ACADEMIA } })
+        ]);
+      } catch (e) { console.warn("reportFinalToCore:", e); }
+    }
+
     var sessionUser = null;   // { id, email }
     var perfil = null;        // { nombre, organizacion, rol }
     var authMode = "login";   // "login" | "register"
@@ -2915,6 +2958,8 @@
       state.finalScore = score;
       state.finalLevel = level;
       save();
+      // avisar al Core (no bloquea): alguien aprobó el examen final
+      if (score >= CERT_PASS) { reportFinalToCore(score); }
       document.getElementById("finalScore").textContent = score + "%";
       document.getElementById("finalMessage").innerHTML = "<strong>Nivel obtenido: " + level + "</strong><br>" + recommendation;
       // Revisión: ahora SÍ se revela qué acertaste y qué no, y se bloquea todo.
